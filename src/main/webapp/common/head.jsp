@@ -19,6 +19,9 @@
 
 <nav class="navbar navbar-expand-sm bg-light">
   <ul class="navbar-nav">
+  <a class="navbar-brand" href="${pageContext.request.contextPath}/member/index">
+  	<img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo" style="width:50%;">
+  </a>
   <c:if test="${sessionScope.id==null }">
     <li class="nav-item">
       <a class="nav-link" href="${pageContext.request.contextPath}/member/join">회원가입</a>
@@ -42,12 +45,11 @@
 	    <li class="nav-item">
 	      <a class="nav-link" href="${pageContext.request.contextPath}/member/memberList">회원리스트</a>
 	    </li> 
-	    
     </c:if>
     
     <li class="nav-item">
-      <a class="nav-link" href="#">공지사항</a>
-    </li>
+	      <a class="nav-link" href="${pageContext.request.contextPath}/board/boardList">공지사항</a>
+	    </li> 
   </ul>
 </nav>
 <br>

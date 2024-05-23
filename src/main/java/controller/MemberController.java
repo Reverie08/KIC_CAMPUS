@@ -9,9 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.oreilly.servlet.MultipartRequest;
+
+import dao.KicBoardDAO;
 import dao.KicMemberDAO;
 import kic.mskim.MskimRequestMapping;
 import kic.mskim.RequestMapping;
+import model.KicBoard;
 import model.KicMember;
 
 @WebServlet("/member/*")
@@ -259,5 +263,32 @@ public class MemberController extends MskimRequestMapping {
 		
 		return "/view/member/memberList.jsp";
 	}
+	
+	@RequestMapping("pictureimgForm")
+	public String pictureimgForm(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		return "/single/pictureimgForm.jsp";
+	}
+	
+	@RequestMapping("picturePro")
+	public String picturePro(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String path = request.getServletContext().getRealPath("/")+"/img/member/picture/";
+		System.out.println(path);
+		
+		String filename = null;
+		
+		MultipartRequest multi = new MultipartRequest(request, path, 10*1024*1024, "UTF-8" );
+		
+		filename = multi.getFilesystemName("picture");
+		
+		System.out.println(filename);
+		request.setAttribute("filename", filename);
+		
+		
+		return "/single/picturePro.jsp";
+	}
+	
 
 }

@@ -15,31 +15,29 @@ import model.KicMember;
 
 public class KicBoardDAO {
 	public Connection getConnection() {
-		//1. driver
+		// 1. driver
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
-			Connection conn = DriverManager
-					.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "kic24", "1234");
-	        return conn;
+			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "kic24", "1234");
+			return conn;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		//2 connection
-	    catch (SQLException e) {
+		// 2 connection
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
-		
+
 	}
-	
+
 	public int insertBoard(KicBoard board) {
 		Connection conn = getConnection();
-		//3. PreparedStatement
-		PreparedStatement pstmt=null;
-		String sql = 
-		"insert into kicboard values (kicboardseq.nextval,?,?,?,?,?,sysdate,0,?)";
-		//4. mapping
+		// 3. PreparedStatement
+		PreparedStatement pstmt = null;
+		String sql = "insert into kicboard values (kicboardseq.nextval,?,?,?,?,?,sysdate,0,?)";
+		// 4. mapping
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getName());
@@ -48,30 +46,28 @@ public class KicBoardDAO {
 			pstmt.setString(4, board.getContent());
 			pstmt.setString(5, board.getFile1());
 			pstmt.setString(6, "1");
-			//sql 실행
+			// sql 실행
 			int num = pstmt.executeUpdate();
-			
+
 			return num;
-			
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return 0;
-		
+
 	}
-	
-	
+
 	public List<KicBoard> BoardList() {
 		Connection conn = getConnection();
 		PreparedStatement pstmt = null;
-		String sql = "select * from kicboard"; 
+		String sql = "select * from kicboard order by num desc";
 		List<KicBoard> li = new ArrayList<KicBoard>();
 		try {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				KicBoard m = new KicBoard();
 				m.setNum(rs.getInt("num"));
 				m.setPass(rs.getString("pass"));
@@ -79,7 +75,7 @@ public class KicBoardDAO {
 				m.setSubject(rs.getString("subject"));
 				m.setContent(rs.getString("content"));
 				m.setFile1(rs.getString("file1"));
-				m.setRegdate(rs.getDate("regdate")); 
+				m.setRegdate(rs.getTimestamp("regdate"));
 				m.setReadcnt(rs.getInt("readcnt"));
 				m.setBoardid(rs.getString("boardid"));
 				li.add(m);
@@ -90,7 +86,72 @@ public class KicBoardDAO {
 		}
 		return null;
 	}
+
+	public KicBoard getBoard(int num) {
+		Connection conn = getConnection();
+		PreparedStatement pstmt = null;
+		String sql = "select * from kicboard where num = ?";
+		// 4. mapping
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				KicBoard board = new KicBoard();
+				// id 있음
+				board.setNum(rs.getInt("num"));
+				board.setName(rs.getString("name"));
+				board.setPass(rs.getString("pass"));
+				board.setSubject(rs.getString("subject"));
+				board.setContent(rs.getString("content"));
+				board.setFile1(rs.getString("file1"));
+				board.setReadcnt(rs.getInt("readcnt"));
+
+				return board;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
+	public int updateBoard(KicBoard board) {
+		Connection conn = getConnection();
+		PreparedStatement pstmt=null;
+		String sql = 
+		"update kicboard set name=?, subject=?, content=?, file1=? where num = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, board.getName());
+			pstmt.setString(2, board.getSubject());
+			pstmt.setString(3, board.getContent());
+			pstmt.setString(4, board.getFile1());
+			pstmt.setInt(5, board.getNum());
+			//sql 실행
+			int num = pstmt.executeUpdate();
+			return num;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
+	
+	public int deleteBoard(KicBoard board) {
+		Connection conn = getConnection();
+		PreparedStatement pstmt = null;
+		String sql = "delete from kicboard where num = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board.getNum());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+				
+	}
 }
-
-

@@ -21,14 +21,14 @@
   				</tr>
   			</thead>
   			<tbody>
-  				<c:forEach var="m" items="${li}">
+  				<c:forEach var="b" items="${li}">
   					<tr>
-  						<td>${m.num}</td>
-  						<td>${m.name}</td>
-  						<td>${m.subject }</td>
-  						<td>${m.file1 }</td>
-  						<td>${m.regdate }</td>
-  						<td>${m.readcnt }</td>
+  						<td>${b.num}</td>
+  						<td>${b.name}</td>
+  						<td><a href ="${pageContext.request.contextPath }/board/boardInfo?num=${b.num}">${b.subject}</a></td>
+  						<td>${b.file1 }</td>
+  						<td>${b.regdate }</td>
+  						<td>${b.readcnt }</td>
   					</tr>
   				</c:forEach>
   			</tbody>
