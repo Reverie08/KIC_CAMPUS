@@ -53,9 +53,11 @@ function chkpass(f) {
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
 				<h4 class="mb-3">게시물 수정</h4>
-				<form class="validation-form" novalidate  
+				<form class="validation-form" novalidate enctype="multipart/form-data"  
 				    action="boardUpdatePro"<%-- action="boardUpdatePro?num="${board.num }   --%> method="post" onsubmit="return chkpass(this)">
 				    <input type="hidden" name="num" value="${board.num }"> <!-- action 주석 부분처럼 하거나 이와 같이하거나 -->
+				    <input type="hidden" name="originfile" value="${board.file1 }">
+				    <!-- <div class ="row"></div> -->
 					<div class="mb-3">
 						<label for="name">작성자</label> <input type="text"     name="name"
 							class="form-control" id="name" placeholder="이름" value="${board.name}"
@@ -84,8 +86,8 @@ function chkpass(f) {
 						<div class="invalid-feedback">내용을 입력해주세요.</div>
 					</div>
 					<div class="mb-3">
-						<label for="file">파일 업로드</label> <input type="file"    name="file"
-							class="form-control" id="file"   >
+						<label for="file">파일 업로드:${board.file1 }</label> <input type="file" name="file1"
+							class="form-control" id="file1"   >
 					</div>	
 					
 				

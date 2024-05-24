@@ -22,12 +22,10 @@ public Connection getConnection() {
 				.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "kic24", "1234");
         return conn;
 	} catch (ClassNotFoundException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	//2 connection
     catch (SQLException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	
@@ -63,7 +61,6 @@ public KicMember getMember(String id) {
 		}
 		
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}	
 		return null;
@@ -85,7 +82,7 @@ public int insertMember(KicMember kic) {
 		pstmt.setInt(4, kic.getGender());
 		pstmt.setString(5, kic.getTel());
 		pstmt.setString(6, kic.getEmail());
-		pstmt.setString(7, "");
+		pstmt.setString(7, kic.getPicture());
 		//sql 실행
 		int num = pstmt.executeUpdate();
 		
@@ -93,7 +90,6 @@ public int insertMember(KicMember kic) {
 		
 		
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	
@@ -105,7 +101,7 @@ public int updateMember(KicMember kic) {
 	//3. PreparedStatement
 	PreparedStatement pstmt=null;
 	String sql = 
-	"update kicmember set name=?, gender=?, tel=?, email=? where id = ?";
+	"update kicmember set name=?, gender=?, tel=?, email=?, picture=? where id = ?";
 	//4. mapping
 	try {
 		pstmt = conn.prepareStatement(sql);
@@ -113,7 +109,8 @@ public int updateMember(KicMember kic) {
 		pstmt.setInt(2, kic.getGender());
 		pstmt.setString(3, kic.getTel());
 		pstmt.setString(4, kic.getEmail());
-		pstmt.setString(5, kic.getId());
+		pstmt.setString(5, kic.getPicture());
+		pstmt.setString(6, kic.getId());
 		//sql 실행
 		int num = pstmt.executeUpdate();
 		
@@ -121,7 +118,6 @@ public int updateMember(KicMember kic) {
 		
 		
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	
@@ -142,7 +138,6 @@ public int deleteMember(String id) {
 		int num = pstmt.executeUpdate();
 		return num;		
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	
@@ -164,7 +159,6 @@ public int chgPassMember(String id, String chgpass) {
 		int num = pstmt.executeUpdate();
 		return num;		
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	

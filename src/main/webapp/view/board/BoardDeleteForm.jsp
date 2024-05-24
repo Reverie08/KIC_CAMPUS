@@ -45,19 +45,13 @@ body {
 			<div class="input-form col-md-12 mx-auto">
 				<h4 class="mb-3  center">게시물 삭제</h4>
 				<form class="validation-form" novalidate      
-				action="BoardDeletePro"     method="post">
-				<input type="hidden" name="num" value="${board.num }">
+				action="boardDeletePro"     method="post">
+				<input type="hidden" name="num" value="${num}">
 				
 					<div class="row">
 						<div class="col-md-6 mb-3">
-							<label for="id">아이디</label> <input type="text"
-								class="form-control" id="id" placeholder="" 
-								value="<%=session.getAttribute("id") %>" readonly name="id" >
-							<div class="invalid-feedback">아이디를 입력해주세요.</div>
-						</div>
-						<div class="col-md-6 mb-3">
 							<label for="pass">비밀번호</label> <input type="password"
-								class="form-control" id="pass" placeholder="" value=""   name="pass" 
+								class="form-control" id="pass" placeholder="" value="" name="pass" 
 								required>
 							<div class="invalid-feedback">비밀번호을 입력해주세요.</div>
 						</div>

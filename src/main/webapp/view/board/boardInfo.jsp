@@ -37,7 +37,7 @@
 			</tr>
 			<tr>
 				<td>이미지</td>
-				<td>${board.file1}</td>
+				<td><img src="${pageContext.request.contextPath}/img/board/${board.file1}"/></td>
 			</tr>
 			
 			<tr class ="text-center">
@@ -49,7 +49,7 @@
 					href="${pageContext.request.contextPath}/board/boardDeleteForm?num=${board.num}">글 삭제</a>
 					
 					<a class="btn btn-primary"
-					href="${pageContext.request.contextPath}/board/boardList">글 목록</a>
+					href="${pageContext.request.contextPath}/board/boardList?boardid=${sessionScope.boardid}">글 목록</a>
 				</td>
 			</tr>
 			</table>

@@ -53,7 +53,7 @@ function chkpass(f) {
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
 				<h4 class="mb-3">게시판등록</h4>
-				<form class="validation-form" novalidate  
+				<form class="validation-form" novalidate  enctype="multipart/form-data" 
 				    action="boardPro"   method="post" onsubmit="return chkpass(this)">
 					<div class="mb-3">
 						<label for="name">작성자</label> <input type="text"     name="name"
@@ -89,8 +89,9 @@ function chkpass(f) {
 						<div class="invalid-feedback">내용을 입력해주세요.</div>
 					</div>
 					<div class="mb-3">
-						<label for="file">파일 업로드</label> <input type="file"    name="file"
-							class="form-control" id="file"   >
+						<label for="file">파일 업로드</label> 
+						<input type="file"    name="file1"
+							class="form-control" id="file1"   >
 					</div>	
 					
 				

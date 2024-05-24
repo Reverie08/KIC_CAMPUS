@@ -8,6 +8,7 @@ public class KicMember {
 	private String tel;
 	private String email;
 	private String picture;
+	
 	public String getId() {
 		return id;
 	}

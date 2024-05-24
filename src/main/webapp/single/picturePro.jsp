@@ -10,7 +10,9 @@
 let img = opener.document.getElementById("pic")
 img.src="${pageContext.request.contextPath}/img/member/picture/${filename}";
 alert(img.src)
-window.close();
+opener.document.joinform.picture.value="${filename}"
+self.close();
+/* window.close(); */
 </script>
 <body>
 

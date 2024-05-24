@@ -6,9 +6,8 @@ name varchar(20),
 gender number(1), 
 tel varchar(20), 
 email varchar(50), 
-picture varchar(200)
+picture varchar(200) --이미지 이름
 );
-
 
 
 create table kicboard (
