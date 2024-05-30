@@ -1,0 +1,39 @@
+@charset "UTF-8";
+    body {
+        font-family: GmarketSansMedium, sans-serif;
+        background-color: #f9f9f9;
+
+    }
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+    h4 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    input[type="hidden"] {
+        display: none;
+    }
+    button {
+        padding: 10px 15px;
+        background-color: #ff4d4d;
+        border: none;
+        color: white;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+    button:hover {
+        background-color: #ff1a1a;
+    }

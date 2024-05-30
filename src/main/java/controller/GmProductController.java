@@ -50,12 +50,17 @@ public class GmProductController extends MskimRequestMapping {
 	@RequestMapping("gmProdForm")
 	public String gmProdForm(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*
-		 * String id = (String)session.getAttribute("id"); GmMemberDAO dao=new
-		 * GmMemberDAO(); GmMember mem = dao.getMember(id); request.setAttribute("mem",
-		 * mem);
-		 */
+		String msg = "";
+		String url = "gmProdList";
 
+		Integer trader = (Integer) session.getAttribute("trader");
+		/* int trader = Integer.parseInt(session.getAttribute("trader")); -> 오류 */
+		if (trader == null || trader == 1) { // 1 is for consumer
+			msg = "판매자만 상품 등록이 가능합니다";
+			request.setAttribute("msg", msg);
+			request.setAttribute("url", url);
+			return "/view/alert.jsp";
+		}
 		return "/view/product/gmProdForm.jsp";
 	}
 
@@ -101,10 +106,9 @@ public class GmProductController extends MskimRequestMapping {
 		GmProductDAO dao = new GmProductDAO();
 		List<GmProduct> li = dao.gmProdList();
 		request.setAttribute("li", li);
-		
+
 		String prodid = request.getParameter("prodid");
 		session.setAttribute("prodid", prodid);
-		
 
 		System.out.println(li);
 
@@ -119,6 +123,7 @@ public class GmProductController extends MskimRequestMapping {
 		System.out.println(prodid);
 		GmProductDAO dao = new GmProductDAO();
 		GmProduct prod = dao.getProd(prodid);
+		System.out.println(prod.getProdregdate());
 
 		request.setAttribute("prod", prod);
 		return "/view/product/gmProdInfo.jsp";
@@ -133,6 +138,16 @@ public class GmProductController extends MskimRequestMapping {
 		GmProduct prod = dao.getProd(prodid);
 
 		request.setAttribute("prod", prod);
+		String msg = "";
+		String url = "gmProdList";
+
+		Integer trader = (Integer) session.getAttribute("trader");
+		if (trader == null || trader == 1) {
+			msg = "판매자만 상품 수정이 가능합니다";
+			request.setAttribute("msg", msg);
+			request.setAttribute("url", url);
+			return "/view/alert.jsp";
+		}
 
 		return "/view/product/gmProdUpdForm.jsp";
 	}
@@ -144,8 +159,8 @@ public class GmProductController extends MskimRequestMapping {
 		request.setCharacterEncoding("utf-8");
 		String path = request.getServletContext().getRealPath("/") + "storage/product/";
 		MultipartRequest multi = new MultipartRequest(request, path, 10 * 1024 * 1024, "UTF-8");
-		
-		int prodid = Integer.parseInt(multi.getParameter("prodid")); 
+
+		int prodid = Integer.parseInt(multi.getParameter("prodid"));
 		System.out.println(prodid);
 		/* String pass = multi.getParameter("pass"); */
 		System.out.println(prodid);
@@ -159,9 +174,11 @@ public class GmProductController extends MskimRequestMapping {
 		prod.setCategory(multi.getParameter("category"));
 
 		if (multi.getFilesystemName("file2") == null) {
-			proddb.setFile2(multi.getParameter("currentfile"));
+			prod.setFile2(multi.getParameter("currentfile"));
+			System.out.println(multi.getParameter("currentfile"));
 		} else {
-			proddb.setFile2(multi.getFilesystemName("file2"));
+			prod.setFile2(multi.getFilesystemName("file2"));
+			System.out.println(multi.getFilesystemName("file2"));
 		}
 
 		String msg = "수정 할 수 없습니다";
@@ -188,16 +205,26 @@ public class GmProductController extends MskimRequestMapping {
 		request.setAttribute("url", url);
 		return "/view/alert.jsp";
 	}
-	
+
 	@RequestMapping("gmProdDelForm")
 	public String gmProdDelForm(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// http://localhost:8080/kicmodel2/board/boardInfo?num=10
+		String msg = "";
+		String url = "gmProdList";
+
+		Integer trader = (Integer) session.getAttribute("trader");
+		if (trader == null || trader == 1) { // 1 is for consumer
+			msg = "판매자만 상품 삭제가 가능합니다";
+			request.setAttribute("msg", msg);
+			request.setAttribute("url", url);
+			return "/view/alert.jsp";
+		}
 
 		request.setAttribute("prodid", request.getParameter("prodid"));
 		return "/view/product/gmProdDelForm.jsp";
 	}
-	
+
 	@RequestMapping("gmProdDel")
 	public String gmProdDel(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -210,16 +237,16 @@ public class GmProductController extends MskimRequestMapping {
 		String url = "gmProdDelForm?prodid=" + prodid;
 
 		if (proddb != null) {
-			/*if (pass.equals(boarddb.getPass())) {*/
-				int count = dao.deleteProd(prodid);
-				if (count == 1) {
-					msg = "삭제 되었습니다";
-					url = "gmProdList";
-				}
-				/* } */
-				/*
-				 * else { msg = "비밀번호를 확인 하세요"; }
-				 */
+			/* if (pass.equals(boarddb.getPass())) { */
+			int count = dao.deleteProd(prodid);
+			if (count == 1) {
+				msg = "삭제 되었습니다";
+				url = "gmProdList";
+			}
+			/* } */
+			/*
+			 * else { msg = "비밀번호를 확인 하세요"; }
+			 */
 		} else {
 			msg = "상품이 없습니다";
 		}

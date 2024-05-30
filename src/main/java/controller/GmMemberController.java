@@ -125,6 +125,7 @@ public class GmMemberController extends MskimRequestMapping {
 		request.setCharacterEncoding("utf-8");
 		String id = request.getParameter("id");
 		String pass = request.getParameter("pass");
+
 		// Connection 객체
 		GmMemberDAO dao = new GmMemberDAO();
 		String msg = id + "님이 로그인 하셨습니다";
@@ -133,6 +134,7 @@ public class GmMemberController extends MskimRequestMapping {
 		if (mem != null) {
 			if (pass.equals(mem.getPass())) {
 				session.setAttribute("id", id);
+				session.setAttribute("trader", mem.getTrader());
 			} else {
 				msg = "비밀번호가 맞지 않습니다";
 				url = "gmLogin";

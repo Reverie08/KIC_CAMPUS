@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +32,7 @@
                 </tr>
                 <tr>
                     <td class="label">상품등록일</td>
-                    <td class="value">${prod.prodregdate}</td>
+                    <td class="value"><fmt:formatDate value="${prod.prodregdate}" pattern="yyyy-MM-dd"/></td>
                 </tr>
                 <tr>
                     <td class="label">카테고리</td>

@@ -32,14 +32,14 @@
 					 required>${prod.prodcontent }</textarea>
 			</div>
 			<div class="form-group">
-				<label for="category">카테고리</label> <select id="category"
-					name="category" required>
+				<label for="category">카테고리</label> 
+				<select id="category" name="category" required>
 					<option value="">카테고리를 선택하세요</option>
-					<option value="전자제품">전자제품</option>
-					<option value="패션">패션</option>
-					<option value="도서">도서</option>
-					<option value="스포츠">스포츠</option>
-					<option value="음식">음식</option>
+					<option value="전자제품" <c:if test="${prod.category == '전자제품'}">selected</c:if>>전자제품</option>
+					<option value="패션" <c:if test="${prod.category == '패션'}">selected</c:if>>패션</option>
+					<option value="도서" <c:if test="${prod.category == '도서'}">selected</c:if>>도서</option>
+					<option value="스포츠" <c:if test="${prod.category == '스포츠'}">selected</c:if>>스포츠</option>
+					<option value="음식" <c:if test="${prod.category == '음식'}">selected</c:if>>음식</option>
 				</select>
 			</div>
 			<div class="form-group">

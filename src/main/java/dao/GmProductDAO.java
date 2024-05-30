@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Timestamp;
 
-import model.GmBoard;
 import model.GmProduct;
 
 public class GmProductDAO {
@@ -61,7 +61,7 @@ public class GmProductDAO {
 				gp.setProdname(rs.getString("prodname"));
 				gp.setPrice(rs.getInt("price"));
 				gp.setFile2(rs.getString("file2"));
-				/* gp.setProdregdate(rs.getTimestamp("prodregdate")); */
+				gp.setProdregdate(rs.getTimestamp("prodregdate"));
 				li.add(gp);
 			}
 			return li;

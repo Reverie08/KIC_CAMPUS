@@ -32,7 +32,7 @@
 						href="${pageContext.request.contextPath}/member/gmMemberPassForm">비밀번호
 							수정</a></td>
 				</tr>
-				<tr><td>목적</td><td>${mem.trader==1?"소비":"판매"}</td><tr>
+				<tr><td>활동</td><td>${mem.trader==1?"소비":"판매"}</td><tr>
 				<tr>
 					<td>E-mail</td>
 					<td>${mem.email}</td>
