@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.naming.spi.DirStateFactory.Result;
 
+import model.Comment;
 import model.KicBoard;
 import model.KicMember;
 
@@ -58,15 +59,46 @@ public class KicBoardDAO {
 		return 0;
 
 	}
+	
+	public int insertComment(String comment, int boardnum) {
+		Connection conn = getConnection();
+		// 3. PreparedStatement
+		PreparedStatement pstmt = null;
+		String sql = "insert into boardcomment "
+				+ "values (boardcomseq.nextval,?,?,sysdate)";
+		// 4. mapping
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardnum);
+			pstmt.setString(2, comment);
+			// sql 실행
+			int num = pstmt.executeUpdate();
 
-	public List<KicBoard> boardList(String boardid) {
+			return num;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return 0;
+
+	}
+
+	public List<KicBoard> boardList(String boardid, int pageInt, int limit) {
 		Connection conn = getConnection();
 		PreparedStatement pstmt = null;
-		String sql = "select * from kicboard where boardid=? order by num desc";
+		String sql = " select * from ("
+				+ " select rownum rnum, a.* from ("
+				+ " select * from kicboard where boardid = ? "
+				+ " order by num desc) a) "
+				+ " where rnum between ? and ?";
 		List<KicBoard> li = new ArrayList<KicBoard>();
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, boardid);
+			pstmt.setInt(2, (pageInt-1)*limit+1);
+			pstmt.setInt(3, pageInt*limit);
+			/* pstmt.setInt(3, (pageInt-1)*limit+1+limit-1); */
+			//pageInt*limit-limit+limit+1-1 --> pageInt*limit
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
@@ -89,6 +121,32 @@ public class KicBoardDAO {
 		return null;
 	}
 	
+	public List<Comment> commentList(int boardnum) {
+		Connection conn = getConnection();
+		PreparedStatement pstmt = null;
+		String sql = " select * from boardcomment where num = ? order by regdate desc";
+		List<Comment> li = new ArrayList<>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardnum);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Comment c = new Comment();
+				c.setNum(rs.getInt("num"));
+				c.setSer(rs.getInt("ser"));
+				c.setContent(rs.getString("content"));
+				c.setRegdate(rs.getDate("regdate"));
+
+				li.add(c);
+			}
+			return li;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public int boardCount(String boardid) {
 		Connection conn = getConnection();
 		PreparedStatement pstmt = null;
@@ -97,6 +155,28 @@ public class KicBoardDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, boardid);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			} else {
+				return 0;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	
+	public int getCommentCount(int boardnum) {
+		Connection conn = getConnection();
+		PreparedStatement pstmt = null;
+		String sql = "select nvl(count(*),0) "
+				+ "from boardcomment where num = ?";
+		// 4. mapping
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardnum);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return rs.getInt(1);

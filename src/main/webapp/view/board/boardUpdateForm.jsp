@@ -52,7 +52,7 @@ function chkpass(f) {
 	<div class="container">
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
-				<h4 class="mb-3">게시물 수정</h4>
+				<h4 class="mb-3">${boardName }게시물 수정</h4>
 				<form class="validation-form" novalidate enctype="multipart/form-data"  
 				    action="boardUpdatePro"<%-- action="boardUpdatePro?num="${board.num }   --%> method="post" onsubmit="return chkpass(this)">
 				    <input type="hidden" name="num" value="${board.num }"> <!-- action 주석 부분처럼 하거나 이와 같이하거나 -->

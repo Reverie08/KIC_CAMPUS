@@ -56,13 +56,13 @@
 				</li>
 			</c:if>
 
-			<li class="nav-item"><a class="nav-link ${boardid eq '1' ?  'nav' : ' ' }"
+			<li class="nav-item"><a class="nav-link ${nav eq '1' ?  'nav' : ' ' }"
 				href="${pageContext.request.contextPath}/board/boardList?boardid=1">공지사항</a>
 			</li>
-			<li class="nav-item"><a class="nav-link ${boardid eq '2' ?  'nav' : ' ' }"
+			<li class="nav-item"><a class="nav-link ${nav eq '2' ?  'nav' : ' ' }"
 				href="${pageContext.request.contextPath}/board/boardList?boardid=2">자유게시판</a>
 			</li>
-			<li class="nav-item"><a class="nav-link ${boardid eq '3' ?  'nav' : ' ' }"
+			<li class="nav-item"><a class="nav-link ${nav eq '3' ?  'nav' : ' ' }"
 				href="${pageContext.request.contextPath}/board/boardList?boardid=3">Q&A</a>
 			</li>
 		</ul>

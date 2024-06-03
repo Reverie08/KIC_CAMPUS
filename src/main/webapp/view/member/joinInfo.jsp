@@ -9,10 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
-
-
-%>
 <div class="container">
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
