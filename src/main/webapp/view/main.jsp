@@ -215,8 +215,8 @@
             </ul>
          </nav>
          <div class="login-inquiry">
-            <a href="login.html">로그인</a>
-            <a href="#" class="inquiry-button" style="color: white;">도입문의</a>
+            <a href="${pageContext.request.contextPath}/member/joinok">로그인</a>
+            <a href="${pageContext.request.contextPath}/member/resume" class="inquiry-button" style="color: white;">도입문의</a>
          </div>
       </div>
    </header>

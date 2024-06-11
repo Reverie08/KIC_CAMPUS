@@ -138,7 +138,7 @@
                 <span id="number" class="invalid">숫자</span>
                 <span id="special" class="invalid">특수문자</span>
                 <span id="length" class="invalid">8자 이상</span>
-                <span id="no-personal-info" class="invalid">개인정보 미포함</span>
+                <!-- <span id="no-personal-info" class="invalid">개인정보 미포함</span> -->
             </div>
 
             <label for="confirm-password">비밀번호 확인</label>

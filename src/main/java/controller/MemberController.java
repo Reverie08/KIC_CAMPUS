@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.GtMemberDao;
+import dao.MemberDAO;
 import kic.mskim.MskimRequestMapping;
 import kic.mskim.RequestMapping;
-import model.GtMember;
+import model.Member;
 
 @WebServlet("/member/*")
 public class MemberController extends MskimRequestMapping {
@@ -23,9 +23,18 @@ public class MemberController extends MskimRequestMapping {
 		super.service(request, response); 
 	}
 	
+	@RequestMapping("main")
+	public String index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		return "/view/main.jsp";
+	}
+	
+	@RequestMapping("resume")
+	public String resume(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		return "/view/resume.jsp";
+	}
+	
 	@RequestMapping("joinok")
 	public String joinOk(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		return "/view/member/joinok.jsp";
 	}
 	
@@ -56,8 +65,8 @@ public class MemberController extends MskimRequestMapping {
 		String email = request.getParameter("email");
 		String birth = request.getParameter("birth"); 
 		String address = request.getParameter("address"); 
-		GtMemberDao  dao = new GtMemberDao(); 
-		GtMember gt = new GtMember();  //DTO bean
+		MemberDAO  dao = new MemberDAO(); 
+		Member gt = new Member();  //DTO bean
 		gt.setUserid(id);
 		gt.setPw(pw);
 		gt.setName(name);
