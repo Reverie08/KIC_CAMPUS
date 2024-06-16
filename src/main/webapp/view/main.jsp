@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> 
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -214,10 +215,20 @@
                <li><a href="#">정부지원 바우처</a></li>
             </ul>
          </nav>
+         <c:if test="${sessionScope.bid==null }">
          <div class="login-inquiry">
-            <a href="${pageContext.request.contextPath}/member/joinok">로그인</a>
-            <a href="${pageContext.request.contextPath}/member/resume" class="inquiry-button" style="color: white;">도입문의</a>
+            <a href="${pageContext.request.contextPath}/business/businesslogin">로그인</a>
+            <a href="${pageContext.request.contextPath}/business/businesslist" class="inquiry-button" style="color: white;">기업리스트</a>
          </div>
+         </c:if>
+         
+          <c:if test="${sessionScope.bid!=null }">
+         <div class="login-inquiry">
+            <a href="${pageContext.request.contextPath}/business/businessinfo?bid=${bid}">${business.bname}님</a>
+            <a href="${pageContext.request.contextPath}/business/businesslogout">로그아웃</a>
+            <a href="${pageContext.request.contextPath}/business/businesslist" class="inquiry-button" style="color: white;">기업리스트</a>
+         </div>
+         </c:if>
       </div>
    </header>
 

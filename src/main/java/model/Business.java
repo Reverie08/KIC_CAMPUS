@@ -1,7 +1,7 @@
 package model;
 
 public class Business {
-	int bid;
+	String bid;
 	String bpw;
 	String bname;
 	String address;
@@ -16,11 +16,11 @@ public class Business {
 	String homepage;
 	String content;
 
-	public int getBid() {
+	public String getBid() {
 		return bid;
 	}
 
-	public void setBid(int bid) {
+	public void setBid(String bid) {
 		this.bid = bid;
 	}
 

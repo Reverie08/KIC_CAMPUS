@@ -14,6 +14,7 @@
 		<typeAlias type="model.Resume" alias="resume"/>
 		<typeAlias type="model.Anno" alias="anno"/>
 		<typeAlias type="model.Skill" alias="skill"/>
+		<typeAlias type="model.Search" alias="search"/>
 	</typeAliases>
 	
 	<environments default="oracle">
