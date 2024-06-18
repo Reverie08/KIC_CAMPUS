@@ -88,16 +88,16 @@ body {
 			</div>
 			<c:if test="${sessionScope.memberId != null }">
 				<div class="login-inquiry mt-auto">
-					<a href="${pageContext.request.contextPath}/member/memberlogout"
+					<a href="${pageContext.request.contextPath}/member/member-logout"
 						method="post">
 						<button type="submit" class="inquiry-button">개인 로그아웃</button>
 					</a> 
 					
-					<a href="${pageContext.request.contextPath}/member/memberinfo"
+					<a href="${pageContext.request.contextPath}/member/member-info"
 						method="post">
 						<button type="submit" class="inquiry-button">내 정보</button>
 					</a>
-						<a href="${pageContext.request.contextPath}/resume/resumeRegisterForm"
+						<a href="${pageContext.request.contextPath}/resume/resume-register-form"
 						method="post">
 						<button type="submit" class="inquiry-button">이력서 작성하러 가기</button>
 					</a> 
@@ -181,35 +181,35 @@ body {
 				<!-- 오른쪽에 나머지 정보 -->
 				<div class="w-2/3">
 					<h2 class="text-lg font-semibold mb-4">개인 정보</h2>
-					<form action="memberupdatepro" method="post"
+					<form action="member-update-pro" method="post"
 						enctype="multipart/form-data">
 						<div class="mb-4">
 							<label for="name"
 								class="block text-sm font-medium text-gray-700">이름</label> <input
 								type="text" name="name" id="name"
 								class="mt-1 p-2 border border-gray-300 rounded w-full"
-								value="${mem.name}" readonly>
+								value="${member.name}" readonly>
 						</div>
 						<div class="mb-4">
 							<label for="email"
 								class="block text-sm font-medium text-gray-700">이메일</label> <input
 								type="email" name="email" id="email"
 								class="mt-1 p-2 border border-gray-300 rounded w-full"
-								value="${mem.email}" readonly>
+								value="${member.email}" readonly>
 						</div>
 						<div class="mb-4">
 							<label for="phone"
 								class="block text-sm font-medium text-gray-700">전화번호</label> <input
 								type="tel" name="phone" id="phone"
 								class="mt-1 p-2 border border-gray-300 rounded w-full"
-								value="${mem.phone}" readonly>
+								value="${member.phone}" readonly>
 						</div>
 						<div class="mb-4">
 							<label for="birth"
 								class="block text-sm font-medium text-gray-700">생년월일</label> <input
 								type="text" name="birth" id="birth"
 								class="mt-1 p-2 border border-gray-300 rounded w-full"
-								value="${mem.birth}" readonly>
+								value="${member.birth}" readonly>
 						</div>
 					</form>
 				</div>
@@ -244,7 +244,7 @@ body {
 									<div class="flex space-x-2">
 										<button class="text-blue-500">수정</button>
 										<button class="text-blue-500">삭제</button>
-										<a href="${pageContext.request.contextPath}/resume/resumeInfo?resumeId=5">이력서 보기</a>
+										<a href="${pageContext.request.contextPath}/resume/resume-info?resumeid=5">이력서 보기</a>
 									</div>
 								</td>
 							</tr>

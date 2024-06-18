@@ -33,51 +33,11 @@ public class Resume {
 	Edu edu;
 
 	String memberId;
-	String bid;
+	String businessId;
 	int columnStage = 0; // 기본값 0
 	int evaluStage = 0; // 기본값 0
 	int resumeScore = 0; // 기본값 0
 	int annoId = 0; // 기본값 0
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getBirth() {
-		return birth;
-	}
-
-	public void setBirth(String birth) {
-		this.birth = birth;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getRegisterDate() {
-		return registerDate;
-	}
-
-	public void setRegisterDate(String registerDate) {
-		this.registerDate = registerDate;
-	}
 
 	public int getResumeId() {
 		return resumeId;
@@ -135,6 +95,46 @@ public class Resume {
 		this.profileImage = profileImage;
 	}
 
+	public String getRegisterDate() {
+		return registerDate;
+	}
+
+	public void setRegisterDate(String registerDate) {
+		this.registerDate = registerDate;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public Career getCareer() {
 		return career;
 	}
@@ -175,12 +175,12 @@ public class Resume {
 		this.memberId = memberId;
 	}
 
-	public String getBid() {
-		return bid;
+	public String getBusinessId() {
+		return businessId;
 	}
 
-	public void setBid(String bid) {
-		this.bid = bid;
+	public void setBusinessId(String businessId) {
+		this.businessId = businessId;
 	}
 
 	public int getColumnStage() {
@@ -222,8 +222,8 @@ public class Resume {
 				+ ", profileImage=" + profileImage + ", registerDate=" + registerDate + ", name=" + name + ", birth="
 				+ birth + ", phone=" + phone + ", email=" + email + ", registdate=" + registdate + ", career=" + career
 				+ ", project=" + project + ", portfolio=" + portfolio + ", edu=" + edu + ", memberId=" + memberId
-				+ ", bid=" + bid + ", columnStage=" + columnStage + ", evaluStage=" + evaluStage + ", resumeScore="
-				+ resumeScore + ", annoId=" + annoId + "]";
+				+ ", businessId=" + businessId + ", columnStage=" + columnStage + ", evaluStage=" + evaluStage
+				+ ", resumeScore=" + resumeScore + ", annoId=" + annoId + "]";
 	}
 
 }

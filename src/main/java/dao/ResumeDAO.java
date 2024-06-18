@@ -65,23 +65,21 @@ public class ResumeDAO {
 	
 	
 	// 이력서 여러 개 리스트로 가져오기, 기업에 들어온 이력서 목록 가져오기 getBusinessReumeList
-	public List<Resume> getBusinessReumeList(int bid){
-		List<Resume> businessResumeList = session.getMapper(ResumeMapper.class).getBusinessReumeList(bid);
+	public List<Resume> getBusinessReumeList(int businessId){
+		List<Resume> businessResumeList = session.getMapper(ResumeMapper.class).getBusinessReumeList(businessId);
 		return businessResumeList;
 	}
 	
 	
 	// 이력서 여러 개 리스트로 가져오기, 공고에 지원한 이력서 목록 가져오기 getAnnoReumeList
-	public List<Resume> getAnnoReumeList(int annoid){
-		List<Resume> annoResumeList = session.getMapper(ResumeMapper.class).getAnnoReumeList(annoid);
+	public List<Resume> getAnnoReumeList(int annoId){
+		List<Resume> annoResumeList = session.getMapper(ResumeMapper.class).getAnnoReumeList(annoId);
 		return annoResumeList;
 	}
 	
 	public int selectResumeId() {
 		return session.getMapper(ResumeMapper.class).selectResumeId();
 	}
-	
-	
 	
 	
 	// 이력서 작성하기 insertResume
@@ -129,8 +127,8 @@ public class ResumeDAO {
 	
 	
 	// 이력서 삭제하기 deleteResume
-	public int deleteResume(int resumeid) {
-		int num = session.getMapper(ResumeMapper.class).deleteResume(resumeid);
+	public int deleteResume(int resumeId) {
+		int num = session.getMapper(ResumeMapper.class).deleteResume(resumeId);
 		return num;
 	}
 	

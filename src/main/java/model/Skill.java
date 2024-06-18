@@ -8,7 +8,7 @@ public class Skill {
 	String css;
 	String javascript;
 	String react;
-	String springframeworl;
+	String springframework;
 	String springboot;
 	String python;
 	String typescript;
@@ -20,6 +20,35 @@ public class Skill {
 	int resumeId;
 	int annoId;
 
+	// 모든 필드를 초기화하는 생성자 추가
+	public Skill(int skillId, String java, String jsp, String html, String css, String javascript, String react,
+			String springframework, String springboot, String python, String typescript, String express, String oracle,
+			String mysql, String mongodb, String memberId, int resumeId, int annoId) {
+		this.skillId = skillId;
+		this.java = java;
+		this.jsp = jsp;
+		this.html = html;
+		this.css = css;
+		this.javascript = javascript;
+		this.react = react;
+		this.springframework = springframework;
+		this.springboot = springboot;
+		this.python = python;
+		this.typescript = typescript;
+		this.express = express;
+		this.oracle = oracle;
+		this.mysql = mysql;
+		this.mongodb = mongodb;
+		this.memberId = memberId;
+		this.resumeId = resumeId;
+		this.annoId = annoId;
+	}
+
+	// 기본 생성자
+	public Skill() {
+	}
+
+	// Getter와 Setter 메서드
 	public int getSkillId() {
 		return skillId;
 	}
@@ -76,12 +105,12 @@ public class Skill {
 		this.react = react;
 	}
 
-	public String getSpringframeworl() {
-		return springframeworl;
+	public String getSpringframework() {
+		return springframework;
 	}
 
-	public void setSpringframeworl(String springframeworl) {
-		this.springframeworl = springframeworl;
+	public void setSpringframework(String springframework) {
+		this.springframework = springframework;
 	}
 
 	public String getSpringboot() {
@@ -167,7 +196,7 @@ public class Skill {
 	@Override
 	public String toString() {
 		return "Skill [skillId=" + skillId + ", java=" + java + ", jsp=" + jsp + ", html=" + html + ", css=" + css
-				+ ", javascript=" + javascript + ", react=" + react + ", springframeworl=" + springframeworl
+				+ ", javascript=" + javascript + ", react=" + react + ", springframework=" + springframework
 				+ ", springboot=" + springboot + ", python=" + python + ", typescript=" + typescript + ", express="
 				+ express + ", oracle=" + oracle + ", mysql=" + mysql + ", mongodb=" + mongodb + ", memberId="
 				+ memberId + ", resumeId=" + resumeId + ", annoId=" + annoId + "]";

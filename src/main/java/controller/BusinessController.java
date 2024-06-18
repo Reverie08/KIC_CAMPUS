@@ -30,18 +30,18 @@ public class BusinessController extends MskimRequestMapping {
 	}
 	
 	// 메인
-	@RequestMapping("main")
+	@RequestMapping("business-main")
 	public String business(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String bId = (String) session.getAttribute("bId");
-		Business business = businessDao.getBusiness(bId);
+		String businessId = (String) session.getAttribute("businessId");
+		Business business = businessDao.getBusiness(businessId);
 		request.setAttribute("business", business);
 
-		return "/view/main.jsp";
+		return "/view/business/businessMain.jsp";
 	}
 	
 	// 기업 회원가입폼
-	@RequestMapping("businessjoin")
+	@RequestMapping("business-join")
 	public String businessJoin(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		return "/view/business/businessJoin.jsp";
@@ -49,13 +49,13 @@ public class BusinessController extends MskimRequestMapping {
 
 	
 	// 기업 회원 가입 처리 
-	@RequestMapping("businessjoinpro")
+	@RequestMapping("business-join-pro")
 	public String businessJoinPro(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		String bId = request.getParameter("bId");
-		String bpw = request.getParameter("bpw");
-		String bname = request.getParameter("bname");
+		String businessId = request.getParameter("businessId");
+		String businessPw = request.getParameter("businessPw");
+		String businessName = request.getParameter("businessName");
 		String address = request.getParameter("address");
 		int salary = Integer.parseInt(request.getParameter("salary"));
 		String welfare = request.getParameter("welfare");
@@ -71,9 +71,9 @@ public class BusinessController extends MskimRequestMapping {
 		content = content.replace("\n", "<br>");
 
 		Business business = new Business();
-		business.setbId(bId);
-		business.setbPw(bpw);
-		business.setbName(bname);
+		business.setBusinessId(businessId);
+		business.setBusinessPw(businessPw);
+		business.setBusinessName(businessName);
 		business.setAddress(address);
 		business.setSalary(salary);
 		business.setWelfare(welfare);
@@ -86,17 +86,17 @@ public class BusinessController extends MskimRequestMapping {
 		business.setHomepage(homepage);
 		business.setContent(content);
 		System.out.println(business);
-		int bnum = businessDao.insertBusiness(business);
+		int businessNum = businessDao.insertBusiness(business);
 
 		String msg = "";
 		String url = "";
 
-		if (bnum > 0) {
-			msg = bname + "님의 회원가입이 완료 되었습니다";
-			url = "businesslogin";
+		if (businessNum > 0) {
+			msg = businessName + "님의 회원가입이 완료 되었습니다";
+			url = "business-login";
 		} else {
 			msg = "회원가입이 실패 하였습니다";
-			url = "businessjoin";
+			url = "business-join";
 		}
 
 		request.setAttribute("msg", msg);
@@ -106,7 +106,7 @@ public class BusinessController extends MskimRequestMapping {
 	}
 
 	// 기업 로그인 폼
-	@RequestMapping("businesslogin")
+	@RequestMapping("business-login")
 	public String businessLogin(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -115,28 +115,28 @@ public class BusinessController extends MskimRequestMapping {
 
 	
 	// 기업 로그인 처리
-	@RequestMapping("businessloginpro")
+	@RequestMapping("business-login-pro")
 	public String businessLoginPro(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		String bId = request.getParameter("bId");
-		String bpw = request.getParameter("bpw");
+		String businessId = request.getParameter("businessId");
+		String businessPw = request.getParameter("businessPw");
 
 		// Connection 객체
-		Business business = businessDao.getBusiness(bId);
+		Business business = businessDao.getBusiness(businessId);
 		String msg = "";
-		String url = "main";
+		String url = "business-main";
 		if (business != null) {
-			if (bpw.equals(business.getbPw())) {
-				session.setAttribute("bId", bId);
-				msg = business.getbName() + "님이 로그인 하셨습니다";
+			if (businessPw.equals(business.getBusinessPw())) {
+				session.setAttribute("businessId", businessId);
+				msg = business.getBusinessName() + "님이 로그인 하셨습니다";
 			} else {
 				msg = "비밀번호가 맞지 않습니다";
-				url = "businesslogin";
+				url = "business-login";
 			}
 		} else {
 			msg = "사업자번호를 확인 하세요";
-			url = "businesslogin";
+			url = "business-login";
 		}
 
 		request.setAttribute("msg", msg);
@@ -146,17 +146,17 @@ public class BusinessController extends MskimRequestMapping {
 	}
 
 	// 기업 로그아웃
-	@RequestMapping("businesslogout")
+	@RequestMapping("business-logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		session.invalidate();
 		request.setAttribute("msg", "로그아웃 되었습니다");
-		request.setAttribute("url", "main");
+		request.setAttribute("url", "business-main");
 		return "/view/alert.jsp";
 	}
 
 	// 기업 리스트
-	@RequestMapping("businesslist")
+	@RequestMapping("business-list")
 	public String businessList(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		List<Business> businessList = businessDao.businessList();
@@ -166,23 +166,23 @@ public class BusinessController extends MskimRequestMapping {
 	}
 
 	// 기업 정보
-	@RequestMapping("businessinfo")
+	@RequestMapping("business-info")
 	public String businessInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		String bId = (String)session.getAttribute("bId");
-		String bId = request.getParameter("bId");
-		Business business = businessDao.getBusiness(bId);
+		String businessId = (String)session.getAttribute("businessId");
+//		String businessId = session.getParameter("businessId");
+		Business business = businessDao.getBusiness(businessId);
 		request.setAttribute("business", business);
 
 		return "/view/business/businessInfo.jsp";
 	}
 
 	// 기업 정보 수정 폼
-	@RequestMapping("businessupdate")
+	@RequestMapping("business-update")
 	public String businessUpdate(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String bId = (String) session.getAttribute("bId");
-		Business business = businessDao.getBusiness(bId);
+		String businessId = (String) session.getAttribute("businessId");
+		Business business = businessDao.getBusiness(businessId);
 		if (business != null) {
 			String content = business.getContent();
 			content = content.replace("<br>", "\n");
@@ -193,13 +193,13 @@ public class BusinessController extends MskimRequestMapping {
 	}
 
 	// 기업 정보 수정 처리
-	@RequestMapping("businessupdatepro")
+	@RequestMapping("business-update-pro")
 	public String businessUpdatePro(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		String bId = (String) session.getAttribute("bId");
-		String bPw = request.getParameter("bPw");
-		String bName = request.getParameter("bName");
+		String businessId = (String) session.getAttribute("businessId");
+		String businessPw = request.getParameter("businessPw");
+		String businessName = request.getParameter("businessName");
 		String address = request.getParameter("address");
 		int salary = Integer.parseInt(request.getParameter("salary"));
 		String welfare = request.getParameter("welfare");
@@ -214,13 +214,16 @@ public class BusinessController extends MskimRequestMapping {
 		
 		content = content.replace("\n", "<br>");
 
-		Business businessDb = businessDao.getBusiness(bId);
+		Business businessDb = businessDao.getBusiness(businessId);
 		Business business = new Business();
-		business.setbId(bId);
-		business.setbPw(bPw);
-		business.setbName(bName);
+		business.setBusinessId(businessId);
+		business.setBusinessPw(businessPw);
+		business.setBusinessName(businessName);
 		business.setAddress(address);
 		business.setSalary(salary);
+		business.setWelfare(welfare);
+		business.setCeo(ceo);
+		business.setSales(sales);
 		business.setEmployees(employees);
 		business.setType(type);
 		business.setIndustry(industry);
@@ -228,14 +231,16 @@ public class BusinessController extends MskimRequestMapping {
 		business.setHomepage(homepage);
 		business.setContent(content);
 		String msg = "";
-		String url = "businessupdate?bid=" + bId;
+		String url = "business-update?businessid=" + businessId;
 
 		if (businessDb != null) {
-			if (businessDb.getbPw().equals(bPw)) {
+			if (businessDb.getBusinessPw().equals(businessPw)) {
 				msg = "수정하였습니다";
 				businessDao.updateBusiness(business);
-				url = "businessinfo?bid=" + bId;
+				url = "business-info?businessid=" + businessId;
 			} else {
+				System.out.println(businessDb.getBusinessPw());
+				System.out.println(businessPw);
 				msg = "비밀번호를 확인해주세요";
 			}
 		} else {
@@ -248,12 +253,12 @@ public class BusinessController extends MskimRequestMapping {
 	}
 
 	// 기업 탈퇴 폼
-	@RequestMapping("businessdelete")
+	@RequestMapping("business-delete")
 	public String businessDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String bId = (String) session.getAttribute("bId");
-		Business business = businessDao.getBusiness(bId);
+		String businessId = (String) session.getAttribute("businessId");
+		Business business = businessDao.getBusiness(businessId);
 
 		request.setAttribute("business", business);
 
@@ -261,23 +266,23 @@ public class BusinessController extends MskimRequestMapping {
 	}
 
 	// 기업 탈퇴 처리
-	@RequestMapping("businessdeletepro")
+	@RequestMapping("business-delete-pro")
 	public String businessDeletePro(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		String bId = (String) session.getAttribute("bId");
-		String bPw = request.getParameter("bPw");
-		Business businessDb = businessDao.getBusiness(bId);
+		String businessId = (String) session.getAttribute("businessId");
+		String businessPw = request.getParameter("businessPw");
+		Business businessDb = businessDao.getBusiness(businessId);
 
 		String msg = "";
-		String url = "businessdelete";
+		String url = "business-delete";
 
 		if (businessDb != null) {
-			if (businessDb.getbPw().equals(bPw)) {
+			if (businessDb.getBusinessPw().equals(businessPw)) {
 				msg = "탈퇴 하였습니다.";
 				session.invalidate();
-				businessDao.deleteBusiness(bId);
-				url = "businesslogin";
+				businessDao.deleteBusiness(businessId);
+				url = "business-login";
 			} else {
 				msg = "비밀번호가 틀렸습니다.";
 			}
@@ -292,7 +297,7 @@ public class BusinessController extends MskimRequestMapping {
 	}
 
 	// 기업 검색
-	@RequestMapping("searchbusinesslist")
+	@RequestMapping("search-business-list")
 	public String searchBusinessList(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");

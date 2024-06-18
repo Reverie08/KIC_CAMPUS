@@ -117,16 +117,16 @@ body {
 			</div>
 		</div>
 		<div class="info-group">
-			<label for="bid">사업자번호</label>
-			<p>${business.bid}</p>
+			<label for="businessId">사업자번호</label>
+			<p>${business.businessId}</p>
 		</div>
 		<div class="info-group">
-			<label for="bpw">비밀번호</label>
-			<p>${business.bpw}</p>
+			<label for="businessPw">비밀번호</label>
+			<p>${business.businessPw}</p>
 		</div>
 		<div class="info-group">
-			<label for="bname">회사명</label>
-			<p>${business.bname}</p>
+			<label for="businessName">회사명</label>
+			<p>${business.businessName}</p>
 		</div>
 		<div class="info-group">
 			<label for="address">주소</label>
@@ -160,16 +160,16 @@ body {
 			<label for="content">설명</label>
 			<p>${business.content}</p>
 		</div>
-		<c:if test="${sessionScope.bid eq business.bid}">
+		<c:if test="${sessionScope.businessId eq business.businessId}">
 			<div class="button-group">
-				<a href="${pageContext.request.contextPath}/business/businessupdate"><button>수정하기</button></a>
-				<a href="${pageContext.request.contextPath}/business/main"><button>홈으로</button></a>
-				<a href="${pageContext.request.contextPath}/business/businessdelete"><button class="delete">탈퇴하기</button></a>
+				<a href="${pageContext.request.contextPath}/business/business-update"><button>수정하기</button></a>
+				<a href="${pageContext.request.contextPath}/business/business-main"><button>홈으로</button></a>
+				<a href="${pageContext.request.contextPath}/business/business-delete"><button class="delete">탈퇴하기</button></a>
 			</div>
 		</c:if>
-		<c:if test="${sessionScope.bid ne business.bid}">
+		<c:if test="${sessionScope.businessId ne business.businessId}">
 			<div class="button-group">
-				<a href="${pageContext.request.contextPath}/business/main"><button>홈으로</button></a>
+				<a href="${pageContext.request.contextPath}/business/business-main"><button>홈으로</button></a>
 			</div>
 		</c:if>
 	</div>

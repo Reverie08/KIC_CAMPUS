@@ -36,14 +36,14 @@
     <h2 class="text-2xl font-bold mb-4">Anno Info</h2>
     
     <div class="info">
-      <div>annoid:</div>
-      <div>${anno.annoid}</div>
+      <div>annoId:</div>
+      <div>${anno.annoId}</div>
       
       <div>annodate:</div>
       <div>${anno.annoDate}</div>
       
       <div>기업명:</div>
-      <div>${anno.bname}</div>
+      <div>${anno.businessName}</div>
       
       <div>복지:</div>
       <div>${anno.welfare}</div>
@@ -85,15 +85,15 @@
       <div>${anno.annoContent}</div>
       
       <div>기업 ID:</div>
-      <div>${anno.bid}</div>
+      <div>${anno.businessId}</div>
       
       <div>스킬 ID:</div>
-      <div>${anno.skillid}</div>
+      <div>${anno.skillId}</div>
     </div>
     
     <div class="actions">
-      <a href="${pageContext.request.contextPath}/member/membermain?annoid=${anno.annoid}" class="bg-blue-500 text-white px-4 py-2 rounded">지원하기</a>
-      <a href="${pageContext.request.contextPath}/anno/UserAnnoList" class="bg-gray-500 text-white px-4 py-2 rounded">목록보기</a>
+      <a href="${pageContext.request.contextPath}/member/member-main?annoid=${anno.annoId}" class="bg-blue-500 text-white px-4 py-2 rounded">지원하기</a>
+      <a href="${pageContext.request.contextPath}/anno/user-anno-list" class="bg-gray-500 text-white px-4 py-2 rounded">목록보기</a>
     </div>
   </div>
 </body>

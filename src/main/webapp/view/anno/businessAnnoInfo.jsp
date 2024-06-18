@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,8 +62,8 @@
       <aside class="bg-white rounded-lg shadow p-4 fixed-sidebar">
         <h2 class="text-lg font-bold mb-4">Sidebar</h2>
         <ul>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/businessannoinfo?annoid=${anno.annoid}" class="text-blue-500"><b>공고내용</b></a></li>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/businessannomanagement?annoid=${anno.annoid}" class="text-blue-500">이력서 관리</a></li>
+          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/BusinessAnnoInfo?annoid=${anno.annoid}" class="text-blue-500"><b>공고내용</b></a></li>
+          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/BusinessAnnoManagement?annoid=${anno.annoid}" class="text-blue-500">이력서 관리</a></li>
           <li class="mb-2"><a href="#" class="text-blue-500">미정</a></li>
         </ul>
       </aside>
@@ -73,14 +74,14 @@
           <h2 class="text-2xl font-bold mb-4">Anno Info</h2>
           
           <div class="info">
-            <div>annoid:</div>
+            <div>annoId:</div>
             <div>${anno.annoId}</div>
             
-            <div>annodate:</div>
+            <div>annoDate:</div>
             <div>${anno.annoDate}</div>
             
             <div>기업명:</div>
-            <div>${anno.bName}</div>
+            <div>${anno.businessName}</div>
             
             <div>복지:</div>
             <div>${anno.welfare}</div>
@@ -122,19 +123,67 @@
             <div>${anno.annoContent}</div>
             
             <div>기업 ID:</div>
-            <div>${anno.bId}</div>
-            
-            <div>스킬 ID:</div>
-            <div>${anno.skillId}</div>
+            <div>${anno.businessId}</div>
+          </div>
+
+          <!-- Skill Selection -->
+          <div class="form-group">
+            <label for="skills" class="form-label">스킬:</label>
+            <div id="skills">
+              <c:forEach var="skill" items="${skills}">
+                <c:if test="${skill.java != null && !skill.java.isEmpty()}">
+                  <div class="skill-button" data-skillname="java">${skill.java}</div>
+                </c:if>
+                <c:if test="${skill.jsp != null && !skill.jsp.isEmpty()}">
+                  <div class="skill-button" data-skillname="jsp">${skill.jsp}</div>
+                </c:if>
+                <c:if test="${skill.html != null && !skill.html.isEmpty()}">
+                  <div class="skill-button" data-skillname="html">${skill.html}</div>
+                </c:if>
+                <c:if test="${skill.css != null && !skill.css.isEmpty()}">
+                  <div class="skill-button" data-skillname="css">${skill.css}</div>
+                </c:if>
+                <c:if test="${skill.javascript != null && !skill.javascript.isEmpty()}">
+                  <div class="skill-button" data-skillname="javascript">${skill.javascript}</div>
+                </c:if>
+                <c:if test="${skill.react != null && !skill.react.isEmpty()}">
+                  <div class="skill-button" data-skillname="react">${skill.react}</div>
+                </c:if>
+                <c:if test="${skill.springframework != null && !skill.springframework.isEmpty()}">
+                  <div class="skill-button" data-skillname="springframework">${skill.springframework}</div>
+                </c:if>
+                <c:if test="${skill.springboot != null && !skill.springboot.isEmpty()}">
+                  <div class="skill-button" data-skillname="springboot">${skill.springboot}</div>
+                </c:if>
+                <c:if test="${skill.python != null && !skill.python.isEmpty()}">
+                  <div class="skill-button" data-skillname="python">${skill.python}</div>
+                </c:if>
+                <c:if test="${skill.typescript != null && !skill.typescript.isEmpty()}">
+                  <div class="skill-button" data-skillname="typescript">${skill.typescript}</div>
+                </c:if>
+                <c:if test="${skill.express != null && !skill.express.isEmpty()}">
+                  <div class="skill-button" data-skillname="express">${skill.express}</div>
+                </c:if>
+                <c:if test="${skill.oracle != null && !skill.oracle.isEmpty()}">
+                  <div class="skill-button" data-skillname="oracle">${skill.oracle}</div>
+                </c:if>
+                <c:if test="${skill.mysql != null && !skill.mysql.isEmpty()}">
+                  <div class="skill-button" data-skillname="mysql">${skill.mysql}</div>
+                </c:if>
+                <c:if test="${skill.mongodb != null && !skill.mongodb.isEmpty()}">
+                  <div class="skill-button" data-skillname="mongodb">${skill.mongodb}</div>
+                </c:if>
+              </c:forEach>
+            </div>
           </div>
           
           <div class="actions">
-            <a href="${pageContext.request.contextPath}/anno/businessannoupdateform?annoid=${anno.annoId}" class="bg-blue-500 text-white px-4 py-2 rounded">공고수정</a>
-            <form action="AnnoDeletePro" method="post" onsubmit="return removeCheck();" class="btn">
+            <a href="${pageContext.request.contextPath}/anno/business-anno-update-form?annoid=${anno.annoId}" class="bg-blue-500 text-white px-4 py-2 rounded">공고수정</a>
+            <form action="anno-delete-pro" method="post" onsubmit="return removeCheck();" class="btn">
               <input type="hidden" name="annoId" value="${anno.annoId}">
               <input type="submit" value="공고삭제" class="bg-red-500 text-white px-4 py-2 rounded btn">
             </form>
-            <a href="${pageContext.request.contextPath}/anno/businessannolist" class="bg-gray-500 text-white px-4 py-2 rounded">목록보기</a>
+            <a href="${pageContext.request.contextPath}/anno/business-anno-list" class="bg-gray-500 text-white px-4 py-2 rounded">목록보기</a>
           </div>
         </div>
       </div>

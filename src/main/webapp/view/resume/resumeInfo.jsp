@@ -76,7 +76,7 @@
 </head>
 <body class="bg-gray-100" >
   <div class="container mx-auto p-6 bg-white shadow-md rounded-lg mt-10 container-fixed " style="max-width: 1000px;">
-    <form method="post" name="resumeForm" action="insertResume" enctype="multipart/form-data">
+    <form method="post" name="resumeForm" action="insert-resume" enctype="multipart/form-data">
         <header class="text-center mb-6">
             <input name="resumeTitle" value="${resume.resumeTitle}" class="text-2xl font-bold"  style="width: 70%; height: 40px; text-align: center;"  type="text" placeholder="이력서 제목을 입력해주세요">
             </header>

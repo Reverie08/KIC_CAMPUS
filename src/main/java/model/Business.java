@@ -1,9 +1,9 @@
 package model;
 
 public class Business {
-	String bId;
-	String bPw;
-	String bName;
+	String businessId;
+	String businessPw;
+	String businessName;
 	String address;
 	int salary;
 	String welfare;
@@ -16,28 +16,28 @@ public class Business {
 	String homepage;
 	String content;
 
-	public String getbId() {
-		return bId;
+	public String getBusinessId() {
+		return businessId;
 	}
 
-	public void setbId(String bId) {
-		this.bId = bId;
+	public void setBusinessId(String businessId) {
+		this.businessId = businessId;
 	}
 
-	public String getbPw() {
-		return bPw;
+	public String getBusinessPw() {
+		return businessPw;
 	}
 
-	public void setbPw(String bPw) {
-		this.bPw = bPw;
+	public void setBusinessPw(String businessPw) {
+		this.businessPw = businessPw;
 	}
 
-	public String getbName() {
-		return bName;
+	public String getBusinessName() {
+		return businessName;
 	}
 
-	public void setbName(String bName) {
-		this.bName = bName;
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
 	}
 
 	public String getAddress() {
@@ -130,10 +130,10 @@ public class Business {
 
 	@Override
 	public String toString() {
-		return "Business [bId=" + bId + ", bPw=" + bPw + ", bName=" + bName + ", address=" + address + ", salary="
-				+ salary + ", welfare=" + welfare + ", ceo=" + ceo + ", sales=" + sales + ", employees=" + employees
-				+ ", type=" + type + ", industry=" + industry + ", detailIndustry=" + detailIndustry + ", homepage="
-				+ homepage + ", content=" + content + "]";
+		return "Business [businessId=" + businessId + ", businessPw=" + businessPw + ", businessName=" + businessName
+				+ ", address=" + address + ", salary=" + salary + ", welfare=" + welfare + ", ceo=" + ceo + ", sales="
+				+ sales + ", employees=" + employees + ", type=" + type + ", industry=" + industry + ", detailIndustry="
+				+ detailIndustry + ", homepage=" + homepage + ", content=" + content + "]";
 	}
 
 }

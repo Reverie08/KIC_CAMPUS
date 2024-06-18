@@ -127,28 +127,28 @@ body {
 </head>
 <body>
 	<div class="container">
-		<form action="searchbusinesslist" method="post" novalidate>
+		<form action="search-business-list" method="post" novalidate>
 			<div class="search-bar">
 				<select name="part">
-					<option value="bname">기업명</option>
+					<option value="businessName">기업명</option>
 					<option value="industry">산업</option>
 					<option value="detailIndustry">세부 산업</option>
 				</select> <input type="text" name="searchData" placeholder="기업명을 입력해주세요."
 					id="search-input">
 				<button type="submit" id="search-button">검색</button>
 				<a class="btn-home"
-					href="${pageContext.request.contextPath}/business/main">홈</a>
+					href="${pageContext.request.contextPath}/business/business-main">홈</a>
 			</div>
 		</form>
 		<div class="card-container">
 			<c:forEach var="business" items="${businessList}">
-				<form action="businesslist" method="post" novalidate>
+				<form action="business-list" method="post" novalidate>
 					<a
-						href="${pageContext.request.contextPath}/business/businessinfo?bid=${business.bid}">
-						<input type="hidden" name="bid" value="${business.bid }">
+						href="${pageContext.request.contextPath}/business/business-info?businessid=${business.businessId}">
+						<input type="hidden" name="bid" value="${business.businessId }">
 						<div class="card">
 							<div class="card-body">
-								<h3>${business.bname}</h3>
+								<h3>${business.businessName}</h3>
 								<p>${business.industry}</p>
 								<p>${business.detailIndustry}</p>
 							</div>

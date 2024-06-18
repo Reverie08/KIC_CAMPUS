@@ -85,38 +85,38 @@ body {
 	<div class="container">
 		<div class="title">회원정보</div>
 		<form
-			action="${pageContext.request.contextPath}/member/memberupdatepro"
+			action="${pageContext.request.contextPath}/member/member-update-pro"
 			method="post">
 			<div class="info-group">
-				<label for="id">사용자 아이디</label> <input type="text" id="memberId"
-					name="memberId" value="${mem.memberId}" readonly>
+				<label for="memberId">사용자 아이디</label> <input type="text" id="memberId"
+					name="memberId" value="${member.memberId}" readonly>
 			</div>
 			<div class="info-group">
-				<label for="username">사용자 이름</label> <input type="text" id="name"
-					name="name" value="${mem.name}" readonly>
+				<label for="name">사용자 이름</label> <input type="text" id="name"
+					name="name" value="${member.name}" readonly>
 			</div>
 			<div class="info-group">
 				<label for="email">이메일</label> <input type="email" id="email"
-					name="email" placeholder="abc@abc.com" value="${mem.email}">
+					name="email" placeholder="abc@abc.com" value="${member.email}">
 			</div>
 			<div class="info-group">
 				<label for="phone">전화번호</label> <input type="tel" id="phone"
-					name="phone" placeholder="010-XXXX-XXXX" value="${mem.phone}">
+					name="phone" placeholder="010-XXXX-XXXX" value="${member.phone}">
 			</div>
 			<div class="info-group">
 				<label for="birth">생년월일</label> <input type="text" id="birth"
-					name="birth" placeholder="YYYY-MM-DD" value="${mem.birth}">
+					name="birth" placeholder="YYYY-MM-DD" value="${member.birth}">
 			</div>
 			<div class="info-group">
-				<label for="birth">비밀번호</label> <input type="password" id="pw"
-					name="pw" placeholder="비밀번호를 입력해주세요." value="">
+				<label for="memberPw">비밀번호</label> <input type="password" id="memberPw"
+					name="memberPw" placeholder="비밀번호를 입력해주세요." value="">
 			</div>
 
 			<button type="submit" class="button">수정 확인</button>
 		</form>
-		<a href="${pageContext.request.contextPath}/member/memberinfo">
+		<a href="${pageContext.request.contextPath}/member/member-info">
 			<button type="button" class="button button-secondary">수정 취소</button>
-		</a> <a href="${pageContext.request.contextPath}/member/memberdeleteform">
+		</a> <a href="${pageContext.request.contextPath}/member/member-delete-form">
 			<button type="button" class="button button-secondary">회원 탈퇴</button>
 		</a>
 	</div>

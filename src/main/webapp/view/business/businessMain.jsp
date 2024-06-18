@@ -196,7 +196,7 @@
    <header>
       <div class="container">
          <div class="logo">
-            <a href="https://www.greetinghr.com/"><img src="https://ifh.cc/g/HL86Yz.png" alt="Greeting Logo" class="logosize">Greeting</a>
+            <a href="${pageContext.request.contextPath}/business/business-main"><img src="https://ifh.cc/g/HL86Yz.png" alt="Greeting Logo" class="logosize">Greeting</a>
          </div>
          <nav>
             <ul>
@@ -215,18 +215,18 @@
                <li><a href="#">정부지원 바우처</a></li>
             </ul>
          </nav>
-         <c:if test="${sessionScope.bid==null }">
+         <c:if test="${sessionScope.businessId==null }">
          <div class="login-inquiry">
-            <a href="${pageContext.request.contextPath}/business/businesslogin">로그인</a>
-            <a href="${pageContext.request.contextPath}/business/businesslist" class="inquiry-button" style="color: white;">기업리스트</a>
+            <a href="${pageContext.request.contextPath}/business/business-login">로그인</a>
+            <a href="${pageContext.request.contextPath}/business/business-list" class="inquiry-button" style="color: white;">기업리스트</a>
          </div>
          </c:if>
          
-          <c:if test="${sessionScope.bid!=null }">
+          <c:if test="${sessionScope.businessId!=null }">
          <div class="login-inquiry">
-            <a href="${pageContext.request.contextPath}/business/businessinfo?bid=${bid}">${business.bname}님</a>
-            <a href="${pageContext.request.contextPath}/business/businesslogout">로그아웃</a>
-            <a href="${pageContext.request.contextPath}/business/businesslist" class="inquiry-button" style="color: white;">기업리스트</a>
+            <a href="${pageContext.request.contextPath}/business/business-info?businessid=${businessId}">${business.businessName}님</a>
+            <a href="${pageContext.request.contextPath}/business/business-logout">로그아웃</a>
+            <a href="${pageContext.request.contextPath}/business/business-list" class="inquiry-button" style="color: white;">기업리스트</a>
          </div>
          </c:if>
       </div>

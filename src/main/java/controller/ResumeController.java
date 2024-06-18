@@ -37,7 +37,7 @@ public class ResumeController extends MskimRequestMapping{
     }
 
     // 이력서 상세 정보 조회
-    @RequestMapping("resumeInfo")
+    @RequestMapping("resume-info")
     public String getresume(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int resumeId = Integer.parseInt(request.getParameter("resumeId"));
         Resume resume = resumeDao.getResume(resumeId);
@@ -50,7 +50,7 @@ public class ResumeController extends MskimRequestMapping{
     }
 
     // 회원이 작성한 이력서 목록 조회
-    @RequestMapping("/getMemberReumeList")
+    @RequestMapping("/get-member-resume-list")
     public String getMemberReumeList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String memberId = (String) session.getAttribute("memberId");
         List<Resume> resumeList = resumeDao.getMemberReumeList(memberId);
@@ -65,18 +65,18 @@ public class ResumeController extends MskimRequestMapping{
     }
 
     // 사업자가 작성한 이력서 목록 조회
-    @RequestMapping("/getBusinessReumeList")
+    @RequestMapping("/get-business-resume-list")
     public String getBusinessReumeList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String bStrId = (String) session.getAttribute("bid");
-        int bid = Integer.parseInt(bStrId);
-        List<Resume> resumeList = resumeDao.getBusinessReumeList(bid);
+        String bStrId = (String) session.getAttribute("businessId");
+        int businessId = Integer.parseInt(bStrId);
+        List<Resume> resumeList = resumeDao.getBusinessReumeList(businessId);
 
         request.setAttribute("resumeList", resumeList);
         return "";
     }
 
     // 공고에 지원한 이력서 목록 조회
-    @RequestMapping("getAnnoReumeList")
+    @RequestMapping("get-anno-resume-list")
     public String getAnnoReumeList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int annoId = 0;
         List<Resume> resumeList = resumeDao.getAnnoReumeList(annoId);
@@ -86,7 +86,7 @@ public class ResumeController extends MskimRequestMapping{
     }
 
     // 이력서 작성 폼으로 이동
-    @RequestMapping("resumeRegisterForm")
+    @RequestMapping("resume-register-form")
     public String insertResumeForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String memberId = (String) session.getAttribute("memberId");
         MemberDAO mdao = new MemberDAO();
@@ -97,9 +97,9 @@ public class ResumeController extends MskimRequestMapping{
     }
 
     // 이력서 작성 처리
-    @RequestMapping("insertResume")
+    @RequestMapping("insert-resume")
     public String insertResume(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = request.getServletContext().getRealPath("/") + "img/resume/";
+        String path = request.getServletContext().getRealPath("/") + "img/member/";
         MultipartRequest multi = new MultipartRequest(request, path, 10 * 1024 * 1024, "UTF-8");
 
         // 회원 정보: 회원 아이디를 가져와서 회원 테이블에서 조회
@@ -188,17 +188,17 @@ public class ResumeController extends MskimRequestMapping{
         request.setAttribute("profileImage", resume.getProfileImage());
         request.setAttribute("memberResumeList", memberResumeList);
 
-        return "/member/membermain";
+        return "/member/member-main";
     }
 
     // 이력서 수정 처리
-    @RequestMapping("/updateResume")
+    @RequestMapping("/update-resume")
     public String updateResume(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         return "";
     }
 
     // 이력서 삭제 처리
-    @RequestMapping("/deleteResume")
+    @RequestMapping("/delete-resume")
     public String deleteResume(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int resumeId = Integer.parseInt(request.getParameter("resumeId"));
         int num = resumeDao.deleteResume(resumeId);

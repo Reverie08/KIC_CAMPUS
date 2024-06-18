@@ -93,7 +93,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', (event) => {
-            const input = document.getElementById('bid');
+            const input = document.getElementById('businessId');
             input.addEventListener('input', validateInput);
         });
     </script>
@@ -101,19 +101,19 @@
 <body>
     <div class="container">
         <h2>기업 정보수정</h2>
-        <form action="businessupdatepro" method="post" novalidate>
+        <form action="business-update-pro" method="post" novalidate>
             <div class="form-group">
-                <label for="bid">사업자번호</label>
-                <input type="text" id="bid" name="bid" placeholder="사업자번호" required pattern="\d{1,10}" value="${bid}">
+                <label for="businessId">사업자번호</label>
+                <input type="text" id="businessId" name="businessId" placeholder="사업자번호" required pattern="\d{1,10}" value="${businessId}">
                 <div class="error-message">숫자를 입력하세요 (최대 10자리).</div>
             </div>
             <div class="form-group">
-                <label for="bpw">비밀번호</label>
-                <input type="password" id="bpw" name="bpw" placeholder="비밀번호" required>
+                <label for="businessPw">비밀번호</label>
+                <input type="password" id="businessPw" name="businessPw" placeholder="비밀번호" required>
             </div>
             <div class="form-group">
-                <label for="bname">회사명</label>
-                <input type="text" id="bname" name="bname" placeholder="회사명" required value="${business.bname}">
+                <label for="businessName">회사명</label>
+                <input type="text" id="businessName" name="businessName" placeholder="회사명" required value="${business.businessName}">
             </div>
             <div class="form-group">
                 <label for="address">주소</label>

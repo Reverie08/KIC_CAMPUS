@@ -1,6 +1,6 @@
 CREATE TABLE member (
 	memberid	VARCHAR2(30)	NOT NULL,
-	pw	VARCHAR2(30)	NULL,
+	memberpw	VARCHAR2(30)	NULL,
 	name	VARCHAR2(30)	NULL,
 	gender	VARCHAR2(30)	NULL,
 	email	VARCHAR2(30)	NULL,
@@ -10,12 +10,12 @@ CREATE TABLE member (
 );
 
 CREATE TABLE business (
-	bid	VARCHAR2(20)	NOT NULL,
-	bpw	VARCHAR2(40)	NULL,
-	bname	VARCHAR2(40)	NULL,
-	address	VARCHAR2(40)	NULL,
+	businessid	VARCHAR2(20)	NOT NULL,
+	businesspw	VARCHAR2(40)	NULL,
+	businessname	VARCHAR2(40)	NULL,
+	address	VARCHAR2(200)	NULL,
 	salary	number	NULL,
-	welfare	VARCHAR2(40)	NULL,
+	welfare	VARCHAR2(500)	NULL,
 	ceo	VARCHAR2(40)	NULL,
 	sales	number	NULL,
 	employees	number	NULL,
@@ -43,13 +43,13 @@ CREATE TABLE resume (
 	evalustage	number	NULL,
 	resumescore	number	NULL,
 	memberid	VARCHAR2(40)	NOT NULL,
-	bid	VARCHAR2(40)	NOT NULL,
+	businessid	VARCHAR2(40)	NOT NULL,
 	annoid	number	NOT NULL
 );
 
 CREATE TABLE anno (
 	annoid	number	NOT NULL,
-	bname	VARCHAR2(90)	NULL,
+	businessname	VARCHAR2(90)	NULL,
 	welfare	VARCHAR2(90)	NULL,
 	annotitle	VARCHAR2(90)	NULL,
 	annocareer	VARCHAR2(90)	NULL,
@@ -64,7 +64,7 @@ CREATE TABLE anno (
 	annopicknum	number	NULL,
 	annodate	DATE	NULL,
 	annocontent	VARCHAR2(400)	NULL,
-	bid	number	NOT NULL,
+	businessid	number	NOT NULL,
 	skillid	number	NOT NULL
 );
 

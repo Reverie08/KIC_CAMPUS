@@ -217,15 +217,15 @@
          </nav>
          <c:if test = "${sessionScope.memberId == null }">
          <div class="login-inquiry">
-            <a href="${pageContext.request.contextPath}/member/memberlogin" class="inquiry-button" style="color: white;">개인 로그인</a>
-            <a href="${pageContext.request.contextPath}/business/businesslogin" class="inquiry-button" style="color: white;">기업 로그인</a>
+            <a href="${pageContext.request.contextPath}/member/member-login" class="inquiry-button" style="color: white;">개인 로그인</a>
+            <a href="${pageContext.request.contextPath}/business/business-login" class="inquiry-button" style="color: white;">기업 로그인</a>
          </div>
          </c:if>
          <c:if test = "${sessionScope.memberId != null }">
          <div class="login-inquiry">
-            <a href="${pageContext.request.contextPath}/member/memberlogout" class="inquiry-button" style="color: white;">개인 로그아웃</a>
-            <a href="${pageContext.request.contextPath}/business/businesslogout" class="inquiry-button" style="color: white;">기업 로그아웃</a>
-            <a href="${pageContext.request.contextPath}/member/memberinfo" class="inquiry-button" style="color: white;">내 정보</a>
+            <a href="${pageContext.request.contextPath}/member/member-logout" class="inquiry-button" style="color: white;">개인 로그아웃</a>
+            <a href="${pageContext.request.contextPath}/business/business-logout" class="inquiry-button" style="color: white;">기업 로그아웃</a>
+            <a href="${pageContext.request.contextPath}/member/member-info" class="inquiry-button" style="color: white;">내 정보</a>
          </div>
          </c:if>
       </div>

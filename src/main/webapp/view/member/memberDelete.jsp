@@ -84,19 +84,19 @@ body {
 	<div class="container">
 		<div class="title">회원 탈퇴</div>
 		<form
-			action="${pageContext.request.contextPath}/member/memberdeletepro"
+			action="${pageContext.request.contextPath}/member/member-delete-pro"
 			method="post">
 			<div class="info-group">
-				<label for="id">사용자 아이디</label><input type="text" id="memberId"
-					name="memberId" value="${mem.memberId}" readonly>
+				<label for="memberId">사용자 아이디</label><input type="text" id="memberId"
+					name="memberId" value="${member.memberId}" readonly>
 			</div>
 			<div class="info-group">
-				<label for="pw">비밀번호</label> <input type="password" id="pw"
-					name="pw" required>
+				<label for="memberPw">비밀번호</label> <input type="password" id="memberPw"
+					name="memberPw" required>
 			</div>
 			<button type="submit" class="button">회원 탈퇴</button>
 		</form>
-		<a href="${pageContext.request.contextPath}/member/memberinfo">
+		<a href="${pageContext.request.contextPath}/member/member-info">
 			<button type="button" class="button button-secondary">취소</button>
 		</a>
 	</div>

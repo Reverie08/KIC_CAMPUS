@@ -13,8 +13,8 @@ import model.Member;
 public interface MemberMapper {
 
 	// 회원 가입
-	@Insert("insert into member values(#{memberId}, #{pw}, #{name}, #{gender}, #{email}, #{phone}, #{birth}, null)")
-	int insertMember(Member mem);
+	@Insert("insert into member values(#{memberId}, #{memberPw}, #{name}, #{gender}, #{email}, #{phone}, #{birth}, null)")
+	int insertMember(Member member);
 
 	// 회원 정보 가져오기
 	@Select("select * from member where memberid = #{memberId}")
@@ -33,7 +33,7 @@ public interface MemberMapper {
 	int updateMember(Member mem);
 
 	// 회원 비밀번호 변경
-	@Update("update member set pw = #{chgpw} where memberid = #{memberId}")
+	@Update("update member set memberpw = #{changePw} where memberid = #{memberId}")
 	int changePw(Map map);
 
 	// 회원 삭제

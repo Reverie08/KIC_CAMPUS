@@ -2,7 +2,7 @@ package model;
 
 public class Member {
 	String memberId;
-	String pw;
+	String memberPw;
 	String name;
 	int gender;
 	String email;
@@ -18,12 +18,12 @@ public class Member {
 		this.memberId = memberId;
 	}
 
-	public String getPw() {
-		return pw;
+	public String getMemberPw() {
+		return memberPw;
 	}
 
-	public void setPw(String pw) {
-		this.pw = pw;
+	public void setMemberPw(String memberPw) {
+		this.memberPw = memberPw;
 	}
 
 	public String getName() {
@@ -76,8 +76,8 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [memberId=" + memberId + ", pw=" + pw + ", name=" + name + ", gender=" + gender + ", email="
-				+ email + ", phone=" + phone + ", birth=" + birth + ", profileImage=" + profileImage + "]";
+		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", name=" + name + ", gender=" + gender
+				+ ", email=" + email + ", phone=" + phone + ", birth=" + birth + ", profileImage=" + profileImage + "]";
 	}
 
 }

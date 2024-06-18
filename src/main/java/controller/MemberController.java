@@ -2,8 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +19,7 @@ import model.Member;
 public class MemberController extends MskimRequestMapping {
     
     HttpSession session;
-    MemberDAO dao = new MemberDAO();
+    MemberDAO memberDao = new MemberDAO();
     
     @Override
     protected void service(HttpServletRequest request, 
@@ -39,50 +37,50 @@ public class MemberController extends MskimRequestMapping {
         return "/view/member/main.jsp";
     }
     // 회원 가입 폼 
-    @RequestMapping("memberjoin")
+    @RequestMapping("member-join")
     public String memberJoin(HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
-        return "/view/member/memberjoin.jsp";
+        return "/view/member/memberJoin.jsp";
     }
     
     // 회원 가입 처리 
-    @RequestMapping("memberjoinPro")
+    @RequestMapping("member-join-pro")
     public String memberJoinPro(HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException, ParseException {
         
         request.setCharacterEncoding("utf-8");
         String memberId = request.getParameter("memberId");
-        String pw = request.getParameter("pw");
+        String memberPw = request.getParameter("memberPw");
         String name = request.getParameter("name");
         int gender = Integer.parseInt((request.getParameter("gender")));
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String birth = request.getParameter("birth");
         
-        Member mem = new Member();
+        Member member = new Member();
         
-        mem.setMemberId(memberId);
-        mem.setPw(pw);
-        mem.setName(name);
-        mem.setGender(gender);
-        mem.setEmail(email);
-        mem.setPhone(phone);
-        mem.setBirth(birth);
+        member.setMemberId(memberId);
+        member.setMemberPw(memberPw);
+        member.setName(name);
+        member.setGender(gender);
+        member.setEmail(email);
+        member.setPhone(phone);
+        member.setBirth(birth);
 
-        System.out.println(mem);
+        System.out.println(member);
         
-        int num = dao.insertMember(mem);
+        int num = memberDao.insertMember(member);
         
         String msg = "";
         String url = "";
         
         if( num > 0){
             msg = name + "님이 회원가입이 완료 되었습니다.";
-            url = "memberlogin";
+            url = "member-login";
         } else {
             msg = "회원가입이 실패 하였습니다. 다시 시도해 주세요";
-            url = "memberjoin";
+            url = "member-join";
         }
         request.setAttribute("msg", msg);
         request.setAttribute("url", url);
@@ -91,61 +89,61 @@ public class MemberController extends MskimRequestMapping {
     }
     
     // 로그인 폼 
-    @RequestMapping("memberlogin")
+    @RequestMapping("member-login")
     public String login(HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
         
-        return "/view/member/memberlogin.jsp";
+        return "/view/member/memberLogin.jsp";
     }
     // 로그인 메인 폼
-    @RequestMapping("membermain")
+    @RequestMapping("member-main")
     public String memberMain(HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
         ResumeDAO resumeDao = new ResumeDAO();
         String memberId = (String)session.getAttribute("memberId");
-        Member mem = dao.getMember(memberId);
+        Member member = memberDao.getMember(memberId);
         
         // String profileImage = resumeDao.getProfileImage(memberId);
         
         // request.setAttribute("profileImage", profileImage);
-        request.setAttribute("mem", mem);
+        request.setAttribute("member", member);
         
         
-        return "/view/member/membermain.jsp";
+        return "/view/member/memberMain.jsp";
     }
     
 	// 로그인 처리
-    @RequestMapping("memberloginPro")
+    @RequestMapping("member-login-pro")
     public String memberLoginPro(HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
         request.setCharacterEncoding("utf-8");
         String memberId = request.getParameter("memberId");
-        String pw = request.getParameter("pw");
+        String memberPw = request.getParameter("memberPw");
         
         
         String msg = "";
-        String url = "membermain";
-        Member mem = dao.getMember(memberId);
+        String url = "member-main";
+        Member member = memberDao.getMember(memberId);
         
-        if(mem != null){
+        if(member != null){
             System.out.println(memberId);
             
-            if(pw.equals(mem.getPw())) {
+            if(memberPw.equals(member.getMemberPw())) {
                 session.setAttribute("memberId", memberId);
-                msg = mem.getName() + "님이 로그인 하셨습니다.";
+                msg = member.getName() + "님이 로그인 하셨습니다.";
                 
                 
             } else {
                     msg = "비밀번호가 맞지 않습니다.";
-                    url = "memberlogin";
+                    url = "member-login";
             }
             
             } else {
                 msg = "id를 확인하세요.";
-                url = "memberlogin";
+                url = "member-login";
         }
         
         request.setAttribute("msg", msg);
@@ -154,21 +152,21 @@ public class MemberController extends MskimRequestMapping {
     }
     
     // 회원 정보
-    @RequestMapping("memberinfo")
+    @RequestMapping("member-info")
     public String memberInfo(HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
         String memberId = (String)session.getAttribute("memberId");
-        Member mem = dao.getMember(memberId);
+        Member member = memberDao.getMember(memberId);
         
-        request.setAttribute("mem", mem);
+        request.setAttribute("member", member);
         request.setAttribute("nav", "memberinfo");
         
-        return "/view/member/memberinfo.jsp";
+        return "/view/member/memberInfo.jsp";
     }
     
     // 로그아웃
-    @RequestMapping("memberlogout")
+    @RequestMapping("member-logout")
     public String memberLogout(HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
@@ -179,53 +177,57 @@ public class MemberController extends MskimRequestMapping {
         return "/view/alert.jsp";
     }
     // 회원 정보 수정
-    @RequestMapping("memberupdate")
+    @RequestMapping("member-update")
     public String memberUpdate(HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
             
         String memberId = (String)session.getAttribute("memberId");
-        Member mem = dao.getMember(memberId);
+        Member member = memberDao.getMember(memberId);
         
-        request.setAttribute("mem", mem);
+        request.setAttribute("member", member);
         request.setAttribute("nav", "memberinfo");
         
-        return "/view/member/memberupdate.jsp";
+        return "/view/member/memberUpdate.jsp";
     }
     
     // 정보 수정 처리
-    @RequestMapping("memberupdatepro")
+    @RequestMapping("member-update-pro")
     public String memberUpdatePro(HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
         request.setCharacterEncoding("utf-8");
         String memberId = request.getParameter("memberId");
-        String pw = request.getParameter("pw");
+        String memberPw = request.getParameter("memberPw");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String birth = request.getParameter("birth");
         
-        Member memDb = dao.getMember(memberId);
-        Member mem = new Member();
+        Member memberDb = memberDao.getMember(memberId);
+        Member member = new Member();
         
-        mem.setMemberId(memberId);
-        mem.setPw(pw);
-        mem.setEmail(email);
-        mem.setPhone(phone);
-        mem.setBirth(birth);
+        member.setMemberId(memberId);
+        member.setMemberPw(memberPw);
+        member.setEmail(email);
+        member.setPhone(phone);
+        member.setBirth(birth);
         
         String msg = "";
         String url = "";
         
-        if(memDb != null) {
-            if(memDb.getPw().equals(pw)) {
+        if(memberDb != null) {
+            if(memberDb.getMemberPw().equals(memberPw)) {
                 msg = "수정 하였습니다.";
-                dao.updateMember(mem);
-                url = "memberinfo";
+                memberDao.updateMember(member);
+                url = "member-info";
             } else {
+            	System.out.println(memberDb.getMemberPw());
+            	System.out.println(memberPw);
                 msg = "비밀번호가 맞지 않습니다.";
+                
             }
         } else {
             msg = "수정할 수 없습니다.";
+            url = "member-update";
         }
         
         request.setAttribute("msg", msg);
@@ -234,41 +236,41 @@ public class MemberController extends MskimRequestMapping {
     }
     
     // 회원 비밀번호 수정
-    @RequestMapping("memberchangepw")
+    @RequestMapping("member-change-pw")
     public String memberChangePw(HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
         
         String memberId = (String)session.getAttribute("memberId");
-        Member mem = dao.getMember(memberId);
+        Member member = memberDao.getMember(memberId);
         
-        request.setAttribute("mem", mem);
+        request.setAttribute("member", member);
         
         
-        return "/view/member/memberchangepw.jsp";
+        return "/view/member/memberChangePw.jsp";
     }
     
     // 회원 비밀번호 수정 처리
-    @RequestMapping("memberchangepwpro")
+    @RequestMapping("member-change-pw-pro")
     public String memberChangePwPro(HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         
         String memberId = (String)session.getAttribute("memberId");
-        String pw = request.getParameter("pw");
-        String chgpw = request.getParameter("chgpw");
+        String memberPw = request.getParameter("memberPw");
+        String changePw = request.getParameter("changePw");
         
-        Member memDb = dao.getMember(memberId);
+        Member memberDb = memberDao.getMember(memberId);
         
         String msg = "";
-        String url = "memberchangpw";
+        String url = "member-chang-pw";
         
-        if(memDb != null) {
-            if(memDb.getPw().equals(pw)) {
+        if(memberDb != null) {
+            if(memberDb.getMemberPw().equals(memberPw)) {
                 msg = "비밀번호를 변경 하였습니다.";
                 session.invalidate();
-                dao.changePw(memberId, chgpw);
-                url = "memberlogin";
+                memberDao.changePw(memberId, changePw);
+                url = "member-login";
             } else {
                 msg = "비밀번호가 맞지 않습니다.";
             }
@@ -282,37 +284,37 @@ public class MemberController extends MskimRequestMapping {
     }
     
     // 회원 탈퇴 폼
-    @RequestMapping("memberdelete")
+    @RequestMapping("member-delete")
     public String memberDelete(HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
             
         
         String memberId = (String)session.getAttribute("memberId");
-        Member mem = dao.getMember(memberId);
+        Member member = memberDao.getMember(memberId);
         
-        request.setAttribute("mem", mem);
+        request.setAttribute("member", member);
         
-        return "/view/member/memberdelete.jsp";
+        return "/view/member/memberDelete.jsp";
     }
     
     // 회원 탈퇴 처리
-    @RequestMapping("memberdeletepro")
+    @RequestMapping("member-delete-pro")
     public String memberDeletePro(HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         String memberId = (String) session.getAttribute("memberId");
-        String pw = request.getParameter("pw");
-        Member memDb = dao.getMember(memberId);
+        String memberPw = request.getParameter("memberPw");
+        Member memberDb = memberDao.getMember(memberId);
         
         String msg = "";
-        String url ="memberdelete";
+        String url ="member-delete";
         
-        if(memDb != null) {
-            if(memDb.getPw().equals(pw)) {
+        if(memberDb != null) {
+            if(memberDb.getMemberPw().equals(memberPw)) {
                 msg = "탈퇴 하였습니다.";
                 session.invalidate();
-                dao.deleteMember(memberId);
-                url = "memberlogin";
+                memberDao.deleteMember(memberId);
+                url = "member-login";
             } else {
                 msg = "비밀번호가 맞지 않습니다.";
             }

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Anno {
 	int annoId;
-	String bName;
+	String businessName;
 	String welfare;
 	String annoTitle;
 	String annoCareer;
@@ -17,11 +17,13 @@ public class Anno {
 	String annoCommon;
 	String annoQualification;
 	int annoPickNum;
-	Date annoDate;
+	Date annoDate = new Date();;
 	String annoContent;
-	String bId;
+	String businessId;
 	int skillId;
 
+	// 기존 getter/setter 및 toString 메서드들...
+	
 	public int getAnnoId() {
 		return annoId;
 	}
@@ -30,12 +32,12 @@ public class Anno {
 		this.annoId = annoId;
 	}
 
-	public String getbName() {
-		return bName;
+	public String getBusinessName() {
+		return businessName;
 	}
 
-	public void setbName(String bName) {
-		this.bName = bName;
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
 	}
 
 	public String getWelfare() {
@@ -150,12 +152,12 @@ public class Anno {
 		this.annoContent = annoContent;
 	}
 
-	public String getbId() {
-		return bId;
+	public String getBusinessId() {
+		return businessId;
 	}
 
-	public void setbId(String bId) {
-		this.bId = bId;
+	public void setBusinessId(String businessId) {
+		this.businessId = businessId;
 	}
 
 	public int getSkillId() {
@@ -168,12 +170,12 @@ public class Anno {
 
 	@Override
 	public String toString() {
-		return "Anno [annoId=" + annoId + ", bName=" + bName + ", welfare=" + welfare + ", annoTitle=" + annoTitle
-				+ ", annoCareer=" + annoCareer + ", annoSalary=" + annoSalary + ", annoEdu=" + annoEdu + ", annoGrade="
-				+ annoGrade + ", annoWorkType=" + annoWorkType + ", annoWorkDay=" + annoWorkDay + ", annoWorkPlace="
-				+ annoWorkPlace + ", annoCommon=" + annoCommon + ", annoQualification=" + annoQualification
-				+ ", annoPickNum=" + annoPickNum + ", annoDate=" + annoDate + ", annoContent=" + annoContent + ", bId="
-				+ bId + ", skillId=" + skillId + "]";
+		return "Anno [annoId=" + annoId + ", businessName=" + businessName + ", welfare=" + welfare + ", annoTitle="
+				+ annoTitle + ", annoCareer=" + annoCareer + ", annoSalary=" + annoSalary + ", annoEdu=" + annoEdu
+				+ ", annoGrade=" + annoGrade + ", annoWorkType=" + annoWorkType + ", annoWorkDay=" + annoWorkDay
+				+ ", annoWorkPlace=" + annoWorkPlace + ", annoCommon=" + annoCommon + ", annoQualification="
+				+ annoQualification + ", annoPickNum=" + annoPickNum + ", annoDate=" + annoDate + ", annoContent="
+				+ annoContent + ", businessId=" + businessId + ", skillId=" + skillId + "]";
 	}
 
 }

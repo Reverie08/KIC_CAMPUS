@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import mapper.AnnoMapper;
 import model.Anno;
+import model.Skill;
 import util.MybatisConnection;
 
 public class AnnoDAO {
@@ -16,8 +17,8 @@ public class AnnoDAO {
 		return li;
 	}
 	
-	public Anno AnnoCountFromBid(String bId) {
-		Anno anno =  session.getMapper(AnnoMapper.class).AnnoCountFromBid(bId);
+	public Anno annoCountFromBusinessId(String businessId) {
+		Anno anno =  session.getMapper(AnnoMapper.class).AnnoCountFromBusinessId(businessId);
 		return anno;
 	}
 	
@@ -26,13 +27,13 @@ public class AnnoDAO {
 		return anno;
 	}
 	
-	public List<Anno> getAnnoListFromBid(String bId) {
-		List<Anno> li =  session.getMapper(AnnoMapper.class).getAnnoListFromBid(bId);
+	public List<Anno> getAnnoListFromBusinessId(String businessId) {
+		List<Anno> li =  session.getMapper(AnnoMapper.class).getAnnoListFromBusinessId(businessId);
 		return li;
 	}
 	
-	public List<Anno> getAnnoListFromBname(String bName) {
-		List<Anno> li =  session.getMapper(AnnoMapper.class).getAnnoListFromBname(bName);
+	public List<Anno> getAnnoListFromBusinessName(String businessName) {
+		List<Anno> li =  session.getMapper(AnnoMapper.class).getAnnoListFromBusinessName(businessName);
 		return li;
 	}
 	
@@ -104,5 +105,32 @@ public class AnnoDAO {
 		return num;
 	}
 
+	public int insertSkill(Skill skill) {
+		int num = session.getMapper(AnnoMapper.class).insertSkill(skill);
+		session.commit();
+		return num;
+	}
 	
+	public List<Skill> getAllSkills() {
+		List<Skill> li =  session.getMapper(AnnoMapper.class).getAllSkills();
+		return li;
+	}
+	
+	public int insertAnnoSkill(int annoId, int skillId) {
+		int num = session.getMapper(AnnoMapper.class).insertAnnoSkill(annoId, skillId);
+		session.commit();
+		return num;
+	}
+
+    public int getAnnoId() {
+        int annoId = session.getMapper(AnnoMapper.class).getAnnoId();
+        return annoId;
+    }
+    
+    public List<Skill> getSkillsByAnnoId(int annoId) {
+        List<Skill> skills = session.getMapper(AnnoMapper.class).getSkillsByAnnoId(annoId);
+        return skills;
+    }
+    
+    
 }

@@ -145,25 +145,25 @@ body {
 <body>
 
 	<div class="container">
-		<form action="businessloginpro" novalidate name="loginform"
+		<form action="business-login-pro" novalidate name="loginForm"
 			method="post">
 			<div class="header">
-				<a href="${pageContext.request.contextPath}/business/main">홈으로</a> <span>KO</span>
+				<a href="${pageContext.request.contextPath}/business/business-main">홈으로</a> <span>KO</span>
 			</div>
 			<img src="https://ifh.cc/g/hqvWJG.png" alt="Logo" class="logo">
 			<div class="title">로그인</div>
 			<div class="subtitle">사업자번호</div>
 			<div class="input-group">
-				<input type="text" name="bid" placeholder="ex)0123456789">
+				<input type="text" name="businessId" placeholder="ex)0123456789">
 			</div>
 			<div class="subtitle">비밀번호</div>
 			<div class="input-group">
-				<input type="password" name="bpw" placeholder="비밀번호">
+				<input type="password" name="businessPw" placeholder="비밀번호">
 			</div>
 			<button type="submit" class="button">계속</button>
 			<div class="signup">
 				계정이 없으신가요? <a
-					href="${pageContext.request.contextPath}/business/businessjoin">가입하기</a>
+					href="${pageContext.request.contextPath}/business/business-join">가입하기</a>
 			</div>
 
 

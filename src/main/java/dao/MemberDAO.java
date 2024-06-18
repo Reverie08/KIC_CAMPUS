@@ -15,17 +15,17 @@ public class MemberDAO {
 	SqlSession session = MybatisConnection.getConnection();
 	
 	// 회원 가입
-	public int insertMember(Member mem) {
-		int num = session.getMapper(MemberMapper.class).insertMember(mem);
+	public int insertMember(Member member) {
+		int num = session.getMapper(MemberMapper.class).insertMember(member);
 		session.commit();
 		return num;
 	}
 	
 	// 회원 가져오기
 	public Member getMember(String email) {
-		Member mem = session.getMapper(MemberMapper.class).getMember(email);
+		Member member = session.getMapper(MemberMapper.class).getMember(email);
 		session.commit();
-		return mem;
+		return member;
 	}
 	
 	// 회원 리스트 가져오기 
@@ -35,17 +35,17 @@ public class MemberDAO {
 	}
 	
 	// 회원 정보 수정하기
-	public int updateMember(Member mem) {
-		int num = session.getMapper(MemberMapper.class).updateMember(mem);
+	public int updateMember(Member member) {
+		int num = session.getMapper(MemberMapper.class).updateMember(member);
 		session.commit();
 		return num;
 	}
 	
 	// 회원 비밀번호 수정하기
-	public int changePw(String memberId, String chgpw) {
+	public int changePw(String memberId, String changePw) {
 		Map map = new HashMap();
 		map.put("memberId", memberId);
-		map.put("chgpw", chgpw);
+		map.put("changePw", changePw);
 		int num = session.getMapper(MemberMapper.class).changePw(map);
 		session.commit();
 		return num;

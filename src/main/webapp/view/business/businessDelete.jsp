@@ -75,19 +75,19 @@ body {
 	<div class="container">
 		<div class="title">회원 탈퇴</div>
 		<form
-			action="${pageContext.request.contextPath}/business/businessdeletepro"
+			action="${pageContext.request.contextPath}/business/business-delete-pro"
 			method="post">
 			<div class="info-group">
-				<label for="bid">사업자번호</label><input type="text" id="bid"
-					name="bid" value="${business.bid}" readonly>
+				<label for="businessId">사업자번호</label><input type="text" id="businessId"
+					name="businessId" value="${business.businessId}" readonly>
 			</div>
 			<div class="info-group">
-				<label for="bpw">비밀번호</label> <input type="password" id="bpw"
-					name="bpw" required>
+				<label for="businessPw">비밀번호</label> <input type="password" id="businessPw"
+					name="businessPw" required>
 			</div>
 			<button type="submit" class="button">회원 탈퇴</button>
 		</form>
-		<a href="${pageContext.request.contextPath}/business/businessinfo">
+		<a href="${pageContext.request.contextPath}/business/business-info">
 			<button type="button" class="button button-secondary">취소</button>
 		</a>
 	</div>

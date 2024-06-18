@@ -111,15 +111,15 @@ body {
 </head>
 <body>
 	<div class="container">
-		<form action="memberloginPro" novalidate name="loginform"
+		<form action="member-login-pro" novalidate name="loginForm"
 			method="post">
 			<div class="header">
 				<div class="left">
 					<a href="${pageContext.request.contextPath}/member/main">홈</a>
 				</div>
 				<div class="right">
-					<a href="${pageContext.request.contextPath}/member/memberlogin">개인</a>
-					<a href="${pageContext.request.contextPath}/business/businesslogin">기업</a>
+					<a href="${pageContext.request.contextPath}/member/member-login">개인</a>
+					<a href="${pageContext.request.contextPath}/business/business-login">기업</a>
 				</div>
 			</div>
 			<img src="https://ifh.cc/g/hqvWJG.png" alt="Logo" class="logo">
@@ -127,12 +127,12 @@ body {
 			<div class="subtitle">사용중이신 개인 아이디를 입력해 주세요.</div>
 			<div class="input-group">
 				<input type="text" id="memberId" name="memberId" placeholder="아이디">
-				<input type="password" id="pw" name="pw" placeholder="비밀번호">
+				<input type="password" id="memberPw" name="memberPw" placeholder="비밀번호">
 			</div>
 			<button class="button">계속</button>
 			<div class="signup">
 				계정이 없으신가요? <a
-					href="${pageContext.request.contextPath}/member/memberjoin">가입하기</a>
+					href="${pageContext.request.contextPath}/member/member-join">가입하기</a>
 			</div>
 			<ul>
 				<li onclick="kakaoLogin();"><a href="javascript:void(0)"> <span>카카오

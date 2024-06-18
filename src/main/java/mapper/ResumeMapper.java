@@ -24,8 +24,8 @@ public interface ResumeMapper {
 	public List<Resume> getMemberReumeList(String memberId);
 	
 	// 기업이 작성한 이력서 목록 가져오기
-	@Select("select * from resume where bid=#{bId}")
-	public List<Resume> getBusinessReumeList(int bId);
+	@Select("select * from resume where businessid=#{businessId}")
+	public List<Resume> getBusinessReumeList(int businessId);
 	
 	// 공고에 지원한 이력서 목록 가져오기
 	@Select("select * from resume where annoid=#{annoId}")
@@ -37,7 +37,7 @@ public interface ResumeMapper {
 	// 이력서 삽입
 	@Insert("insert into resume values(#{resumeId},#{resumeTitle},#{profileImage},"
 			+ "#{name},#{birth},#{phone},#{email},sysdate,#{selfInfo},#{certification},#{language},"
-			+ "#{address},#{columnStage},#{evaluStage},#{resumeScore},#{memberId},#{bId},#{annoId})")
+			+ "#{address},#{columnStage},#{evaluStage},#{resumeScore},#{memberId},#{businessId},#{annoId})")
 	public int insertResume(Resume resume);
 	
 	// 이력서 삭제

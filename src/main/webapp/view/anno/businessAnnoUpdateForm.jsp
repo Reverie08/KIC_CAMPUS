@@ -61,8 +61,8 @@
       <aside class="bg-white rounded-lg shadow p-4 fixed-sidebar">
         <h2 class="text-lg font-bold mb-4">Sidebar</h2>
         <ul>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/BusinessAnnoInfo?annoid=${anno.annoid}" class="text-blue-500"><b>공고내용</b></a></li>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/BusinessAnnoManagement?annoid=${anno.annoid}" class="text-blue-500">이력서 관리</a></li>
+          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-info?annoid=${anno.annoId}" class="text-blue-500"><b>공고내용</b></a></li>
+          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-management?annoid=${anno.annoId}" class="text-blue-500">이력서 관리</a></li>
           <li class="mb-2"><a href="#" class="text-blue-500">미정</a></li>
         </ul>
       </aside>
@@ -71,12 +71,12 @@
         <div class="main-content w-5/6 p-4 overflow-x-auto">
             <div class="container bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-2xl font-bold mb-4">Update Anno</h2>
-                <form action="AnnoUpdatePro" method="post">
-                    <input type="hidden" name="annoid" value="${anno.annoid}">
+                <form action="anno-update-pro" method="post">
+                    <input type="hidden" name="annoId" value="${anno.annoId}">
 
                     <div class="form-group">
-                        <label for="bname" class="form-label">기업명:</label>
-                        <input type="text" id="bname" name="bname" value="${anno.bname}" class="form-input">
+                        <label for="businessName" class="form-label">기업명:</label>
+                        <input type="text" id="businessName" name="businessName" value="${anno.businessName}" class="form-input">
                     </div>
 
                     <div class="form-group">
@@ -85,73 +85,73 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="annotitle" class="form-label">공고 제목:</label>
-                        <input type="text" id="annotitle" name="annotitle" value="${anno.annoTitle}" class="form-input">
+                        <label for="annoTitle" class="form-label">공고 제목:</label>
+                        <input type="text" id="annoTitle" name="annoTitle" value="${anno.annoTitle}" class="form-input">
                     </div>
 
                     <div class="form-group">
-                        <label for="annocareer" class="form-label">경력:</label>
-                        <input type="text" id="annocareer" name="annocareer" value="${anno.annoCareer}" class="form-input">
+                        <label for="annoCareer" class="form-label">경력:</label>
+                        <input type="text" id="annoCareer" name="annoCareer" value="${anno.annoCareer}" class="form-input">
                     </div>
 
                     <div class="form-group">
-                        <label for="annosalary" class="form-label">연봉:</label>
-                        <input type="text" id="annosalary" name="annosalary" value="${anno.annoSalary}" class="form-input">
+                        <label for="annoSalary" class="form-label">연봉:</label>
+                        <input type="text" id="annoSalary" name="annoSalary" value="${anno.annoSalary}" class="form-input">
                     </div>
 
                     <div class="form-group">
-                        <label for="annoedu" class="form-label">학력:</label>
-                        <input type="text" id="annoedu" name="annoedu" value="${anno.annoEdu}" class="form-input">
+                        <label for="annoEdu" class="form-label">학력:</label>
+                        <input type="text" id="annoEdu" name="annoEdu" value="${anno.annoEdu}" class="form-input">
                     </div>
 
                     <div class="form-group">
-                        <label for="annograde" class="form-label">직급:</label>
-                        <input type="text" id="annograde" name="annograde" value="${anno.annoGrade}" class="form-input">
+                        <label for="annoGrade" class="form-label">직급:</label>
+                        <input type="text" id="annoGrade" name="annoGrade" value="${anno.annoGrade}" class="form-input">
                     </div>
 
                     <div class="form-group">
-                        <label for="annoworktype" class="form-label">근무 형태:</label>
-                        <input type="text" id="annoworktype" name="annoworktype" value="${anno.annoWorkType}" class="form-input">
+                        <label for="annoWorkType" class="form-label">근무 형태:</label>
+                        <input type="text" id="annoWorkType" name="annoWorkType" value="${anno.annoWorkType}" class="form-input">
                     </div>
 
                     <div class="form-group">
-                        <label for="annoworkday" class="form-label">근무 요일:</label>
-                        <input type="text" id="annoworkday" name="annoworkday" value="${anno.annoWorkDay}" class="form-input">
+                        <label for="annoWorkDay" class="form-label">근무 요일:</label>
+                        <input type="text" id="annoWorkDay" name="annoWorkDay" value="${anno.annoWorkDay}" class="form-input">
                     </div>
 
                     <div class="form-group">
-                        <label for="annoworkplace" class="form-label">근무지:</label>
-                        <input type="text" id="annoworkplace" name="annoworkplace" value="${anno.annoWorkPlace}" class="form-input">
+                        <label for="annoWorkPlace" class="form-label">근무지:</label>
+                        <input type="text" id="annoWorkPlace" name="annoWorkPlace" value="${anno.annoWorkPlace}" class="form-input">
                     </div>
 
                     <div class="form-group">
-                        <label for="annocommon" class="form-label">공통 자격:</label>
-                        <input type="text" id="annocommon" name="annocommon" value="${anno.annoCommon}" class="form-input">
+                        <label for="annoCommon" class="form-label">공통 자격:</label>
+                        <input type="text" id="annoCommon" name="annoCommon" value="${anno.annoCommon}" class="form-input">
                     </div>
 
                     <div class="form-group">
-                        <label for="annoqualification" class="form-label">지원 자격:</label>
-                        <input type="text" id="annoqualification" name="annoqualification" value="${anno.annoQualification}" class="form-input">
+                        <label for="annoQualification" class="form-label">지원 자격:</label>
+                        <input type="text" id="annoQualification" name="annoQualification" value="${anno.annoQualification}" class="form-input">
                     </div>
 
                     <div class="form-group">
-                        <label for="annopicknum" class="form-label">채용 인원:</label>
-                        <input type="text" id="annopicknum" name="annopicknum" value="${anno.annoPickNum}" class="form-input">
+                        <label for="annoPickNum" class="form-label">채용 인원:</label>
+                        <input type="text" id="annoPickNum" name="annoPickNum" value="${anno.annoPickNum}" class="form-input">
                     </div>
 
                     <div class="form-group">
-                        <label for="annocontent" class="form-label">공고 내용:</label>
-                        <textarea id="annocontent" name="annocontent" class="form-textarea">${anno.annoContent}</textarea>
+                        <label for="annoContent" class="form-label">공고 내용:</label>
+                        <textarea id="annoContent" name="annoContent" class="form-textarea">${anno.annoContent}</textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="bid" class="form-label">기업 ID:</label>
-                        <input type="text" id="bid" name="bid" value="${anno.bid}" class="form-input">
+                        <label for="businessId" class="form-label">기업 ID:</label>
+                        <input type="text" id="businessId" name="businessId" value="${anno.businessId}" class="form-input">
                     </div>
                     
                     <div class="form-group">
-                        <label for="skillid" class="form-label">스킬 ID:</label>
-                        <input type="text" id="skillid" name="skillid" value="${anno.skillid}" class="form-input">
+                        <label for="skillId" class="form-label">스킬 ID:</label>
+                        <input type="text" id="skillId" name="skillId" value="${anno.skillId}" class="form-input">
                     </div>
                     
                     <div class="form-group">

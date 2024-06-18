@@ -92,28 +92,28 @@
       <aside class="bg-white rounded-lg shadow p-4 fixed-sidebar">
         <h2 class="text-lg font-bold mb-4">Sidebar</h2>
         <ul>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/BusinessAnnoList" class="text-blue-500"><b>공고목록</b></a></li>
+          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-list" class="text-blue-500"><b>공고목록</b></a></li>
           <li class="mb-2"><a href="#" class="text-blue-500">#</a></li>
           <li class="mb-2"><a href="#" class="text-blue-500">#</a></li>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/BusinessAnnoInsertForm" class="text-blue-500">공고작성</a></li>
+          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-insert-form" class="text-blue-500">공고작성</a></li>
         </ul>
       </aside>
 
       <!-- Main Content -->
       <div class="main-content w-5/6 p-4 overflow-x-auto">
         <div class="card-container">
-          <c:set var="annoid" value="${annoid}"/>
-          <c:forEach var="m" items="${li}">
-            <a href="${pageContext.request.contextPath}/anno/BusinessAnnoInfo?annoid=${m.annoid}" class="card">
+          <c:set var="annoId" value="${annoId}"/>
+          <c:forEach var="businessAnno" items="${li}">
+            <a href="${pageContext.request.contextPath}/anno/business-anno-info?annoid=${businessAnno.annoId}" class="card">
               <div class="card-content-wrapper">
                 <div class="card-content">
-                  <div class="card-title">${m.annoid}</div>
-                  <div class="card-title">${m.bid}</div>
-                  <div class="card-title">${m.bname}</div>
-                  <div class="card-text">Title: ${m.annoTitle}</div>
-                  <div class="card-text">Grade: ${m.annoGrade}</div>
-                  <div class="card-text">Type: ${m.annoWorkType}</div>
-                  <div class="card-text">Place: ${m.annoWorkPlace}</div>
+                  <div class="card-title">${businessAnno.annoId}</div>
+                  <div class="card-title">${businessAnno.businessId}</div>
+                  <div class="card-title">${businessAnno.businessName}</div> 
+                  <div class="card-text">Title: ${businessAnno.annoTitle}</div>
+                  <div class="card-text">Grade: ${businessAnno.annoGrade}</div>
+                  <div class="card-text">Type: ${businessAnno.annoWorkType}</div>
+                  <div class="card-text">Place: ${businessAnno.annoWorkPlace}</div>
                 </div>
                 <div class="card-extra">
                   <div class="card-text">Extra Info 1: </div>
@@ -122,7 +122,7 @@
                 </div>
               </div>
               <div class="card-footer">
-                <fmt:formatDate value="${m.annoDate}" pattern="yyyy-MM-dd" />
+                <fmt:formatDate value="${businessAnno.annoDate}" pattern="yyyy-MM-dd" />
               </div>
             </a>
           </c:forEach>

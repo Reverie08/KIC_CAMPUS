@@ -85,33 +85,33 @@ body {
 	<div class="container">
 		<div class="title">회원정보</div>
 		<div class="info-group">
-			<label for="id">사용자 아이디</label><input type="text" id="memberId"
-				name="memberId" value="${mem.memberId}" readonly>
+			<label for="memberId">사용자 아이디</label><input type="text" id="memberId"
+				name="memberId" value="${member.memberId}" readonly>
 		</div>
 		<div class="info-group">
-			<label for="username">사용자 이름</label> <input type="text" id="name"
-				name="name" value="${mem.name}" readonly>
+			<label for="name">사용자 이름</label> <input type="text" id="name"
+				name="name" value="${member.name}" readonly>
 		</div>
 		<div class="info-group">
 			<label for="email">이메일</label> <input type="email" id="email"
-				name="email" value="${mem.email}" readonly>
+				name="email" value="${member.email}" readonly>
 		</div>
 		<div class="info-group">
 			<label for="phone">전화번호</label> <input type="tel" id="phone"
-				name="phone" value="${mem.phone}" readonly>
+				name="phone" value="${member.phone}" readonly>
 		</div>
 		<div class="info-group">
 			<label for="birth">생년월일</label> <input type="text" id="birth"
-				name="birth" value="${mem.birth}" readonly>
+				name="birth" value="${member.birth}" readonly>
 		</div>
 
-		<a href="${pageContext.request.contextPath}/member/memberlogout">
+		<a href="${pageContext.request.contextPath}/member/member-logout">
 			<button type="button" class="button">로그아웃</button>
-		</a> <a href="${pageContext.request.contextPath}/member/memberupdate">
+		</a> <a href="${pageContext.request.contextPath}/member/member-update">
 			<button type="button" class="button">내 정보 수정</button>
-		</a> <a href="${pageContext.request.contextPath}/member/memberchangepw">
+		</a> <a href="${pageContext.request.contextPath}/member/member-change-pw">
 			<button type="button" class="button">비밀번호 변경하기</button>
-		</a> <a href="${pageContext.request.contextPath}/member/memberdelete">
+		</a> <a href="${pageContext.request.contextPath}/member/member-delete">
 			<button type="button" class="button">회원 탈퇴</button>
 		</a>
 	</div>

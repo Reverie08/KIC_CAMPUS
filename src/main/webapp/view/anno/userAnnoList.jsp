@@ -53,20 +53,20 @@
 </head>
 <body>
     <div class="card-container">
-        <c:set var="annoid" value="${annoid}"/>
-        <c:forEach var="m" items="${li}">
-            <a href="${pageContext.request.contextPath}/anno/UserAnnoInfo?annoid=${m.annoid}" class="card"> <!-- Replace "yourLinkHere" with your actual link -->
+        <c:set var="annoId" value="${annoId}"/>
+        <c:forEach var="userAnno" items="${li}">
+            <a href="${pageContext.request.contextPath}/anno/user-anno-info?annoid=${userAnno.annoId}" class="card"> <!-- Replace "yourLinkHere" with your actual link -->
                 <div class="card-content">
-                    <div class="card-title">${m.annoid}</div>
-                    <div class="card-title">${m.bid}</div>
-                    <div class="card-title">${m.bname}</div>
-                    <div class="card-text">Title: ${m.annoTitle}</div>
-                    <div class="card-text">Grade: ${m.annoGrade}</div>
-                    <div class="card-text">Type: ${m.annoWorkType}</div>
-                    <div class="card-text">Place: ${m.annoWorkPlace}</div>
+                    <div class="card-title">${userAnno.annoId}</div>
+                    <div class="card-title">${userAnno.businessId}</div>
+                    <div class="card-title">${userAnno.businessName}</div>
+                    <div class="card-text">Title: ${userAnno.annoTitle}</div>
+                    <div class="card-text">Grade: ${userAnno.annoGrade}</div>
+                    <div class="card-text">Type: ${userAnno.annoWorkType}</div>
+                    <div class="card-text">Place: ${userAnno.annoWorkPlace}</div>
                 </div>
                 <div class="card-footer">
-                    <fmt:formatDate value="${m.annoDate}" pattern="yyyy-MM-dd" />
+                    <fmt:formatDate value="${userAnno.annoDate}" pattern="yyyy-MM-dd" />
                 </div>
             </a>
         </c:forEach>
