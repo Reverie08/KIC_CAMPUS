@@ -181,32 +181,40 @@ body {
 			<!-- Filters -->
 			<div class="filters">
 				<button class="active">내 공고</button>
-				<button>모든 공고</button>
+				<a href="${pageContext.request.contextPath}/anno/user-anno-list"><button>모든 공고</button></a>
 				<form action="search-anno-list" method="post">
 					<select name="part">
 						<option value="annoTitle">공고 제목</option>
 						<option value="businessName">공고 기업</option>
-					</select> <input type="text" name="searchData" placeholder="공고 검색">
-					<!-- 					<input type="submit" value="검색"> -->
+					</select> 
+					<input type="text" name="searchData" placeholder="공고 검색">
+<!-- 					<input type="submit" value="검색"> -->
 				</form>
 				<select>
 					<option>전체</option>
 					<option>진행중</option>
 					<option>마감</option>
-				</select> <select>
+				</select> 
+				<select>
 					<option>자동 마감일 순</option>
 					<option>생성일 순</option>
 					<option>가나다 순</option>
-				</select> <select>
+				</select> 
+				<select>
 					<option>직군</option>
 					<option>개발</option>
 					<option>디자인</option>
 				</select>
 			</div>
 			<div class="card-container">
-				
+			<c:if test="${empty searchAnnoList}">
+					<!-- list.size()가 0이라면 -->
+					<tr align="center">
+						<td colspan="5">해당 공고가 없습니다.</td>
+					</tr>
+				</c:if>
 				<c:set var="annoId" value="${annoId}" />
-				<c:forEach var="userAnno" items="${li}">
+				<c:forEach var="userAnno" items="${searchAnnoList}">
 					<a
 						href="${pageContext.request.contextPath}/anno/user-anno-info?annoId=${userAnno.annoId}"
 						class="card">

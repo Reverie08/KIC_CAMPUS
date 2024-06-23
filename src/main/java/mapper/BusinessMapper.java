@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Update;
 
 import model.Business;
 import model.Search;
+import model.Sort;
 
 public interface BusinessMapper {
 
@@ -49,7 +50,27 @@ public interface BusinessMapper {
 	@Select("select * from business where industry=#{industry} and detailindustry=#{detailIndustry}")
 	List<Business> detailIndustryList(String industry, String detailIndustry);
 
-	// 기업 검색어 리스트
-	@Select("select * from business where upper(${part}) like upper(#{searchData})")
-	List<Business> searchBusinessList(Search search);
+//	// 기업 검색어 리스트
+//	@Select("select * from business where upper(${part}) like upper(#{searchData})")
+//	List<Business> searchBusinessList(Search search);
+	
+	// 기업 조건 검색
+    @Select({
+        "<script>",
+        "SELECT * FROM business",
+        "WHERE upper(${part}) LIKE upper(#{searchData})",
+        "<if test='sortData != null and !sortData.isEmpty()'>",
+        "ORDER BY ${sortData}",
+        "</if>",
+        "</script>"
+    })
+    List<Business> searchBusinessList(Search search);
+    
+	
+	
+	// 기업 리스트 정렬
+	@Select("SELECT * FROM business ORDER BY ${sortData} ${ascDesc}")
+	List<Business> sortBusinessList(Sort sort);
+	
+	
 }

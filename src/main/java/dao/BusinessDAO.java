@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import mapper.BusinessMapper;
 import model.Business;
 import model.Search;
+import model.Sort;
 import util.MybatisConnection;
 
 public class BusinessDAO {
@@ -73,11 +74,26 @@ public class BusinessDAO {
 		return detailIndustryList;
 	}
 	
-	// 기업 조건 검색
-	public List<Business> searchBusinessList(Search search) {
-		// 검색 결과가 없을 수도 있고 정확한 타입인지 확인하기 위해 List로 받는다.
-		List<Business> searchBusinessList = session.getMapper(BusinessMapper.class).searchBusinessList(search);
-//		session.close();
-		return searchBusinessList;
-	} 
+//	// 기업 조건 검색
+//	public List<Business> searchBusinessList(Search search) {
+//		// 검색 결과가 없을 수도 있고 정확한 타입인지 확인하기 위해 List로 받는다.
+//		List<Business> searchBusinessList = session.getMapper(BusinessMapper.class).searchBusinessList(search);
+////		session.close();
+//		return searchBusinessList;
+//	} 
+	
+	
+	// 기업 검색어 리스트
+    public List<Business> searchBusinessList(Search search) {
+        List<Business> searchBusinessList = session.getMapper(BusinessMapper.class)
+                .searchBusinessList(search);
+        return searchBusinessList;
+    }
+	
+	
+	// 기업 리스트 정렬
+	public List<Business> sortBusinessList(Sort sort) {
+		List<Business> sortBusinessList = session.getMapper(BusinessMapper.class).sortBusinessList(sort);
+		return sortBusinessList; 
+	}
 }

@@ -129,6 +129,7 @@ public class ResumeDAO {
 	// 이력서 삭제하기 deleteResume
 	public int deleteResume(int resumeId) {
 		int num = session.getMapper(ResumeMapper.class).deleteResume(resumeId);
+		session.commit();
 		return num;
 	}
 	

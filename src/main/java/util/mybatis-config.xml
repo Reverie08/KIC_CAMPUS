@@ -19,6 +19,8 @@
 		<typeAlias type="model.MemberPortfolio"
 			alias="memberportfolio" />
 		<typeAlias type="model.MemberProject" alias="memberproject" />
+		<typeAlias type="model.Search" alias="search" />
+		<typeAlias type="model.Sort" alias="sort" />
 
 	</typeAliases>
 

@@ -41,6 +41,10 @@ public interface MemberMapper {
 	int deleteMember(String memberId);
 
 	// 회원 프로필 이미지 추가
-	@Insert("insert into member (profileImage) values(#{profileImage} where memberid = #{memberId})")
+	@Insert("insert into member (profileimage) values(#{profileImage} where memberid = #{memberId})")
 	int insertProfileImage(String profileImage, String memberId);
+	
+	// 회원 프로필 이미지 변경
+	@Update("update member set profileimage = #{profileImage} where memberid = #{memberId}")
+	int updateProfileImage(Map<String,String> map);
 }

@@ -84,6 +84,7 @@
     <header class="header bg-white p-4 shadow-md">
       <div class="container mx-auto flex justify-between items-center">
         <h1 class="text-2xl font-bold">Job Announcements</h1>
+        <a href="${pageContext.request.contextPath}/business/business-info?businessid=${sessionScope.businessId}">${business.businessName}</a>
       </div>
     </header>
     <div class="flex flex-grow">
@@ -92,7 +93,7 @@
       <aside class="bg-white rounded-lg shadow p-4 fixed-sidebar">
         <h2 class="text-lg font-bold mb-4">Sidebar</h2>
         <ul>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-list" class="text-blue-500"><b>공고목록</b></a></li>
+          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-list?busineessid=${sessionScope.businessId}" class="text-blue-500"><b>공고목록</b></a></li>
           <li class="mb-2"><a href="#" class="text-blue-500">#</a></li>
           <li class="mb-2"><a href="#" class="text-blue-500">#</a></li>
           <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-insert-form" class="text-blue-500">공고작성</a></li>
@@ -102,9 +103,11 @@
       <!-- Main Content -->
       <div class="main-content w-5/6 p-4 overflow-x-auto">
         <div class="card-container">
+        
           <c:set var="annoId" value="${annoId}"/>
           <c:forEach var="businessAnno" items="${li}">
-            <a href="${pageContext.request.contextPath}/anno/business-anno-info?annoid=${businessAnno.annoId}" class="card">
+          <c:if test="${sessionScope.businessId eq businessAnno.businessId}">
+            <a href="${pageContext.request.contextPath}/anno/business-anno-info?annoId=${businessAnno.annoId}" class="card">
               <div class="card-content-wrapper">
                 <div class="card-content">
                   <div class="card-title">${businessAnno.annoId}</div>
@@ -125,6 +128,7 @@
                 <fmt:formatDate value="${businessAnno.annoDate}" pattern="yyyy-MM-dd" />
               </div>
             </a>
+            </c:if>
           </c:forEach>
         </div>
       </div>

@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Search implements Serializable {
 	private String part;
 	private String searchData;
+	private String sortData;
 
 	public Search() {
 	}
@@ -31,9 +32,17 @@ public class Search implements Serializable {
 		this.searchData = searchData;
 	}
 
+	public String getSortData() {
+		return sortData;
+	}
+
+	public void setSortData(String sortData) {
+		this.sortData = sortData;
+	}
+
 	@Override
 	public String toString() {
-		return "Search [part=" + part + ", searchData=" + searchData + "]";
+		return "Search [part=" + part + ", searchData=" + searchData + ", sortData=" + sortData + "]";
 	}
 
 }

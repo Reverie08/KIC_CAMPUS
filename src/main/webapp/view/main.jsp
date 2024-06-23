@@ -215,19 +215,26 @@
                <li><a href="#">정부지원 바우처</a></li>
             </ul>
          </nav>
-         <c:if test = "${sessionScope.memberId == null }">
+         <c:if test = "${sessionScope.memberId == null && sessionScope.businessId == null}">
          <div class="login-inquiry">
             <a href="${pageContext.request.contextPath}/member/member-login" class="inquiry-button" style="color: white;">개인 로그인</a>
             <a href="${pageContext.request.contextPath}/business/business-login" class="inquiry-button" style="color: white;">기업 로그인</a>
          </div>
          </c:if>
-         <c:if test = "${sessionScope.memberId != null }">
+    
          <div class="login-inquiry">
+         	<c:if test ="${sessionScope.memberId != null }">
             <a href="${pageContext.request.contextPath}/member/member-logout" class="inquiry-button" style="color: white;">개인 로그아웃</a>
+            </c:if>
+            <c:if test ="${sessionScope.businessId != null }">
             <a href="${pageContext.request.contextPath}/business/business-logout" class="inquiry-button" style="color: white;">기업 로그아웃</a>
-            <a href="${pageContext.request.contextPath}/member/member-info" class="inquiry-button" style="color: white;">내 정보</a>
+            <a href="${pageContext.request.contextPath}/business/business-list" class="inquiry-button" style="color: white;">기업리스트</a>
+          <a href="${pageContext.request.contextPath}/anno/business-anno-list?busineessid=${sessionScope.businessId}" class="text-blue-500"><b>공고목록</b></a>
+				   <a href="${pageContext.request.contextPath}/anno/business-anno-insert-form" class="text-blue-500">공고작성</a>
+				   
+             </c:if>
          </div>
-         </c:if>
+   
       </div>
    </header>
 

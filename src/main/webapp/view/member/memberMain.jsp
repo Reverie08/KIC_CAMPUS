@@ -16,7 +16,6 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
 	rel="stylesheet">
 <style>
-
 body {
 	font-family: 'Roboto', sans-serif;
 }
@@ -75,32 +74,36 @@ body {
 						alt="Logo" class="mr-2"> <span class="text-lg font-bold">Greeting
 						Guide</span>
 				</div>
+				<c:if test="${sessionScope.memberId != null }">
 				<ul>
-					<li class="mb-2 text-gray-700">공고리스트</li>
-					<li class="mb-2 text-gray-700 pl-4">CX Manager</li>
-					<li class="mb-2 text-red-500 pl-4">Front-end Developer</li>
+					<li class="mb-2"><a href="${pageContext.request.contextPath}/anno/user-anno-list" class="text-blue-500"><b>공고목록</b></a></li>
+<%-- 				   <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-insert-form" class="text-blue-500">공고작성</a></li> --%>
 				</ul>
+				</c:if>
+				<c:if test="${sessionScope.businessId != null }">
 				<ul>
-					<li class="mb-2 text-gray-700">어쩌구리스트</li>
-					<li class="mb-2 text-gray-700 pl-4">CX Manager</li>
-					<li class="mb-2 text-red-500 pl-4">Front-end Developer</li>
+					<li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-list" class="text-blue-500"><b>공고목록</b></a></li>
+				   <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-insert-form" class="text-blue-500">공고작성</a></li>
+				</ul>
+				</c:if>
+				<ul>
+					<li class="mb-2"><a href="${pageContext.request.contextPath}/member/member-main" class="text-blue-500"><b>회원정보</b></a></li>
+					
 				</ul>
 			</div>
-			<c:if test="${sessionScope.memberId != null }">
+			<c:if test="${sessionScope.memberId != null || sessionScope.businessId != null}">
 				<div class="login-inquiry mt-auto">
 					<a href="${pageContext.request.contextPath}/member/member-logout"
 						method="post">
-						<button type="submit" class="inquiry-button">개인 로그아웃</button>
-					</a> 
-					
-					<a href="${pageContext.request.contextPath}/member/member-info"
+						<button type="submit" class="inquiry-button">로그아웃</button>
+					</a> <a href="${pageContext.request.contextPath}/member/member-info"
 						method="post">
 						<button type="submit" class="inquiry-button">내 정보</button>
-					</a>
-						<a href="${pageContext.request.contextPath}/resume/resume-register-form"
+					</a> <a
+						href="${pageContext.request.contextPath}/resume/resume-register-form"
 						method="post">
 						<button type="submit" class="inquiry-button">이력서 작성하러 가기</button>
-					</a> 
+					</a>
 				</div>
 			</c:if>
 		</div>
@@ -148,8 +151,7 @@ body {
 				<div class="relative">
 					<button class="flex items-center text-gray-700" id="dropdownButton"
 						onclick="toggleDropdown()">
-						<img src="https://via.placeholder.com/20" alt="Options Icon"
-							class="mr-2">
+						<img src="" alt="Options Icon" class="mr-2">
 					</button>
 					<div id="dropdownMenu" class="dropdown-menu">
 						<ul class="space-y-2">
@@ -166,56 +168,62 @@ body {
 					</div>
 				</div>
 			</div>
-			<div class="flex bg-white shadow-lg rounded p-4 mb-4">
-				<!-- 왼쪽에 프로필 사진 -->
-				<div class="w-1/3 mr-8">
-					<h2 class="text-lg font-semibold mb-4">프로필 사진</h2>
-					<div class="w-48 h-48 bg-gray-200 rounded-full overflow-hidden">
-						<img src="https://via.placeholder.com/150" alt="프로필 사진"
-							class="w-full h-full object-cover">
+			<form action="update-profileImage" method="post"
+				enctype="multipart/form-data">
+				<div class="flex bg-white shadow-lg rounded p-4 mb-4">
+					<!-- 왼쪽에 프로필 사진 -->
+					<div class="w-1/3 mr-8">
+						<h2 class="text-lg font-semibold mb-4">프로필 사진</h2>
+						<input type="hidden" name="num" value="${member.memberId}" /> <input
+							type="hidden" name="originfile" value="${member.profileImage}" />
+						<div class="w-48 h-48 bg-gray-200 rounded-full overflow-hidden">
+							<img
+								src="${pageContext.request.contextPath}/img/member/${member.profileImage}"
+								alt="프로필 사진" class="w-full h-full object-cover">
+						</div>
+						<input type="file" name="profileImage" id="profile-pic"
+							class="mt-4">
+						<button type="submit" class="inquiry-button">변경하기</button>
 					</div>
-					<input type="file" name="profileImage" id="profile-pic"
-						class="mt-4">
+					<!-- 오른쪽에 개인 정보 -->
+					<div class="w-2/3">
+						<h2 class="text-lg font-semibold mb-4">개인 정보</h2>
+						<form action="member-update-pro" method="post"
+							enctype="multipart/form-data">
+							<div class="mb-4">
+								<label for="name"
+									class="block text-sm font-medium text-gray-700">이름</label> <input
+									type="text" name="name" id="name"
+									class="mt-1 p-2 border border-gray-300 rounded w-full"
+									value="${member.name}" readonly>
+							</div>
+							<div class="mb-4">
+								<label for="email"
+									class="block text-sm font-medium text-gray-700">이메일</label> <input
+									type="email" name="email" id="email"
+									class="mt-1 p-2 border border-gray-300 rounded w-full"
+									value="${member.email}" readonly>
+							</div>
+							<div class="mb-4">
+								<label for="phone"
+									class="block text-sm font-medium text-gray-700">전화번호</label> <input
+									type="tel" name="phone" id="phone"
+									class="mt-1 p-2 border border-gray-300 rounded w-full"
+									value="${member.phone}" readonly>
+							</div>
+							<div class="mb-4">
+								<label for="birth"
+									class="block text-sm font-medium text-gray-700">생년월일</label> <input
+									type="text" name="birth" id="birth"
+									class="mt-1 p-2 border border-gray-300 rounded w-full"
+									value="${member.birth}" readonly>
+							</div>
+						</form>
+					</div>
 				</div>
+			</form>
 
-				<!-- 오른쪽에 나머지 정보 -->
-				<div class="w-2/3">
-					<h2 class="text-lg font-semibold mb-4">개인 정보</h2>
-					<form action="member-update-pro" method="post"
-						enctype="multipart/form-data">
-						<div class="mb-4">
-							<label for="name"
-								class="block text-sm font-medium text-gray-700">이름</label> <input
-								type="text" name="name" id="name"
-								class="mt-1 p-2 border border-gray-300 rounded w-full"
-								value="${member.name}" readonly>
-						</div>
-						<div class="mb-4">
-							<label for="email"
-								class="block text-sm font-medium text-gray-700">이메일</label> <input
-								type="email" name="email" id="email"
-								class="mt-1 p-2 border border-gray-300 rounded w-full"
-								value="${member.email}" readonly>
-						</div>
-						<div class="mb-4">
-							<label for="phone"
-								class="block text-sm font-medium text-gray-700">전화번호</label> <input
-								type="tel" name="phone" id="phone"
-								class="mt-1 p-2 border border-gray-300 rounded w-full"
-								value="${member.phone}" readonly>
-						</div>
-						<div class="mb-4">
-							<label for="birth"
-								class="block text-sm font-medium text-gray-700">생년월일</label> <input
-								type="text" name="birth" id="birth"
-								class="mt-1 p-2 border border-gray-300 rounded w-full"
-								value="${member.birth}" readonly>
-						</div>
-					</form>
-				</div>
-			</div>
-
-			<!-- Column Container -->
+			<!-- 이력서 관리 -->
 			<div class="flex flex-col bg-white shadow-lg rounded p-4 mb-4">
 				<div class="flex justify-between mb-2">
 					<h2 class="text-lg font-semibold">이력서 관리</h2>
@@ -230,26 +238,25 @@ body {
 							</tr>
 						</thead>
 						<tbody>
-						
-							<c:forEach var="resume" items="${memberResumeList} ">
-							<tr>
-								<td class="py-2">
-									<div class="flex items-center">
-										<span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">기본이력서</span>
-										<span class="ml-2 text-gray-700">이력서 설명</span>
-									</div>
-								</td>
-								<td class="text-sm text-gray-500">이력서 등록날짜</td>
-								<td>
-									<div class="flex space-x-2">
-										<button class="text-blue-500">수정</button>
-										<button class="text-blue-500">삭제</button>
-										<a href="${pageContext.request.contextPath}/resume/resume-info?resumeid=5">이력서 보기</a>
-									</div>
-								</td>
-							</tr>
+							<c:forEach var="resume" items="${memberResumeList}">
+								<tr>
+									<td class="py-2">
+										<div class="flex items-center">
+											<span
+												class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">기본이력서</span>
+											<span class="ml-2 text-gray-700">${resume.selfInfo}</span>
+										</div>
+									</td>
+									<td class="text-sm text-gray-500">${resume.registerDate}</td>
+									<td>
+										<div class="flex space-x-2">
+							       <a href="${pageContext.request.contextPath}/resume/update-resume?resumeId=${resume.resumeId}" class="inquiry-button">수정</a>
+                               <button onclick="deleteResume('${resume.resumeId}')" class="inquiry-button">삭제</button>
+                              <a href="${pageContext.request.contextPath}/resume/resume-info?resumeId=${resume.resumeId}" class="inquiry-button">이력서 보기</a>
+										</div>
+									</td>
+								</tr>
 							</c:forEach>
-							
 						</tbody>
 					</table>
 				</div>
@@ -258,35 +265,17 @@ body {
 	</div>
 
 	<script>
-        function addTemplate(columnId) {
-            const template = `
-                <div class="p-4 border border-gray-200 rounded mb-2">
-                    <div class="text-gray-700">New Candidate</div>
-                    <div class="text-sm text-gray-500">직접등록</div>
-                    <div class="text-sm text-gray-500">2023.06.19</div>
-                    <div class="text-sm text-gray-500">평가 중 (0/3)</div>
-                </div>
-            `;
-            const column = document.getElementById(columnId);
-            if (column.classList.contains('text-center')) {
-                column.classList.remove('text-center', 'text-gray-500');
-                column.innerHTML = '';
-            }
-            column.insertAdjacentHTML('beforeend', template);
-        }
+	  
+	   function deleteResume(resumeId){
+	   	const ok = confirm("이력서를 지우시겠습니까??");
+	   	if(ok == true){
+	   		location.href= "${pageContext.request.contextPath}/resume/delete-resume?resumeId="+resumeId;
+	   	}else{
+	   			
+	   	}
+	   }
 
-        function toggleDropdown() {
-            const dropdownMenu = document.getElementById('dropdownMenu');
-            dropdownMenu.classList.toggle('show');
-        }
-
-        document.addEventListener('click', function(event) {
-            const dropdownMenu = document.getElementById('dropdownMenu');
-            const button = document.getElementById('dropdownButton');
-            if (!button contains(event.target) && !dropdownMenu.contains(event.target)) {
-                dropdownMenu.classList.remove('show');
-            }
-        });
+	
     </script>
 </body>
 </html>

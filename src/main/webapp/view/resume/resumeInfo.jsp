@@ -157,7 +157,7 @@
                         <div class="w-full md:w-1/2 px-2">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="school-type">학교구분</label>
                           <div class="relative">
-                            <select name="schoolType" class="appearance-none border rounded-lg w-full px-3 py-2" id="school-type">
+                            <select  name="schoolType" class="appearance-none border rounded-lg w-full px-3 py-2" id="school-type">
                               <option value="${resume.edu.schoolType}">${resume.edu.schoolType}</option>
                             </select>
                             <div class="custom-select-icon">

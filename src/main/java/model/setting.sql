@@ -1,5 +1,8 @@
+
+
+
 CREATE TABLE member (
-	memberid	VARCHAR2(30)	NOT NULL,
+	memberid	VARCHAR2(30)	,
 	memberpw	VARCHAR2(30)	NULL,
 	name	VARCHAR2(30)	NULL,
 	gender	VARCHAR2(30)	NULL,
@@ -10,7 +13,7 @@ CREATE TABLE member (
 );
 
 CREATE TABLE business (
-	businessid	VARCHAR2(20)	NOT NULL,
+	businessid	VARCHAR2(20),
 	businesspw	VARCHAR2(40)	NULL,
 	businessname	VARCHAR2(40)	NULL,
 	address	VARCHAR2(200)	NULL,
@@ -27,14 +30,14 @@ CREATE TABLE business (
 );
 
 CREATE TABLE resume (
-	resumeid	number	NOT NULL,
+	resumeid	number,
 	resumetitle	VARCHAR2(90)	NULL,
 	profileimage	VARCHAR2(200)	NULL,
 	name	VARCHAR2(90)	NULL,
 	birth	VARCHAR2(90)	NULL,
 	phone	VARCHAR2(90)	NULL,
 	email	VARCHAR2(90)	NULL,
-	registdate	VARCHAR2(90)	NULL,
+	registdate	DATE	NULL,
 	selfinfo	VARCHAR2(40)	NULL,
 	certification	VARCHAR2(90)	NULL,
 	language	VARCHAR2(90)	NULL,
@@ -42,13 +45,13 @@ CREATE TABLE resume (
 	columnstage	number	NULL,
 	evalustage	number	NULL,
 	resumescore	number	NULL,
-	memberid	VARCHAR2(40)	NOT NULL,
-	businessid	VARCHAR2(40)	NOT NULL,
-	annoid	number	NOT NULL
+	memberid	VARCHAR2(40),
+	businessid	VARCHAR2(40),
+	annoid	number
 );
 
 CREATE TABLE anno (
-	annoid	number	NOT NULL,
+	annoid	number	,
 	businessname	VARCHAR2(90)	NULL,
 	welfare	VARCHAR2(90)	NULL,
 	annotitle	VARCHAR2(90)	NULL,
@@ -64,12 +67,12 @@ CREATE TABLE anno (
 	annopicknum	number	NULL,
 	annodate	DATE	NULL,
 	annocontent	VARCHAR2(400)	NULL,
-	businessid	number	NOT NULL,
-	skillid	number	NOT NULL
+	businessid	number	,
+	skillid	number	
 );
 
 CREATE TABLE skill (
-	skillid	number	NOT NULL,
+	skillid	VARCHAR2(40)	,
 	java	VARCHAR2(40)	NULL,
 	jsp	VARCHAR2(40)	NULL,
 	html	VARCHAR2(40)	NULL,
@@ -84,13 +87,13 @@ CREATE TABLE skill (
 	oracle	VARCHAR2(40)	NULL,
 	mysql	VARCHAR2(40)	NULL,
 	mongodb	VARCHAR2(40)	NULL,
-	memberid	number	NOT NULL,
-	resumeid	number	NOT NULL,
-	annoid	number	NOT NULL
+	memberid	number	,
+	resumeid	number	,
+	annoid	number	
 );
 
 CREATE TABLE edu (
-	eduid	number	NOT NULL,
+	eduid	number	,
 	schooltype	VARCHAR2(40)	NULL,
 	schoolname	VARCHAR2(40)	NULL,
 	admissiondate	VARCHAR2(40)	NULL,
@@ -99,11 +102,11 @@ CREATE TABLE edu (
 	major	VARCHAR2(40)	NULL,
 	score	VARCHAR2(40)	NULL,
 	totalscore	VARCHAR2(40)	NULL,
-	resumeid	number	NOT NULL
+	resumeid	number	
 );
 
 CREATE TABLE career (
-	careerid	number	NOT NULL,
+	careerid	number	,
 	companyname	VARCHAR2(40)	NULL,
 	department	VARCHAR2(40)	NULL,
 	workpart	VARCHAR2(40)	NULL,
@@ -111,23 +114,23 @@ CREATE TABLE career (
 	worktype	VARCHAR2(40)	NULL,
 	isworking	VARCHAR2(40)	NULL,
 	workperiod	VARCHAR2(40)	NULL,
-	resumeid	number	NOT NULL
+	resumeid	number	
 );
 
 CREATE TABLE memberproject (
-	projectid	number	NOT NULL,
+	projectid	number	,
 	projectname	VARCHAR2(40)	NULL,
 	team	VARCHAR2(40)	NULL,
 	isgoing	VARCHAR2(40)	NULL,
 	projectperiod	VARCHAR2(40)	NULL,
 	projectinfo	VARCHAR2(40)	NULL,
-	resumeid	number	NOT NULL
+	resumeid	number	
 );
 
 CREATE TABLE memberportfolio (
-	portfolioid	number	NOT NULL,
+	portfolioid	number	
 	portfoliourl	VARCHAR2(200)	NULL,
 	portfoliofile	VARCHAR2(200)	NULL,
-	resumeid	number	NOT NULL
+	resumeid	number	
 );
 

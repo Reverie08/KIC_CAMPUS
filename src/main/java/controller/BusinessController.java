@@ -14,6 +14,7 @@ import kic.mskim.MskimRequestMapping;
 import kic.mskim.RequestMapping;
 import model.Business;
 import model.Search;
+import model.Sort;
 
 @WebServlet("/business/*")
 public class BusinessController extends MskimRequestMapping {
@@ -28,7 +29,7 @@ public class BusinessController extends MskimRequestMapping {
 		System.out.println("service");
 		super.service(request, response);
 	}
-	
+
 	// 메인
 	@RequestMapping("business-main")
 	public String business(HttpServletRequest request, HttpServletResponse response)
@@ -37,9 +38,9 @@ public class BusinessController extends MskimRequestMapping {
 		Business business = businessDao.getBusiness(businessId);
 		request.setAttribute("business", business);
 
-		return "/view/business/businessMain.jsp";
+		return "/view/main.jsp";
 	}
-	
+
 	// 기업 회원가입폼
 	@RequestMapping("business-join")
 	public String businessJoin(HttpServletRequest request, HttpServletResponse response)
@@ -47,8 +48,7 @@ public class BusinessController extends MskimRequestMapping {
 		return "/view/business/businessJoin.jsp";
 	}
 
-	
-	// 기업 회원 가입 처리 
+	// 기업 회원 가입 처리
 	@RequestMapping("business-join-pro")
 	public String businessJoinPro(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -67,7 +67,7 @@ public class BusinessController extends MskimRequestMapping {
 		String detailIndustry = request.getParameter("detailIndustry");
 		String homepage = request.getParameter("homepage");
 		String content = request.getParameter("content");
-		
+
 		content = content.replace("\n", "<br>");
 
 		Business business = new Business();
@@ -113,7 +113,6 @@ public class BusinessController extends MskimRequestMapping {
 		return "/view/business/businessLogin.jsp";
 	}
 
-	
 	// 기업 로그인 처리
 	@RequestMapping("business-login-pro")
 	public String businessLoginPro(HttpServletRequest request, HttpServletResponse response)
@@ -169,8 +168,9 @@ public class BusinessController extends MskimRequestMapping {
 	@RequestMapping("business-info")
 	public String businessInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String businessId = (String)session.getAttribute("businessId");
-//		String businessId = session.getParameter("businessId");
+		String businessId = request.getParameter("businessid");
+//		String businessId = (String) session.getAttribute("businessId");
+		System.out.println(businessId);
 		Business business = businessDao.getBusiness(businessId);
 		request.setAttribute("business", business);
 
@@ -211,7 +211,7 @@ public class BusinessController extends MskimRequestMapping {
 		String detailIndustry = request.getParameter("detailIndustry");
 		String homepage = request.getParameter("homepage");
 		String content = request.getParameter("content");
-		
+
 		content = content.replace("\n", "<br>");
 
 		Business businessDb = businessDao.getBusiness(businessId);
@@ -296,22 +296,52 @@ public class BusinessController extends MskimRequestMapping {
 		return "/view/alert.jsp";
 	}
 
-	// 기업 검색
-	@RequestMapping("search-business-list")
-	public String searchBusinessList(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		String part = request.getParameter("part");
-		String searchData = request.getParameter("searchData");
-		Search search = new Search();
-		search.setPart(part);
-		search.setSearchData("%" + searchData + "%");
+    // 기업 검색
+    @RequestMapping("search-business-list")
+    public String searchBusinessList(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        String part = request.getParameter("part");
+        String searchData = request.getParameter("searchData");
+        String sortData = request.getParameter("sortData"); // 정렬 조건이 있을 경우 받음
 
-		BusinessDAO businessDao = new BusinessDAO();
-		List<Business> searchBusinessList = businessDao.searchBusinessList(search);
-		request.setAttribute("searchBusinessList", searchBusinessList);
+        Search search = new Search();
+        search.setPart(part);
+        search.setSearchData("%" + searchData + "%");
+        search.setSortData(sortData);
 
-		return "/view/business/searchBusinessList.jsp";
-	}
+        List<Business> searchBusinessList = businessDao.searchBusinessList(search);
+
+        request.setAttribute("searchPart", part); // 선택된 검색 조건
+        request.setAttribute("searchData", searchData); // 검색어
+        request.setAttribute("selectedSortData", sortData); // 선택된 정렬 데이터를 속성에 설정
+        request.setAttribute("searchBusinessList", searchBusinessList);
+
+        return "/view/business/searchBusinessList.jsp";
+    }
+
+	// 기업 정렬
+	@RequestMapping("sort-business-list")
+	 public String sortBusinessList(HttpServletRequest request, HttpServletResponse response)
+	            throws ServletException, IOException {
+	        request.setCharacterEncoding("utf-8");
+	        String sortData = request.getParameter("sortData");
+//	        if (sortData == null || sortData.isEmpty()) {
+//	            sortData = "businessName"; // 기본 정렬 기준
+//	        }
+	        Sort sort = new Sort();
+	        sort.setSortData(sortData);
+
+	        String ascDesc = "asc"; // 기본 정렬 순서
+	        sort.setAscDesc(ascDesc);
+	        
+	        System.out.println(sort);
+
+	        List<Business> sortBusinessList = businessDao.sortBusinessList(sort);
+	        request.setAttribute("sortBusinessList", sortBusinessList); // 정렬된 리스트를 속성에 설정
+	        request.setAttribute("selectedSortData", sortData); // 선택된 정렬 데이터를 속성에 설정
+	        
+	        return "/view/business/sortBusinessList.jsp"; // 결과를 표시할 JSP 페이지
+	    }
 
 }

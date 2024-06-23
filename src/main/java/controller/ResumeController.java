@@ -48,9 +48,11 @@ public class ResumeController extends MskimRequestMapping{
             return "/view/resume/resumeInfo.jsp";
         }
     }
+    
+    
 
     // 회원이 작성한 이력서 목록 조회
-    @RequestMapping("/get-member-resume-list")
+    @RequestMapping("get-member-resume-list")
     public String getMemberReumeList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String memberId = (String) session.getAttribute("memberId");
         List<Resume> resumeList = resumeDao.getMemberReumeList(memberId);
@@ -65,7 +67,7 @@ public class ResumeController extends MskimRequestMapping{
     }
 
     // 사업자가 작성한 이력서 목록 조회
-    @RequestMapping("/get-business-resume-list")
+    @RequestMapping("get-business-resume-list")
     public String getBusinessReumeList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String bStrId = (String) session.getAttribute("businessId");
         int businessId = Integer.parseInt(bStrId);
@@ -98,110 +100,167 @@ public class ResumeController extends MskimRequestMapping{
 
     // 이력서 작성 처리
     @RequestMapping("insert-resume")
-    public String insertResume(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = request.getServletContext().getRealPath("/") + "img/member/";
-        MultipartRequest multi = new MultipartRequest(request, path, 10 * 1024 * 1024, "UTF-8");
+    public String insertResume(HttpServletRequest request, HttpServletResponse response)
+          throws ServletException, IOException {
+       String path = request.getServletContext().getRealPath("/") + "img/member/";
+       MultipartRequest multi = new MultipartRequest(request, path, 10 * 1024 * 1024, "UTF-8");
 
-        // 회원 정보: 회원 아이디를 가져와서 회원 테이블에서 조회
-        String memberId = (String) session.getAttribute("memberId");
+       // 회원 정보: 회원 아이디를 가져와서 회원 테이블에서 조회
+       String memberId = (String) session.getAttribute("memberId");
 
-        // 이력서 아이디 가져오기
-        int resumeId = resumeDao.selectResumeId();
+       // 이력서 아이디 가져오기
+       int resumeId = resumeDao.selectResumeId();
 
-        // 교육 정보 설정
-        Edu edu = new Edu();
-        edu.setSchoolType(multi.getParameter("schoolType"));
-        edu.setSchoolName(multi.getParameter("schoolName"));
-        edu.setAdmissionDate(multi.getParameter("admissionDate"));
-        edu.setGraduateDate(multi.getParameter("graduateDate"));
-        edu.setGraduateState(multi.getParameter("graduateState"));
-        edu.setMajor(multi.getParameter("major"));
-        edu.setScore(multi.getParameter("score"));
-        edu.setTotalScore(multi.getParameter("totalScore"));
-        edu.setResumeId(resumeId);
+       // 교육 정보 설정
+       Edu edu = new Edu();
+       edu.setSchoolType(multi.getParameter("schoolType"));
+       edu.setSchoolName(multi.getParameter("schoolName"));
+       edu.setAdmissionDate(multi.getParameter("admissionDate"));
+       edu.setGraduateDate(multi.getParameter("graduateDate"));
+       edu.setGraduateState(multi.getParameter("graduateState"));
+       edu.setMajor(multi.getParameter("major"));
+       edu.setScore(multi.getParameter("score"));
+       edu.setTotalScore(multi.getParameter("totalScore"));
+       edu.setResumeId(resumeId);
 
-        // 경력 정보 설정
-        Career career = new Career();
-        career.setCompanyName(multi.getParameter("companyName"));
-        career.setDepartment(multi.getParameter("department"));
-        career.setWorkPart(multi.getParameter("workPart"));
-        career.setPosition(multi.getParameter("position"));
-        career.setWorkType(multi.getParameter("workType"));
-        career.setIsWorking(multi.getParameter("isWorking"));
-        career.setWorkPeriod(multi.getParameter("workPeriod"));
-        career.setResumeId(resumeId);
+       // 경력 정보 설정
+       Career career = new Career();
+       career.setCompanyName(multi.getParameter("companyName"));
+       career.setDepartment(multi.getParameter("department"));
+       career.setWorkPart(multi.getParameter("workPart"));
+       career.setPosition(multi.getParameter("position"));
+       career.setWorkType(multi.getParameter("workType"));
+       career.setIsWorking(multi.getParameter("isWorking"));
+       career.setWorkPeriod(multi.getParameter("workPeriod"));
+       career.setResumeId(resumeId);
 
-        // 프로젝트 정보 설정
-        MemberProject project = new MemberProject();
-        project.setProjectName(multi.getParameter("projectName"));
-        project.setTeam(multi.getParameter("team"));
-        project.setIsGoing(multi.getParameter("isGoing"));
-        project.setProjectPeriod(multi.getParameter("projectPeriod"));
-        project.setProjectInfo(multi.getParameter("projectInfo"));
-        project.setResumeId(resumeId);
+       // 프로젝트 정보 설정
+       MemberProject project = new MemberProject();
+       project.setProjectName(multi.getParameter("projectName"));
+       project.setTeam(multi.getParameter("team"));
+       project.setIsGoing(multi.getParameter("isGoing"));
+       project.setProjectPeriod(multi.getParameter("projectPeriod"));
+       project.setProjectInfo(multi.getParameter("projectInfo"));
+       project.setResumeId(resumeId);
 
-        // 포트폴리오 정보 설정
-        MemberPortfolio portfolio = new MemberPortfolio();
-        portfolio.setPortfolioUrl(multi.getParameter("portfolioUrl"));
-        portfolio.setPortfolioFile(multi.getFilesystemName("portfolioFile"));
-        portfolio.setResumeId(resumeId);
+       // 포트폴리오 정보 설정
+       MemberPortfolio portfolio = new MemberPortfolio();
+       portfolio.setPortfolioUrl(multi.getParameter("portfolioUrl"));
+       portfolio.setPortfolioFile(multi.getFilesystemName("portfolioFile"));
+       portfolio.setResumeId(resumeId);
 
-        // 이력서 정보 설정
-        Resume resume = new Resume();
-        resume.setName(multi.getParameter("name"));
-        resume.setBirth(multi.getParameter("birth"));
-        resume.setPhone(multi.getParameter("phone"));
-        resume.setEmail(multi.getParameter("email"));
-        resume.setResumeTitle(multi.getParameter("resumeTitle"));
-        resume.setResumeId(resumeId);
-        resume.setMemberId(memberId);
-        resume.setEdu(edu);
-        resume.setCareer(career);
-        resume.setProject(project);
-        resume.setPortfolio(portfolio);
-        resume.setSelfInfo(multi.getParameter("selfInfo"));
-        resume.setCertification(multi.getParameter("certification"));
-        resume.setLanguage(multi.getParameter("language"));
-        resume.setAddress(multi.getParameter("address"));
-        resume.setProfileImage(multi.getFilesystemName("profileImage"));
+       // 이력서 정보 설정
+       Resume resume = new Resume();
+       resume.setName(multi.getParameter("name"));
+       resume.setBirth(multi.getParameter("birth"));
+       resume.setPhone(multi.getParameter("phone"));
+       resume.setEmail(multi.getParameter("email"));
+       resume.setResumeTitle(multi.getParameter("resumeTitle"));
+       resume.setResumeId(resumeId);
+       resume.setMemberId(memberId);
+       resume.setEdu(edu);
+       resume.setCareer(career);
+       resume.setProject(project);
+       resume.setPortfolio(portfolio);
+       resume.setSelfInfo(multi.getParameter("selfInfo"));
+       resume.setCertification(multi.getParameter("certification"));
+       resume.setLanguage(multi.getParameter("language"));
+       resume.setAddress(multi.getParameter("address"));
+       resume.setProfileImage(multi.getFilesystemName("profileImage"));
 
-        System.out.println("resume" + resume);
-        System.out.println("edu" + edu);
-        System.out.println("career" + career);
-        System.out.println("project" + project);
-        System.out.println("portfolio" + portfolio);
-        System.out.println("selfInfo" + resume.getSelfInfo());
-        System.out.println("certification" + resume.getCertification());
-        System.out.println("language" + resume.getLanguage());
-        System.out.println("address" + resume.getAddress());
+       System.out.println("resume" + resume);
+       System.out.println("edu" + edu);
+       System.out.println("career" + career);
+       System.out.println("project" + project);
+       System.out.println("portfolio" + portfolio);
+       System.out.println("selfInfo" + resume.getSelfInfo());
+       System.out.println("certification" + resume.getCertification());
+       System.out.println("language" + resume.getLanguage());
+       System.out.println("address" + resume.getAddress());
 
-        int num = resumeDao.insertResume(resume);
+       int num = resumeDao.insertResume(resume);
 
-        if (num > 0) {
-            System.out.println("이력서 작성 성공");
-        } else {
-            System.out.println("이력서 작성 실패");
-        }
+       String url = "";
+       String msg = "";
 
-        List<Resume> memberResumeList = resumeDao.getMemberReumeList(memberId);
+       if (num > 0) {
+          System.out.println("이력서 작성 성공");
+          url = "member-main";
+          msg = "이력서 작성 성공";
 
-        request.setAttribute("profileImage", resume.getProfileImage());
-        request.setAttribute("memberResumeList", memberResumeList);
+       } else {
+          System.out.println("이력서 작성 실패");
+       }
 
-        return "/member/member-main";
+       List<Resume> memberResumeList = resumeDao.getMemberReumeList(memberId);
+
+       request.setAttribute("profileImage", resume.getProfileImage());
+       request.setAttribute("memberResumeList", memberResumeList);
+       request.setAttribute("url", url);
+
+       return "/view/alert.jsp";
     }
-
+    
+    @RequestMapping("member-main")
+    public String memberMain(HttpServletRequest request, 
+            HttpServletResponse response) throws ServletException, IOException {
+        
+    	MemberDAO memberDao = new MemberDAO();
+    	
+        ResumeDAO resumeDao = new ResumeDAO();
+        String memberId = (String)session.getAttribute("memberId");
+        Member member = memberDao.getMember(memberId);
+        int resumeId = resumeDao.selectResumeId();
+        List<Resume> memberResumeList = resumeDao.getMemberReumeList(memberId);
+         
+        
+        String profileImage;  
+        
+        
+        if(memberResumeList.size() == 0) {
+        	profileImage = "";
+        }else {
+        	int listNum = memberResumeList.size()-1;
+        	profileImage= memberResumeList.get(listNum).getProfileImage();
+        }
+        request.setAttribute("profileImage", profileImage);
+        
+        
+        request.setAttribute("memberResumeList", memberResumeList);
+        request.setAttribute("member", member);
+        
+        
+        return "/view/member/memberMain.jsp";
+    }
+    
+    
+    
     // 이력서 수정 처리
-    @RequestMapping("/update-resume")
+    @RequestMapping("update-resume")
     public String updateResume(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         return "";
     }
 
     // 이력서 삭제 처리
-    @RequestMapping("/delete-resume")
+    @RequestMapping("delete-resume")
     public String deleteResume(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int resumeId = Integer.parseInt(request.getParameter("resumeId"));
+        
         int num = resumeDao.deleteResume(resumeId);
-        return "";
+        String url="";
+        String msg="";
+        if (num > 0) {
+            System.out.println("이력서 삭제 성공");
+            url = "member-main";
+            msg = "이력서 삭제 성공";
+         } else {
+            System.out.println("이력서 삭제 실패");
+         }
+
+        request.setAttribute("url", url);
+        return "/view/alert.jsp";
     }
+    
+    
+    
 }

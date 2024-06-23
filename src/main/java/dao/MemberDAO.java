@@ -65,4 +65,13 @@ public class MemberDAO {
 		return num;
 	}
 	
+	// 회원 사진 변경
+	public int updateProfileImage(String profileImage, String memberId) {
+		Map<String,String> map = new HashMap<>();
+		map.put("profileImage", profileImage);
+		map.put("memberId", memberId);
+		int num = session.getMapper(MemberMapper.class).updateProfileImage(map);
+		session.commit();
+		return num;
+	}
 }

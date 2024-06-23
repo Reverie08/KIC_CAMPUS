@@ -8,8 +8,13 @@
 </head>
 <body>
 <script>
-alert("${msg}");
-location.href="${url}"
+if("${msg}" == ""){
+	location.href="${url}"
+} else{
+	alert("${msg}");
+	location.href="${url}"
+}
+
 </script>
 </body>
 </html>

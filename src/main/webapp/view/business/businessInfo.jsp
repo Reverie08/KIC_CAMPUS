@@ -101,17 +101,17 @@ body {
 		<h2>기업 정보</h2>
 		<div class="info-summary">
 			<div class="summary-item">
-				<img src="path/to/company-type-icon.png" alt="기업형태">
+				<img src="" alt="기업형태">
 				<p>${business.type}</p>
 				<small>기업형태</small>
 			</div>
 			<div class="summary-item">
-				<img src="path/to/employees-icon.png" alt="사원수">
+				<img src="" alt="사원수">
 				<p>${business.employees} 명</p>
 				<small>사원수</small>
 			</div>
 			<div class="summary-item">
-				<img src="path/to/sales-icon.png" alt="매출액">
+				<img src="" alt="매출액">
 				<p>${business.sales} 원</p>
 				<small>매출액</small>
 			</div>

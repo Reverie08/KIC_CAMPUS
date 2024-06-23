@@ -62,8 +62,8 @@
       <aside class="bg-white rounded-lg shadow p-4 fixed-sidebar">
         <h2 class="text-lg font-bold mb-4">Sidebar</h2>
         <ul>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/BusinessAnnoInfo?annoid=${anno.annoid}" class="text-blue-500"><b>공고내용</b></a></li>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/BusinessAnnoManagement?annoid=${anno.annoid}" class="text-blue-500">이력서 관리</a></li>
+          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-info?annoId=${anno.annoId}" class="text-blue-500"><b>공고내용</b></a></li>
+          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-management?annoId=${anno.annoId}" class="text-blue-500">이력서 관리</a></li>
           <li class="mb-2"><a href="#" class="text-blue-500">미정</a></li>
         </ul>
       </aside>
@@ -124,6 +124,9 @@
             
             <div>기업 ID:</div>
             <div>${anno.businessId}</div>
+            
+             <div>스킬 ID:</div>
+            <div>${anno.skillId}</div>
           </div>
 
           <!-- Skill Selection -->
@@ -178,13 +181,17 @@
           </div>
           
           <div class="actions">
-            <a href="${pageContext.request.contextPath}/anno/business-anno-update-form?annoid=${anno.annoId}" class="bg-blue-500 text-white px-4 py-2 rounded">공고수정</a>
-            <form action="anno-delete-pro" method="post" onsubmit="return removeCheck();" class="btn">
-              <input type="hidden" name="annoId" value="${anno.annoId}">
-              <input type="submit" value="공고삭제" class="bg-red-500 text-white px-4 py-2 rounded btn">
-            </form>
-            <a href="${pageContext.request.contextPath}/anno/business-anno-list" class="bg-gray-500 text-white px-4 py-2 rounded">목록보기</a>
-          </div>
+			    <a href="${pageContext.request.contextPath}/anno/business-anno-update-form?annoId=${anno.annoId}" class="bg-blue-500 text-white px-4 py-2 rounded">공고수정</a>
+			    <a href="${pageContext.request.contextPath}/anno/business-anno-update-form?annoId=${anno.annoId}" class="bg-blue-500 text-white px-4 py-2 rounded">즉시지원</a>
+			    <form action="anno-delete-pro" method="post" onsubmit="return removeCheck();" class="btn">
+			        <input type="hidden" name="annoId" value="${anno.annoId}">
+			        <input type="submit" value="공고삭제" class="bg-red-500 text-white px-4 py-2 rounded btn">
+			    </form>
+			    <a href="${pageContext.request.contextPath}/anno/business-anno-list" class="bg-gray-500 text-white px-4 py-2 rounded">목록보기</a>
+			</div>
+
+          
+          
         </div>
       </div>
     </div>

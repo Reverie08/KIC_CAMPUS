@@ -47,8 +47,8 @@
       <aside class="bg-white rounded-lg shadow p-4 fixed-sidebar">
         <h2 class="text-lg font-bold mb-4">Sidebar</h2>
         <ul>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-info?annoid=${anno.annoId}" class="text-blue-500">공고내용</a></li>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-management?annoid=${anno.annoId}" class="text-blue-500"><b>이력서 관리</b></a></li>
+          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-info?annoId=${anno.annoId}" class="text-blue-500">공고내용</a></li>
+          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-management?annoId=${anno.annoId}" class="text-blue-500"><b>이력서 관리</b></a></li>
           <li class="mb-2"><a href="#" class="text-blue-500">미정</a></li>
         </ul>
         <button class="bg-blue-500 text-white px-4 py-2 rounded mt-4" id="add-column">+ Add Column</button>

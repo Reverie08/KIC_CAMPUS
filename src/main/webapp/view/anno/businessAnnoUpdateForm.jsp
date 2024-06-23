@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +47,36 @@
         border-radius: 0.375rem;
         resize: vertical;
     }
+    .skill-button {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 0.375rem;
+        margin: 0.25rem;
+        cursor: pointer;
+    }
+    .skill-button.selected {
+        background-color: #3182ce;
+        color: white;
+    }
 </style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const skillButtons = document.querySelectorAll('.skill-button');
+        skillButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('selected');
+                updateSelectedSkills();
+            });
+        });
+    });
+
+    function updateSelectedSkills() {
+        const selectedSkills = document.querySelectorAll('.skill-button.selected');
+        const skillNames = Array.from(selectedSkills).map(button => button.dataset.skillname);
+        document.getElementById('selectedSkills').value = skillNames.join(',');
+    }
+</script>
 </head>
 <body class="bg-gray-100">
 <div class="flex flex-col h-screen">
@@ -58,14 +88,14 @@
     <div class="flex flex-grow">
     
         <!-- Sidebar -->
-      <aside class="bg-white rounded-lg shadow p-4 fixed-sidebar">
-        <h2 class="text-lg font-bold mb-4">Sidebar</h2>
-        <ul>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-info?annoid=${anno.annoId}" class="text-blue-500"><b>공고내용</b></a></li>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-management?annoid=${anno.annoId}" class="text-blue-500">이력서 관리</a></li>
-          <li class="mb-2"><a href="#" class="text-blue-500">미정</a></li>
-        </ul>
-      </aside>
+        <aside class="bg-white rounded-lg shadow p-4 fixed-sidebar">
+            <h2 class="text-lg font-bold mb-4">Sidebar</h2>
+            <ul>
+                <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-info?annoId=${anno.annoId}" class="text-blue-500"><b>공고내용</b></a></li>
+                <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-management?annoId=${anno.annoId}" class="text-blue-500">이력서 관리</a></li>
+                <li class="mb-2"><a href="#" class="text-blue-500">미정</a></li>
+            </ul>
+        </aside>
 
         <!-- Main Content -->
         <div class="main-content w-5/6 p-4 overflow-x-auto">
@@ -149,11 +179,31 @@
                         <input type="text" id="businessId" name="businessId" value="${anno.businessId}" class="form-input">
                     </div>
                     
+                    
+                    <!-- Skill Selection -->
                     <div class="form-group">
-                        <label for="skillId" class="form-label">스킬 ID:</label>
-                        <input type="text" id="skillId" name="skillId" value="${anno.skillId}" class="form-input">
+                        <label for="skills" class="form-label">스킬:</label>
+                        <div id="skills">
+                            <c:forEach var="skill" items="${skills}">
+                                <div class="skill-button ${skill.java != null ? 'selected' : ''}" data-skillname="java">java</div>
+                                <div class="skill-button ${skill.jsp != null ? 'selected' : ''}" data-skillname="jsp">jsp</div>
+                                <div class="skill-button ${skill.html != null ? 'selected' : ''}" data-skillname="html">html</div>
+                                <div class="skill-button ${skill.css != null ? 'selected' : ''}" data-skillname="css">css</div>
+                                <div class="skill-button ${skill.javascript != null ? 'selected' : ''}" data-skillname="javascript">javascript</div>
+                                <div class="skill-button ${skill.react != null ? 'selected' : ''}" data-skillname="react">react</div>
+                                <div class="skill-button ${skill.springframework != null ? 'selected' : ''}" data-skillname="springframework">springframework</div>
+                                <div class="skill-button ${skill.springboot != null ? 'selected' : ''}" data-skillname="springboot">springboot</div>
+                                <div class="skill-button ${skill.python != null ? 'selected' : ''}" data-skillname="python">python</div>
+                                <div class="skill-button ${skill.typescript != null ? 'selected' : ''}" data-skillname="typescript">typescript</div>
+                                <div class="skill-button ${skill.express != null ? 'selected' : ''}" data-skillname="express">express</div>
+                                <div class="skill-button ${skill.oracle != null ? 'selected' : ''}" data-skillname="oracle">oracle</div>
+                                <div class="skill-button ${skill.mysql != null ? 'selected' : ''}" data-skillname="mysql">mysql</div>
+                                <div class="skill-button ${skill.mongodb != null ? 'selected' : ''}" data-skillname="mongodb">mongodb</div>
+                            </c:forEach>
+                        </div>
                     </div>
                     
+                    <input type="hidden" id="selectedSkills" name="selectedSkills">
                     <div class="form-group">
                         <input type="submit" value="Submit" class="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer">
                     </div>

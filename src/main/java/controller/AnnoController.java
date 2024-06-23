@@ -7,29 +7,62 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kic.mskim.MskimRequestMapping;
 import kic.mskim.RequestMapping;
 import dao.AnnoDAO;
+import dao.BusinessDAO;
+import dao.MemberDAO;
 import model.Anno;
+import model.Business;
+import model.Member;
+import model.Search;
 import model.Skill;
 
 @WebServlet("/anno/*")
 public class AnnoController extends MskimRequestMapping {
+	HttpSession session;
 	AnnoDAO annoDao = new AnnoDAO();
+	MemberDAO memberDao = new MemberDAO();
+	BusinessDAO businessDao = new BusinessDAO();
+	
+	@Override
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		session = request.getSession();
+		System.out.println("service");
+		super.service(request, response);
+	}
+	
+	
 
 	@RequestMapping("business-anno-insert-form")
 	public String BusinessAnnoInsertForm(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		List<Skill> skills = annoDao.getAllSkills();
-		request.setAttribute("skills", skills);
-		return "/view/anno/businessAnnoInsertForm.jsp";
+	        throws ServletException, IOException {
+	    List<Skill> skills = annoDao.getAllSkills();
+	    String businessId = (String) session.getAttribute("businessId");
+	    Business business = businessDao.getBusiness(businessId);
+
+	    for (Skill skill : skills) {
+	        System.out.println(skill);
+	    }
+	    request.setAttribute("business", business);
+	    request.setAttribute("skills", skills);
+	    return "/view/anno/businessAnnoInsertForm.jsp";
 	}
+
+
+
+
 
 	@RequestMapping("anno-insert-pro")
 	public String annoInsertPro(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		Anno anno = new Anno();
+		AnnoDAO annoDao = new AnnoDAO();
+		int skillId = annoDao.selectSkillId();
 		String businessName = request.getParameter("businessName");
 		String welfare = request.getParameter("welfare");
 		String annoTitle = request.getParameter("annoTitle");
@@ -45,11 +78,9 @@ public class AnnoController extends MskimRequestMapping {
 		int annoPickNum = parseIntOrDefault(request.getParameter("annoPickNum"), 0);
 		String annoContent = request.getParameter("annoContent");
 		String businessId = request.getParameter("businessId");
-		int skillId = parseIntOrDefault(request.getParameter("skillId"), 0);
 		String selectedSkills = request.getParameter("selectedSkills");
 		System.out.println(selectedSkills);
 
-		Anno anno = new Anno();
 
 		anno.setBusinessName(businessName);
 		anno.setWelfare(welfare);
@@ -77,6 +108,7 @@ public class AnnoController extends MskimRequestMapping {
 			Skill skill = new Skill();
 			for (String skillName : skills) {
 				skill.setAnnoId(annoId);
+				skill.setSkillId(skillId);
 				if (skillName.equals("java"))
 					skill.setJava("java");
 				if (skillName.equals("jsp"))
@@ -108,7 +140,7 @@ public class AnnoController extends MskimRequestMapping {
 			}
 			annoDao.insertSkill(skill);
 		}
-
+		
 		String msg = "";
 		String url = "business-anno-list";
 
@@ -117,7 +149,6 @@ public class AnnoController extends MskimRequestMapping {
 		} else {
 			msg = "공고 등록이 실패했습니다.";
 		}
-
 		request.setAttribute("msg", msg);
 		request.setAttribute("url", url);
 		return "/view/alert.jsp";
@@ -129,6 +160,7 @@ public class AnnoController extends MskimRequestMapping {
 	public String userAnnoList(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		List<Anno> li = annoDao.getAnnoList();
+		String memberId = (String) session.getAttribute("memberId");
 		String businessId = request.getParameter("businessId");
 		String businessName = request.getParameter("businessName");
 		String annoTitle = request.getParameter("annoTitle");
@@ -138,7 +170,10 @@ public class AnnoController extends MskimRequestMapping {
 		String annoDate = request.getParameter("annoDate");
 		String skillId = request.getParameter("skillId");
 		String annoId = request.getParameter("annoId");
+		
+		Member member = memberDao.getMember(memberId);
 
+		request.setAttribute("member", member);
 		request.setAttribute("businessId", businessId);
 		request.setAttribute("annoId", annoId);
 		request.setAttribute("businessName", businessName);
@@ -167,16 +202,20 @@ public class AnnoController extends MskimRequestMapping {
 	public String businessAnnoList(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		List<Anno> li = annoDao.getAnnoList();
-		String businessId = request.getParameter("businessId");
+		
+		String businessId = request.getParameter("businessid");
 		String businessName = request.getParameter("businessName");
 		String annoTitle = request.getParameter("annoTitle");
 		String annoGrade = request.getParameter("annoGrade");
 		String annoWorkType = request.getParameter("annoWorkType");
 		String annoWorkPlace = request.getParameter("annoWorkPlace");
 		String annoDate = request.getParameter("annoDate");
-		String skillId = request.getParameter("skillId");
+		
 		String annoId = request.getParameter("annoId");
-
+		
+		Business business = businessDao.getBusiness(businessId);
+		request.setAttribute("business", business);
+		
 		request.setAttribute("businessId", businessId);
 		request.setAttribute("annoId", annoId);
 		request.setAttribute("businessName", businessName);
@@ -185,7 +224,7 @@ public class AnnoController extends MskimRequestMapping {
 		request.setAttribute("annoWorkType", annoWorkType);
 		request.setAttribute("annoWorkPlace", annoWorkPlace);
 		request.setAttribute("annoDate", annoDate);
-		request.setAttribute("skillId", skillId);
+		
 		request.setAttribute("li", li);
 
 		System.out.println("li size: " + li.size());
@@ -202,7 +241,7 @@ public class AnnoController extends MskimRequestMapping {
 	}
 
 	@RequestMapping("business-anno-info")
-	public String BusinessAnnoInfo(HttpServletRequest request, HttpServletResponse response)
+	public String businessAnnoInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int annoId = Integer.parseInt(request.getParameter("annoId"));
 		Anno anno = annoDao.getAnnoFromAnnoId(annoId);
@@ -222,74 +261,107 @@ public class AnnoController extends MskimRequestMapping {
 
 	@RequestMapping("user-anno-info")
 	public String userAnnoInfo(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		int annoId = Integer.parseInt(request.getParameter("annoId"));
-		Anno anno = annoDao.getAnnoFromAnnoId(annoId);
+	        throws ServletException, IOException {
+	    int annoId = Integer.parseInt(request.getParameter("annoId"));
+	    Anno anno = annoDao.getAnnoFromAnnoId(annoId);
+	    List<Skill> skills = annoDao.getSkillsByAnnoId(annoId);
 
-		request.setAttribute("anno", anno);
+	    request.setAttribute("anno", anno);
+	    request.setAttribute("skills", skills);
 
-		return "/view/anno/userAnnoInfo.jsp";
+	    return "/view/anno/userAnnoInfo.jsp";
 	}
+
 
 	@RequestMapping("business-anno-update-form")
 	public String businessAnnoUpdateForm(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		int annoId = Integer.parseInt(request.getParameter("annoId"));
-		Anno anno = annoDao.getAnnoFromAnnoId(annoId);
+	        throws ServletException, IOException {
+	    int annoId = Integer.parseInt(request.getParameter("annoId"));
+	    Anno anno = annoDao.getAnnoFromAnnoId(annoId);
+	    List<Skill> skills = annoDao.getSkillsByAnnoId(annoId);
 
-		request.setAttribute("anno", anno);
+	    request.setAttribute("anno", anno);
+	    request.setAttribute("skills", skills);
 
-		return "/view/anno/businessAnnoUpdateForm.jsp";
+	    return "/view/anno/businessAnnoUpdateForm.jsp";
 	}
+
 
 	@RequestMapping("anno-update-pro")
 	public String annoUpdatePro(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
+	        throws ServletException, IOException {
+	    request.setCharacterEncoding("utf-8");
 
-		// Check if the parameter is received correctly
-		String annoIdStr = request.getParameter("annoId");
-		System.out.println("Received annoId: " + annoIdStr);
+	    // Check if the parameter is received correctly
+	    String annoIdStr = request.getParameter("annoId");
+	    System.out.println("Received annoId: " + annoIdStr);
 
-		int annoId = parseIntOrDefault(annoIdStr, 0);
+	    int annoId = parseIntOrDefault(annoIdStr, 0);
 
-		Anno anno = new Anno();
-		anno.setAnnoId(annoId);
-		anno.setBusinessName(request.getParameter("businessName"));
-		anno.setWelfare(request.getParameter("welfare"));
-		anno.setAnnoTitle(request.getParameter("annoTitle"));
-		anno.setAnnoCareer(request.getParameter("annoCareer"));
-		anno.setAnnoSalary(request.getParameter("annoSalary"));
-		anno.setAnnoEdu(request.getParameter("annoEdu"));
-		anno.setAnnoGrade(request.getParameter("annoGrade"));
-		anno.setAnnoWorkType(request.getParameter("annoWorkType"));
-		anno.setAnnoWorkDay(request.getParameter("annoWorkDay"));
-		anno.setAnnoWorkPlace(request.getParameter("annoWorkPlace"));
-		anno.setAnnoCommon(request.getParameter("annoCommon"));
-		anno.setAnnoQualification(request.getParameter("annoQualification"));
-		anno.setAnnoPickNum(parseIntOrDefault(request.getParameter("annoPickNum"), 0));
-		anno.setAnnoContent(request.getParameter("annoContent"));
-		anno.setBusinessId(request.getParameter("businessId"));
-		anno.setSkillId(parseIntOrDefault(request.getParameter("skillId"), 0));
+	    Anno anno = new Anno();
+	    anno.setAnnoId(annoId);
+	    anno.setBusinessName(request.getParameter("businessName"));
+	    anno.setWelfare(request.getParameter("welfare"));
+	    anno.setAnnoTitle(request.getParameter("annoTitle"));
+	    anno.setAnnoCareer(request.getParameter("annoCareer"));
+	    anno.setAnnoSalary(request.getParameter("annoSalary"));
+	    anno.setAnnoEdu(request.getParameter("annoEdu"));
+	    anno.setAnnoGrade(request.getParameter("annoGrade"));
+	    anno.setAnnoWorkType(request.getParameter("annoWorkType"));
+	    anno.setAnnoWorkDay(request.getParameter("annoWorkDay"));
+	    anno.setAnnoWorkPlace(request.getParameter("annoWorkPlace"));
+	    anno.setAnnoCommon(request.getParameter("annoCommon"));
+	    anno.setAnnoQualification(request.getParameter("annoQualification"));
+	    anno.setAnnoPickNum(parseIntOrDefault(request.getParameter("annoPickNum"), 0));
+	    anno.setAnnoContent(request.getParameter("annoContent"));
+	    anno.setBusinessId(request.getParameter("businessId"));
+	    anno.setSkillId(parseIntOrDefault(request.getParameter("skillId"), 0));
 
-		System.out.print(anno);
+	    System.out.print(anno);
 
-		int num = annoDao.updateAnno(anno);
+	    int num = annoDao.updateAnno(anno);
 
-		String msg = "";
-		String url = "business-anno-list";
+	    // Update skills
+	    String selectedSkills = request.getParameter("selectedSkills");
+	    if (selectedSkills != null && !selectedSkills.isEmpty()) {
+	        annoDao.deleteSkillsByAnnoId(annoId);  // Delete existing skills
+	        String[] skills = selectedSkills.split(",");
+	        Skill skill = new Skill();
+	        for (String skillName : skills) {
+	            skill.setAnnoId(annoId);
+	            if (skillName.equals("java")) skill.setJava("java");
+	            if (skillName.equals("jsp")) skill.setJsp("jsp");
+	            if (skillName.equals("html")) skill.setHtml("html");
+	            if (skillName.equals("css")) skill.setCss("css");
+	            if (skillName.equals("javascript")) skill.setJavascript("javascript");
+	            if (skillName.equals("react")) skill.setReact("react");
+	            if (skillName.equals("springframework")) skill.setSpringframework("springframework");
+	            if (skillName.equals("springboot")) skill.setSpringboot("springboot");
+	            if (skillName.equals("python")) skill.setPython("python");
+	            if (skillName.equals("typescript")) skill.setTypescript("typescript");
+	            if (skillName.equals("express")) skill.setExpress("express");
+	            if (skillName.equals("oracle")) skill.setOracle("oracle");
+	            if (skillName.equals("mysql")) skill.setMysql("mysql");
+	            if (skillName.equals("mongodb")) skill.setMongodb("mongodb");
+	        }
+	        annoDao.insertSkill(skill);
+	    }
 
-		if (num == 1) {
-			msg = "공고가 수정되었습니다.";
-			url = "business-anno-info?annoid=" + annoId;
-		} else {
-			msg = "공고 수정에 실패했습니다.";
-		}
+	    String msg = "";
+	    String url = "business-anno-list";
 
-		request.setAttribute("msg", msg);
-		request.setAttribute("url", url);
-		return "/view/alert.jsp";
+	    if (num == 1) {
+	        msg = "공고가 수정되었습니다.";
+	        url = "business-anno-info?annoId=" + annoId;
+	    } else {
+	        msg = "공고 수정에 실패했습니다.";
+	    }
+
+	    request.setAttribute("msg", msg);
+	    request.setAttribute("url", url);
+	    return "/view/alert.jsp";
 	}
+
 
 	@RequestMapping("anno-delete-pro")
 	public String annoDeletePro(HttpServletRequest request, HttpServletResponse response)
@@ -311,7 +383,7 @@ public class AnnoController extends MskimRequestMapping {
 			url = "business-anno-list";
 		} else {
 			msg = "공고 삭제에 실패했습니다.";
-			url = "business-anno-info?annoid=" + annoId;
+			url = "business-anno-info?annoId=" + annoId;
 		}
 
 		request.setAttribute("msg", msg);
@@ -336,5 +408,19 @@ public class AnnoController extends MskimRequestMapping {
 		} catch (NumberFormatException e) {
 			return defaultValue;
 		}
+	}
+	
+	@RequestMapping("search-anno-list")
+	public String searchAnnoList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		String part = request.getParameter("part");
+		String searchData = request.getParameter("searchData");
+		Search search = new Search();
+		search.setPart(part);
+		search.setSearchData("%" + searchData + "%");
+		List<Anno> searchAnnoList = annoDao.searchAnnoList(search);
+		request.setAttribute("searchAnnoList", searchAnnoList);
+		
+		return "/view/anno/searchAnnoList.jsp"; 
 	}
 }

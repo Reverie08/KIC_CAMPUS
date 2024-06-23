@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import mapper.AnnoMapper;
+import mapper.ResumeMapper;
 import model.Anno;
+import model.Search;
 import model.Skill;
 import util.MybatisConnection;
 
@@ -124,13 +126,32 @@ public class AnnoDAO {
 
     public int getAnnoId() {
         int annoId = session.getMapper(AnnoMapper.class).getAnnoId();
+        
         return annoId;
     }
     
     public List<Skill> getSkillsByAnnoId(int annoId) {
         List<Skill> skills = session.getMapper(AnnoMapper.class).getSkillsByAnnoId(annoId);
+        
         return skills;
     }
+    
+    public int deleteSkillsByAnnoId(int annoId) {
+        int num = session.getMapper(AnnoMapper.class).deleteSkillsByAnnoId(annoId);
+        session.commit();
+        return num;
+    }
+    
+    public int selectSkillId() {
+		return session.getMapper(AnnoMapper.class).selectSkillId();
+	}
+    
+    
+    public List<Anno> searchAnnoList(Search search) {
+    	List<Anno> searchAnnoList = session.getMapper(AnnoMapper.class).searchAnnoList(search);
+    	return searchAnnoList;
+    }
+    
     
     
 }
