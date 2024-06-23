@@ -184,11 +184,11 @@ body {
 				<a href="${pageContext.request.contextPath}/anno/user-anno-list"><button>모든 공고</button></a>
 				<form action="search-anno-list" method="post">
 					<select name="part">
-						<option value="annoTitle">공고 제목</option>
-						<option value="businessName">공고 기업</option>
+						<option value="annoTitle" <c:if test="${searchPart == 'annoTitle'}">selected</c:if>>공고 제목</option>
+						<option value="businessName" <c:if test="${searchPart == 'businessName'}">selected</c:if>>공고 기업</option>
 					</select> 
-					<input type="text" name="searchData" placeholder="공고 검색">
-<!-- 					<input type="submit" value="검색"> -->
+					<input type="text" name="searchData" placeholder="공고 검색" value="${searchData}">
+					<input type="submit" value="검색">
 				</form>
 				<select>
 					<option>전체</option>

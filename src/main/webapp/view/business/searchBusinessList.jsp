@@ -144,7 +144,7 @@ body {
             <input type="hidden" name="searchData" value="${searchData}">
             <div class="search-bar">
                 <select name="sortData" id="sortData" onchange="this.form.submit()">
-                    <option disabled>선택</option>
+                    <option selected disabled>선택</option>
                     <option value="businessName" <c:if test="${selectedSortData == 'businessName'}">selected</c:if>>기업명순</option>
                     <option value="type" <c:if test="${selectedSortData == 'type'}">selected</c:if>>유형순</option>
                     <option value="industry" <c:if test="${selectedSortData == 'industry'}">selected</c:if>>산업순</option>

@@ -124,17 +124,19 @@ public class AnnoDAO {
 		return num;
 	}
 
-    public int getAnnoId() {
-        int annoId = session.getMapper(AnnoMapper.class).getAnnoId();
-        
-        return annoId;
-    }
+	
+//    public int getAnnoId() {
+//        int annoId = session.getMapper(AnnoMapper.class).getAnnoId();
+//        
+//        return annoId;
+//    } 
     
-    public List<Skill> getSkillsByAnnoId(int annoId) {
-        List<Skill> skills = session.getMapper(AnnoMapper.class).getSkillsByAnnoId(annoId);
+    public Skill getSkillsByAnnoId(int annoId) {
+        Skill skills = session.getMapper(AnnoMapper.class).getSkillsByAnnoId(annoId);
         
         return skills;
     }
+    
     
     public int deleteSkillsByAnnoId(int annoId) {
         int num = session.getMapper(AnnoMapper.class).deleteSkillsByAnnoId(annoId);
@@ -146,6 +148,9 @@ public class AnnoDAO {
 		return session.getMapper(AnnoMapper.class).selectSkillId();
 	}
     
+    public int selectAnnoId() {
+		return session.getMapper(AnnoMapper.class).selectAnnoId();
+	}
     
     public List<Anno> searchAnnoList(Search search) {
     	List<Anno> searchAnnoList = session.getMapper(AnnoMapper.class).searchAnnoList(search);

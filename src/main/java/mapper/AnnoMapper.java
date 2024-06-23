@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import model.Anno;
-import model.Business;
 import model.Search;
 import model.Skill;
 
@@ -17,6 +16,10 @@ public interface AnnoMapper {
 	// 스킬의 다음 ID를 가져오기
 	@Select("select skillseq.nextval from dual")
 	public int selectSkillId();
+	
+	// 스킬의 다음 ID를 가져오기
+	@Select("select annoseq.nextval from dual")
+	public int selectAnnoId();
 
 	// annoId, businessId, businessName, annoTitle, annoGrade, annoWorkType, annoWorkPlace, annoDate
     // 모든 공고 목록 조회  
@@ -84,7 +87,7 @@ public interface AnnoMapper {
     List<Anno> getAnnoListFromAnnoDateDesc();
 
     // 스킬 삽입
-    @Insert("INSERT INTO Skill VALUES (#{skillId}, #{java}, #{jsp}, #{html}, #{css}, #{javascript}, #{react}, #{springframework}, #{springboot}, #{python}, #{typescript}, #{express}, #{oracle}, #{mysql}, #{mongodb}, #{memberId}, #{resumeId}, #{annoId})")
+    @Insert("INSERT INTO Skill VALUES (#{skillId}, #{skills}, #{annoId})")
     int insertSkill(Skill skill);
     
 
@@ -93,11 +96,12 @@ public interface AnnoMapper {
     List<Skill> getAllSkills();
 
     // 공고 삽입
-    @Insert("INSERT INTO Anno (annoId, businessName, welfare, annoTitle, annoCareer, annoSalary, annoEdu, annoGrade, annoWorkType, annoWorkDay, annoWorkPlace, annoCommon, annoQualification, annoPickNum, annoDate, annoContent, businessId, skillId) VALUES (annoseq.nextval, #{businessName}, #{welfare}, #{annoTitle}, #{annoCareer}, #{annoSalary}, #{annoEdu}, #{annoGrade}, #{annoWorkType}, #{annoWorkDay}, #{annoWorkPlace}, #{annoCommon}, #{annoQualification}, #{annoPickNum}, sysdate, #{annoContent}, #{businessId}, #{skillId})")
+    @Insert("INSERT INTO Anno (annoId, businessName, welfare, annoTitle, annoCareer, annoSalary, annoEdu, annoGrade, annoWorkType, annoWorkDay, annoWorkPlace, annoCommon, annoQualification, annoPickNum, annoDate, annoContent, businessId, skillId) VALUES (#{annoId}, #{businessName}, #{welfare}, #{annoTitle}, #{annoCareer}, #{annoSalary}, #{annoEdu}, #{annoGrade}, #{annoWorkType}, #{annoWorkDay}, #{annoWorkPlace}, #{annoCommon}, #{annoQualification}, #{annoPickNum}, sysdate, #{annoContent}, #{businessId}, #{skillId})")
     int insertAnno(Anno anno);
 
-    @Select("SELECT annoseq.currval FROM dual")
-    int getAnnoId();
+    // 현재 마지막으로 생성된 시퀀스를 가져온다 이게 왜 있지? 지우가 내 허락 없이 그냥 넣었나본데
+//    @Select("SELECT annoseq.currval FROM dual")
+//    int getAnnoId();
 
     // 공고 스킬 삽입
     @Insert("INSERT INTO AnnoSkill (annoId, skillId) VALUES (#{annoId}, #{skillId})")
@@ -112,15 +116,14 @@ public interface AnnoMapper {
     int deleteAnno(int annoId);
 
     // 공고 id로 스킬 조회
-    @Select("SELECT * FROM Skill WHERE annoId = #{annoId}")
-    List<Skill> getSkillsByAnnoId(int annoId);
+    @Select("SELECT skills FROM Skill WHERE annoId = #{annoId}")
+    Skill getSkillsByAnnoId(int annoId);
     
     @Delete("DELETE FROM Skill WHERE annoid = #{annoId}")
     int deleteSkillsByAnnoId(int annoId);
     
-    
-	// 공고 검색어 리스트
-	@Select("select * from anno where upper(${part}) like upper(#{searchData})")
-	List<Anno> searchAnnoList(Search search);
+ // 공고 검색어 리스트
+ 	@Select("select * from anno where upper(${part}) like upper(#{searchData})")
+ 	List<Anno> searchAnnoList(Search search);
 
 }

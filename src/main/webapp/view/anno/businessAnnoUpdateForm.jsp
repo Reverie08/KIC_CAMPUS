@@ -179,29 +179,50 @@
                         <input type="text" id="businessId" name="businessId" value="${anno.businessId}" class="form-input">
                     </div>
                     
-                    
+<%--                     skillName.equals("html")
                     <!-- Skill Selection -->
                     <div class="form-group">
                         <label for="skills" class="form-label">스킬:</label>
                         <div id="skills">
                             <c:forEach var="skill" items="${skills}">
-                                <div class="skill-button ${skill.java != null ? 'selected' : ''}" data-skillname="java">java</div>
-                                <div class="skill-button ${skill.jsp != null ? 'selected' : ''}" data-skillname="jsp">jsp</div>
-                                <div class="skill-button ${skill.html != null ? 'selected' : ''}" data-skillname="html">html</div>
-                                <div class="skill-button ${skill.css != null ? 'selected' : ''}" data-skillname="css">css</div>
-                                <div class="skill-button ${skill.javascript != null ? 'selected' : ''}" data-skillname="javascript">javascript</div>
-                                <div class="skill-button ${skill.react != null ? 'selected' : ''}" data-skillname="react">react</div>
-                                <div class="skill-button ${skill.springframework != null ? 'selected' : ''}" data-skillname="springframework">springframework</div>
-                                <div class="skill-button ${skill.springboot != null ? 'selected' : ''}" data-skillname="springboot">springboot</div>
-                                <div class="skill-button ${skill.python != null ? 'selected' : ''}" data-skillname="python">python</div>
-                                <div class="skill-button ${skill.typescript != null ? 'selected' : ''}" data-skillname="typescript">typescript</div>
-                                <div class="skill-button ${skill.express != null ? 'selected' : ''}" data-skillname="express">express</div>
-                                <div class="skill-button ${skill.oracle != null ? 'selected' : ''}" data-skillname="oracle">oracle</div>
-                                <div class="skill-button ${skill.mysql != null ? 'selected' : ''}" data-skillname="mysql">mysql</div>
-                                <div class="skill-button ${skill.mongodb != null ? 'selected' : ''}" data-skillname="mongodb">mongodb</div>
+                                <div class="skill-button ${skill.skills('%java%') != null ? 'selected' : ''}" data-skillname="java">java</div>
+                                <div class="skill-button ${skill.skills('%jsp%') != null ? 'selected' : ''}" data-skillname="jsp">jsp</div>
+                                <div class="skill-button ${skill.skills('%html%') != null ? 'selected' : ''}" data-skillname="html">html</div>
+                                <div class="skill-button ${skill.skills('%css%') != null ? 'selected' : ''}" data-skillname="css">css</div>
+                                <div class="skill-button ${skill.skills('%javascript%') != null ? 'selected' : ''}" data-skillname="javascript">javascript</div>
+                                <div class="skill-button ${skill.skills('%react%') != null ? 'selected' : ''}" data-skillname="react">react</div>
+                                <div class="skill-button ${skill.skills('%springframework%') != null ? 'selected' : ''}" data-skillname="springframework">springframework</div>
+                                <div class="skill-button ${skill.skills('%springboot%') != null ? 'selected' : ''}" data-skillname="springboot">springboot</div>
+                                <div class="skill-button ${skill.skills('%python%') != null ? 'selected' : ''}" data-skillname="python">python</div>
+                                <div class="skill-button ${skill.skills('%typescript%') != null ? 'selected' : ''}" data-skillname="typescript">typescript</div>
+                                <div class="skill-button ${skill.skills('%express%') != null ? 'selected' : ''}" data-skillname="express">express</div>
+                                <div class="skill-button ${skill.skills('%oracle%') != null ? 'selected' : ''}" data-skillname="oracle">oracle</div>
+                                <div class="skill-button ${skill.skills('%mysql%') != null ? 'selected' : ''}" data-skillname="mysql">mysql</div>
+                                <div class="skill-button ${skill.skills('%mongodb%') != null ? 'selected' : ''}" data-skillname="mongodb">mongodb</div>
                             </c:forEach>
                         </div>
-                    </div>
+                    </div> --%>
+                    
+                    <!-- Skill Selection -->
+					<div class="form-group">
+					    <label for="skills" class="form-label">스킬:</label>
+					    <div id="skills">
+					        <div class="skill-button" data-skillname="java">java</div>
+					        <div class="skill-button" data-skillname="jsp">jsp</div>
+					        <div class="skill-button" data-skillname="html">html</div>
+					        <div class="skill-button" data-skillname="css">css</div>
+					        <div class="skill-button" data-skillname="javascript">javascript</div>
+					        <div class="skill-button" data-skillname="react">react</div>
+					        <div class="skill-button" data-skillname="springframework">springframework</div>
+					        <div class="skill-button" data-skillname="springboot">springboot</div>
+					        <div class="skill-button" data-skillname="python">python</div>
+					        <div class="skill-button" data-skillname="typescript">typescript</div>
+					        <div class="skill-button" data-skillname="express">express</div>
+					        <div class="skill-button" data-skillname="oracle">oracle</div>
+					        <div class="skill-button" data-skillname="mysql">mysql</div>
+					        <div class="skill-button" data-skillname="mongodb">mongodb</div>
+					    </div>
+					</div>
                     
                     <input type="hidden" id="selectedSkills" name="selectedSkills">
                     <div class="form-group">

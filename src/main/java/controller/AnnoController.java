@@ -53,15 +53,14 @@ public class AnnoController extends MskimRequestMapping {
 	}
 
 
-
-
-
 	@RequestMapping("anno-insert-pro")
 	public String annoInsertPro(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		Anno anno = new Anno();
+		
 		AnnoDAO annoDao = new AnnoDAO();
+		int annoId = annoDao.selectAnnoId();
 		int skillId = annoDao.selectSkillId();
 		String businessName = request.getParameter("businessName");
 		String welfare = request.getParameter("welfare");
@@ -98,47 +97,20 @@ public class AnnoController extends MskimRequestMapping {
 		anno.setAnnoContent(annoContent);
 		anno.setBusinessId(businessId);
 		anno.setSkillId(skillId);
+		
 		System.out.println(anno);
 
 		int num = annoDao.insertAnno(anno);
-		int annoId = annoDao.getAnnoId();
+		//int annoId = annoDao.getAnnoId();
 
 		if (num > 0 && selectedSkills != null && !selectedSkills.isEmpty()) {
-			String[] skills = selectedSkills.split(",");
 			Skill skill = new Skill();
-			for (String skillName : skills) {
+			
 				skill.setAnnoId(annoId);
 				skill.setSkillId(skillId);
-				if (skillName.equals("java"))
-					skill.setJava("java");
-				if (skillName.equals("jsp"))
-					skill.setJsp("jsp");
-				if (skillName.equals("html"))
-					skill.setHtml("html");
-				if (skillName.equals("css"))
-					skill.setCss("css");
-				if (skillName.equals("javascript"))
-					skill.setJavascript("javascript");
-				if (skillName.equals("react"))
-					skill.setReact("react");
-				if (skillName.equals("springframework"))
-					skill.setSpringframework("springframework");
-				if (skillName.equals("springboot"))
-					skill.setSpringboot("springboot");
-				if (skillName.equals("python"))
-					skill.setPython("python");
-				if (skillName.equals("typescript"))
-					skill.setTypescript("typescript");
-				if (skillName.equals("express"))
-					skill.setExpress("express");
-				if (skillName.equals("oracle"))
-					skill.setOracle("oracle");
-				if (skillName.equals("mysql"))
-					skill.setMysql("mysql");
-				if (skillName.equals("mongodb"))
-					skill.setMongodb("mongodb");
-			}
-			annoDao.insertSkill(skill);
+				skill.setSkills(selectedSkills);
+				
+				annoDao.insertSkill(skill);
 		}
 		
 		String msg = "";
@@ -201,9 +173,12 @@ public class AnnoController extends MskimRequestMapping {
 	@RequestMapping("business-anno-list")
 	public String businessAnnoList(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String businessId = (String) session.getAttribute("businessId");
 		List<Anno> li = annoDao.getAnnoList();
+//		List<Anno> li = annoDao.getAnnoListFromBusinessId(businessId);
 		
-		String businessId = request.getParameter("businessid");
+		
+//		businessId = request.getParameter("businessId");
 		String businessName = request.getParameter("businessName");
 		String annoTitle = request.getParameter("annoTitle");
 		String annoGrade = request.getParameter("annoGrade");
@@ -212,11 +187,8 @@ public class AnnoController extends MskimRequestMapping {
 		String annoDate = request.getParameter("annoDate");
 		
 		String annoId = request.getParameter("annoId");
-		
-		Business business = businessDao.getBusiness(businessId);
-		request.setAttribute("business", business);
-		
-		request.setAttribute("businessId", businessId);
+
+//		request.setAttribute("businessId", businessId);
 		request.setAttribute("annoId", annoId);
 		request.setAttribute("businessName", businessName);
 		request.setAttribute("annoTitle", annoTitle);
@@ -224,6 +196,8 @@ public class AnnoController extends MskimRequestMapping {
 		request.setAttribute("annoWorkType", annoWorkType);
 		request.setAttribute("annoWorkPlace", annoWorkPlace);
 		request.setAttribute("annoDate", annoDate);
+		
+		
 		
 		request.setAttribute("li", li);
 
@@ -245,16 +219,14 @@ public class AnnoController extends MskimRequestMapping {
 			throws ServletException, IOException {
 		int annoId = Integer.parseInt(request.getParameter("annoId"));
 		Anno anno = annoDao.getAnnoFromAnnoId(annoId);
-		List<Skill> skills = annoDao.getSkillsByAnnoId(annoId);
+		Skill skills = annoDao.getSkillsByAnnoId(annoId);
 
 		request.setAttribute("anno", anno);
 		request.setAttribute("skills", skills);
 
 		// 스킬 정보를 출력하는 코드 추가
 		System.out.println("Skills for AnnoId: " + annoId);
-		for (Skill skill : skills) {
-			System.out.println(skill);
-		}
+		System.out.println(skills);
 
 		return "/view/anno/businessAnnoInfo.jsp";
 	}
@@ -264,7 +236,7 @@ public class AnnoController extends MskimRequestMapping {
 	        throws ServletException, IOException {
 	    int annoId = Integer.parseInt(request.getParameter("annoId"));
 	    Anno anno = annoDao.getAnnoFromAnnoId(annoId);
-	    List<Skill> skills = annoDao.getSkillsByAnnoId(annoId);
+	    Skill skills = annoDao.getSkillsByAnnoId(annoId);
 
 	    request.setAttribute("anno", anno);
 	    request.setAttribute("skills", skills);
@@ -272,13 +244,12 @@ public class AnnoController extends MskimRequestMapping {
 	    return "/view/anno/userAnnoInfo.jsp";
 	}
 
-
 	@RequestMapping("business-anno-update-form")
 	public String businessAnnoUpdateForm(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
 	    int annoId = Integer.parseInt(request.getParameter("annoId"));
 	    Anno anno = annoDao.getAnnoFromAnnoId(annoId);
-	    List<Skill> skills = annoDao.getSkillsByAnnoId(annoId);
+	    Skill skills = annoDao.getSkillsByAnnoId(annoId);
 
 	    request.setAttribute("anno", anno);
 	    request.setAttribute("skills", skills);
@@ -295,7 +266,8 @@ public class AnnoController extends MskimRequestMapping {
 	    // Check if the parameter is received correctly
 	    String annoIdStr = request.getParameter("annoId");
 	    System.out.println("Received annoId: " + annoIdStr);
-
+	    int skillId = annoDao.selectSkillId();
+	    
 	    int annoId = parseIntOrDefault(annoIdStr, 0);
 
 	    Anno anno = new Anno();
@@ -316,36 +288,24 @@ public class AnnoController extends MskimRequestMapping {
 	    anno.setAnnoContent(request.getParameter("annoContent"));
 	    anno.setBusinessId(request.getParameter("businessId"));
 	    anno.setSkillId(parseIntOrDefault(request.getParameter("skillId"), 0));
+	    String selectedSkills = request.getParameter("selectedSkills");
+	    System.out.println(selectedSkills);
 
 	    System.out.print(anno);
 
 	    int num = annoDao.updateAnno(anno);
-
-	    // Update skills
-	    String selectedSkills = request.getParameter("selectedSkills");
-	    if (selectedSkills != null && !selectedSkills.isEmpty()) {
-	        annoDao.deleteSkillsByAnnoId(annoId);  // Delete existing skills
-	        String[] skills = selectedSkills.split(",");
-	        Skill skill = new Skill();
-	        for (String skillName : skills) {
-	            skill.setAnnoId(annoId);
-	            if (skillName.equals("java")) skill.setJava("java");
-	            if (skillName.equals("jsp")) skill.setJsp("jsp");
-	            if (skillName.equals("html")) skill.setHtml("html");
-	            if (skillName.equals("css")) skill.setCss("css");
-	            if (skillName.equals("javascript")) skill.setJavascript("javascript");
-	            if (skillName.equals("react")) skill.setReact("react");
-	            if (skillName.equals("springframework")) skill.setSpringframework("springframework");
-	            if (skillName.equals("springboot")) skill.setSpringboot("springboot");
-	            if (skillName.equals("python")) skill.setPython("python");
-	            if (skillName.equals("typescript")) skill.setTypescript("typescript");
-	            if (skillName.equals("express")) skill.setExpress("express");
-	            if (skillName.equals("oracle")) skill.setOracle("oracle");
-	            if (skillName.equals("mysql")) skill.setMysql("mysql");
-	            if (skillName.equals("mongodb")) skill.setMongodb("mongodb");
-	        }
-	        annoDao.insertSkill(skill);
-	    }
+		 // Update skills
+//		annoId = annoDao.getAnnoId();
+		if (num > 0 && selectedSkills != null && !selectedSkills.isEmpty()) {
+			//annoDao.deleteSkillsByAnnoId(annoId);  // Delete existing skills
+			Skill skill = new Skill();
+			
+				skill.setAnnoId(annoId);
+				skill.setSkillId(skillId);
+				skill.setSkills(selectedSkills);
+				
+				annoDao.insertSkill(skill);
+		}
 
 	    String msg = "";
 	    String url = "business-anno-list";
@@ -419,6 +379,9 @@ public class AnnoController extends MskimRequestMapping {
 		search.setPart(part);
 		search.setSearchData("%" + searchData + "%");
 		List<Anno> searchAnnoList = annoDao.searchAnnoList(search);
+		
+		request.setAttribute("searchPart", part);
+		request.setAttribute("searchData", searchData);
 		request.setAttribute("searchAnnoList", searchAnnoList);
 		
 		return "/view/anno/searchAnnoList.jsp"; 
