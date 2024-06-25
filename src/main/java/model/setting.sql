@@ -18,14 +18,14 @@ CREATE TABLE business (
 	businessname	VARCHAR2(40)	NULL,
 	address	VARCHAR2(200)	NULL,
 	salary	number	NULL,
-	welfare	VARCHAR2(500)	NULL,
+	welfare	CLOB	NULL,
 	ceo	VARCHAR2(40)	NULL,
 	sales	number	NULL,
 	employees	number	NULL,
 	type	VARCHAR2(40)	NULL,
-	industry	VARCHAR2(40)	NULL,
-	detailindustry	VARCHAR2(40)	NULL,
-	homepage	VARCHAR2(90)	NULL,
+	industry	VARCHAR2(100)	NULL,
+	detailindustry	VARCHAR2(200)	NULL,
+	homepage	VARCHAR2(200)	NULL,
 	content	CLOB	NULL
 );
 

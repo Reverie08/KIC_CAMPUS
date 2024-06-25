@@ -77,7 +77,9 @@ public class BusinessController {
 //		String homepage = request.getParameter("homepage");
 //		String content = request.getParameter("content");
 
+		String welfare = business.getWelfare().replace("\n", "<br>");
 		String content = business.getContent().replace("\n", "<br>");
+//		content = content.replace("\n", "<br>");
 
 //		Business business = new Business();
 //		business.setBusinessId(businessId);
@@ -93,6 +95,7 @@ public class BusinessController {
 //		business.setIndustry(industry);
 //		business.setDetailIndustry(detailIndustry);
 //		business.setHomepage(homepage);
+		business.setWelfare(welfare);
 		business.setContent(content);
 		System.out.println(business);
 		int businessNum = businessDao.insertBusiness(business);
@@ -190,8 +193,11 @@ public class BusinessController {
 		String businessId = (String) session.getAttribute("businessId");
 		Business business = businessDao.getBusiness(businessId);
 		if (business != null) {
+			String welfare = business.getWelfare();
 			String content = business.getContent();
+			welfare = welfare.replace("<br>", "\n");
 			content = content.replace("<br>", "\n");
+			business.setWelfare(welfare);
 			business.setContent(content);
 		}
 		model.addAttribute("business", business);
@@ -217,6 +223,7 @@ public class BusinessController {
 //		String homepage = request.getParameter("homepage");
 //		String content = request.getParameter("content");
 
+		String welfare = business.getWelfare().replace("\n", "<br>");
 		String content = business.getContent().replace("\n", "<br>");
 
 		Business businessDb = businessDao.getBusiness(businessId);
@@ -234,6 +241,8 @@ public class BusinessController {
 //		business.setIndustry(industry);
 //		business.setDetailIndustry(detailIndustry);
 //		business.setHomepage(homepage);
+		
+		business.setWelfare(welfare);
 		business.setContent(content);
 		String msg = "";
 		String url = "business-update?businessid=" + businessId;
@@ -301,22 +310,22 @@ public class BusinessController {
 
 	// 기업 검색
 	@RequestMapping("search-business-list")
-	public String searchBusinessList() throws ServletException, IOException {
+	public String searchBusinessList(Search search) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-        String part = request.getParameter("part");
+//        String part = request.getParameter("part");
         String searchData = request.getParameter("searchData");
-        String sortData = request.getParameter("sortData"); // 정렬 조건이 있을 경우 받음
+//        String sortData = request.getParameter("sortData"); // 정렬 조건이 있을 경우 받음
 
-        Search search = new Search();
-        search.setPart(part);
+//        Search search = new Search();
+//        search.setPart(part);
         search.setSearchData("%" + searchData + "%");
-        search.setSortData(sortData);
+//        search.setSortData(sortData);
         
         List<Business> searchBusinessList = businessDao.searchBusinessList(search);
 
-        model.addAttribute("searchPart", part); // 선택된 검색 조건
+        model.addAttribute("searchPart", search.getPart()); // 선택된 검색 조건
         model.addAttribute("searchData", searchData); // 검색어
-        model.addAttribute("selectedSortData", sortData); // 선택된 정렬 데이터를 속성에 설정
+        model.addAttribute("selectedSortData", searchData); // 선택된 정렬 데이터를 속성에 설정
         model.addAttribute("searchBusinessList", searchBusinessList);
 
 		return "business/searchBusinessList";

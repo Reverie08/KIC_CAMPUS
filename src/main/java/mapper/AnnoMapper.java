@@ -16,10 +16,6 @@ public interface AnnoMapper {
 	// 스킬의 다음 ID를 가져오기
 	@Select("select skillseq.nextval from dual")
 	public int selectSkillId();
-	
-	// 스킬의 다음 ID를 가져오기
-	@Select("select annoseq.nextval from dual")
-	public int selectAnnoId();
 
 	// annoId, businessId, businessName, annoTitle, annoGrade, annoWorkType, annoWorkPlace, annoDate
     // 모든 공고 목록 조회  
@@ -96,12 +92,11 @@ public interface AnnoMapper {
     List<Skill> getAllSkills();
 
     // 공고 삽입
-    @Insert("INSERT INTO Anno (annoId, businessName, welfare, annoTitle, annoCareer, annoSalary, annoEdu, annoGrade, annoWorkType, annoWorkDay, annoWorkPlace, annoCommon, annoQualification, annoPickNum, annoDate, annoContent, businessId, skillId) VALUES (#{annoId}, #{businessName}, #{welfare}, #{annoTitle}, #{annoCareer}, #{annoSalary}, #{annoEdu}, #{annoGrade}, #{annoWorkType}, #{annoWorkDay}, #{annoWorkPlace}, #{annoCommon}, #{annoQualification}, #{annoPickNum}, sysdate, #{annoContent}, #{businessId}, #{skillId})")
+    @Insert("INSERT INTO Anno (annoId, businessName, welfare, annoTitle, annoCareer, annoSalary, annoEdu, annoGrade, annoWorkType, annoWorkDay, annoWorkPlace, annoCommon, annoQualification, annoPickNum, annoDate, annoContent, businessId, skillId) VALUES (annoseq.nextval, #{businessName}, #{welfare}, #{annoTitle}, #{annoCareer}, #{annoSalary}, #{annoEdu}, #{annoGrade}, #{annoWorkType}, #{annoWorkDay}, #{annoWorkPlace}, #{annoCommon}, #{annoQualification}, #{annoPickNum}, sysdate, #{annoContent}, #{businessId}, #{skillId})")
     int insertAnno(Anno anno);
 
-    // 현재 마지막으로 생성된 시퀀스를 가져온다 이게 왜 있지? 지우가 내 허락 없이 그냥 넣었나본데
-//    @Select("SELECT annoseq.currval FROM dual")
-//    int getAnnoId();
+    @Select("SELECT annoseq.currval FROM dual")
+    int getAnnoId();
 
     // 공고 스킬 삽입
     @Insert("INSERT INTO AnnoSkill (annoId, skillId) VALUES (#{annoId}, #{skillId})")
@@ -110,6 +105,10 @@ public interface AnnoMapper {
     // 공고 수정
     @Update("UPDATE anno SET businessName=#{businessName}, welfare=#{welfare}, annoTitle=#{annoTitle}, annoCareer=#{annoCareer}, annoSalary=#{annoSalary}, annoEdu=#{annoEdu}, annoGrade=#{annoGrade}, annoWorkType=#{annoWorkType}, annoWorkDay=#{annoWorkDay}, annoWorkPlace=#{annoWorkPlace}, annoCommon=#{annoCommon}, annoQualification=#{annoQualification}, annoPickNum=#{annoPickNum}, annoContent=#{annoContent}, businessId=#{businessId}, skillId=#{skillId} WHERE annoId=#{annoId}")
     int updateAnno(Anno anno);
+    
+    // 스킬 수정
+    @Update("UPDATE skill set skills=#{skills} WHERE skillId=#{skillId}")
+    int updateAnnoSkill(int skillId);
 
     // 공고 삭제
     @Delete("DELETE FROM anno WHERE annoId=#{annoId}")
@@ -121,6 +120,8 @@ public interface AnnoMapper {
     
     @Delete("DELETE FROM Skill WHERE annoid = #{annoId}")
     int deleteSkillsByAnnoId(int annoId);
+
+
     
  // 공고 검색어 리스트
  	@Select("select * from anno where upper(${part}) like upper(#{searchData})")

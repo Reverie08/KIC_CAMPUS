@@ -84,9 +84,8 @@
         <aside class="bg-white rounded-lg shadow p-4 fixed-sidebar">
             <h2 class="text-lg font-bold mb-4">Sidebar</h2>
             <ul>
-                <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-list?businessid=${sessionScope.businessId}" class="text-blue-500">공고목록</a></li>
-                <li class="mb-2"><a href="#" class="text-blue-500">#</a></li>
-                <li class="mb-2"><a href="#" class="text-blue-500">#</a></li>
+            		<li class="mb-2"><a href="${pageContext.request.contextPath}/business/business-main" class="text-blue-500">메인화면</a></li>
+                <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-list" class="text-blue-500">공고목록</a></li>
                 <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-insert-form" class="text-blue-500"><b>공고작성</b></a></li>
             </ul>
         </aside>
@@ -101,7 +100,7 @@
                     </div>
                     <div class="form-group">
                         <label for="welfare" class="form-label">복지:</label>
-                        <input type="text" id="welfare" name="welfare" class="form-input" value="${business.welfare}">
+                        <textarea id="welfare" name="welfare" class="form-input">${business.welfare}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="annoTitle" class="form-label">공고 제목:</label>
@@ -153,7 +152,7 @@
                     </div>
                     <div class="form-group">
                         <label for="businessId" class="form-label">기업 ID:</label>
-                        <input type="text" id="businessId" name="businessId" class="form-input" value="${business.businessId}" readonly>
+                        <input type="text" id="businessId" name="businessId" class="form-input" value="${business.businessId}">
                     </div>
                             
                     <!-- Skill Selection -->

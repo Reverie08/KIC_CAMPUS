@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import dao.MemberDAO;
 import dao.ResumeDAO;
+import dao.BusinessDAO;
+import model.Business;
 import model.Member;
 import model.Resume;
 
@@ -32,6 +34,9 @@ public class MemberController {
 	
 	@Autowired
 	MemberDAO memberDao = new MemberDAO();
+	
+	@Autowired
+	BusinessDAO businessDao = new BusinessDAO();
 	
 	@Autowired
 	ResumeDAO resumeDao = new ResumeDAO();
@@ -48,7 +53,10 @@ public class MemberController {
 	// 메인
 	@RequestMapping("main")
 	public String main() throws ServletException, IOException {
-
+		String businessId = (String) session.getAttribute("businessId");
+		Business business = businessDao.getBusiness(businessId);
+		model.addAttribute("business", business);
+		
 		return "main";
 	}
 
@@ -62,27 +70,27 @@ public class MemberController {
 
 	// 회원 가입 처리
 	@RequestMapping("member-join-pro")
-	public String memberJoinPro(Member member)
+	public String memberJoinPro()
 			throws ServletException, IOException, ParseException {
 
 		request.setCharacterEncoding("utf-8");
-//		String memberId = request.getParameter("memberId");
-//		String memberPw = request.getParameter("memberPw");
-//		String name = request.getParameter("name");
-//		int gender = Integer.parseInt((request.getParameter("gender")));
-//		String email = request.getParameter("email");
-//		String phone = request.getParameter("phone");
-//		String birth = request.getParameter("birth");
+		String memberId = request.getParameter("memberId");
+		String memberPw = request.getParameter("memberPw");
+		String name = request.getParameter("name");
+		int gender = Integer.parseInt((request.getParameter("gender")));
+		String email = request.getParameter("email");
+		String phone = request.getParameter("phone");
+		String birth = request.getParameter("birth");
 
-//		Member member = new Member();
+		Member member = new Member();
 
-//		member.setMemberId(memberId);
-//		member.setMemberPw(memberPw);
-//		member.setName(name);
-//		member.setGender(gender);
-//		member.setEmail(email);
-//		member.setPhone(phone);
-//		member.setBirth(birth);
+		member.setMemberId(memberId);
+		member.setMemberPw(memberPw);
+		member.setName(name);
+		member.setGender(gender);
+		member.setEmail(email);
+		member.setPhone(phone);
+		member.setBirth(birth);
 
 		System.out.println(member);
 
@@ -92,7 +100,7 @@ public class MemberController {
 		String url = "";
 
 		if (num > 0) {
-			msg = member.getName() + "님이 회원가입이 완료 되었습니다.";
+			msg = name + "님이 회원가입이 완료 되었습니다.";
 			url = "member-login";
 		} else {
 			msg = "회원가입이 실패 하였습니다. 다시 시도해 주세요";
@@ -138,7 +146,7 @@ public class MemberController {
 	}
 
 	@RequestMapping("update-profileImage")
-	public String updateProFileImage(@RequestParam("profileImage") MultipartFile multipartFile)
+	public String updateProFileImage(@RequestParam("profileImageFile") MultipartFile multipartFile)
 			throws ServletException, IOException {
 
 		request.setCharacterEncoding("utf-8");

@@ -12,11 +12,10 @@ import mapper.ResumeMapper;
 import model.Anno;
 import model.Search;
 import model.Skill;
-import util.MybatisConnection;
 
 @Component
 public class AnnoDAO {
-
+	
 	@Autowired
 	SqlSessionTemplate session;
 	
@@ -97,25 +96,26 @@ public class AnnoDAO {
 	
 	public int insertAnno(Anno anno) {
 		int num = session.getMapper(AnnoMapper.class).insertAnno(anno);
-		
 		return num;
 	}
 	
 	public int updateAnno(Anno anno) {
 		int num = session.getMapper(AnnoMapper.class).updateAnno(anno);
-		
+		return num;
+	}
+	
+	public int updateAnnoSkill(int skillId) {
+		int num = session.getMapper(AnnoMapper.class).updateAnnoSkill(skillId);
 		return num;
 	}
 	
 	public int deleteAnno(int annoId) {
 		int num = session.getMapper(AnnoMapper.class).deleteAnno(annoId);
-		
 		return num;
 	}
 
 	public int insertSkill(Skill skill) {
 		int num = session.getMapper(AnnoMapper.class).insertSkill(skill);
-		
 		return num;
 	}
 	
@@ -126,16 +126,14 @@ public class AnnoDAO {
 	
 	public int insertAnnoSkill(int annoId, int skillId) {
 		int num = session.getMapper(AnnoMapper.class).insertAnnoSkill(annoId, skillId);
-		
 		return num;
 	}
 
-	
-//    public int getAnnoId() {
-//        int annoId = session.getMapper(AnnoMapper.class).getAnnoId();
-//        
-//        return annoId;
-//    } 
+    public int getAnnoId() {
+        int annoId = session.getMapper(AnnoMapper.class).getAnnoId();
+        
+        return annoId;
+    }
     
     public Skill getSkillsByAnnoId(int annoId) {
         Skill skills = session.getMapper(AnnoMapper.class).getSkillsByAnnoId(annoId);
@@ -146,18 +144,12 @@ public class AnnoDAO {
     
     public int deleteSkillsByAnnoId(int annoId) {
         int num = session.getMapper(AnnoMapper.class).deleteSkillsByAnnoId(annoId);
-        
         return num;
     }
     
     public int selectSkillId() {
 		return session.getMapper(AnnoMapper.class).selectSkillId();
 	}
-    
-    public int selectAnnoId() {
-		return session.getMapper(AnnoMapper.class).selectAnnoId();
-	}
-    
     public List<Anno> searchAnnoList(Search search) {
     	List<Anno> searchAnnoList = session.getMapper(AnnoMapper.class).searchAnnoList(search);
     	return searchAnnoList;

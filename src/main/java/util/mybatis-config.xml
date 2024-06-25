@@ -46,5 +46,6 @@
 		<mapper class="mapper.EduMapper" />
 		<mapper class="mapper.MemberPortfolioMapper" />
 		<mapper class="mapper.MemberProjectMapper" />
+		<mapper class="mapper.SkillMapper" />
 	</mappers>
 </configuration>

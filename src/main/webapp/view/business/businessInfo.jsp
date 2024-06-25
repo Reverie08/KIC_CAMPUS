@@ -19,6 +19,10 @@ body {
     overflow-y: auto;
 }
 
+html, body {
+    height: 100%;
+}
+
 .container {
     background-color: #fff;
     border-radius: 10px;
@@ -27,6 +31,7 @@ body {
     padding: 20px;
     box-sizing: border-box;
     margin-top: 20px;
+    overflow-y: auto;
 }
 
 .container h2 {
@@ -150,17 +155,17 @@ body {
         <h2>기업 정보</h2>
         <div class="info-summary">
             <div class="summary-item">
-                <img src="" alt="기업형태">
+                <img src="https://ifh.cc/g/L27r88.png" alt="기업형태">
                 <p>${business.type}</p>
                 <small>기업형태</small>
             </div>
             <div class="summary-item">
-                <img src="" alt="사원수">
+                <img src="https://ifh.cc/g/QKnJJq.png" alt="사원수">
                 <p>${business.employees}명</p>
                 <small>사원수</small>
             </div>
             <div class="summary-item">
-                <img src="" alt="매출액">
+                <img src="https://ifh.cc/g/Jfv32W.png" alt="매출액">
                 <p>${business.sales}원</p>
                 <small>매출액</small>
             </div>

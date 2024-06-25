@@ -161,13 +161,11 @@ body {
 		<aside class="sidebar">
 			<div class="flex items-center justify-between mb-4">
 				<h2 class="text-lg font-bold">공고리스트</h2>
-				<button class="bg-blue-500 text-white px-2 py-1 rounded">+</button>
+<!-- 				<button class="bg-blue-500 text-white px-2 py-1 rounded">+</button> -->
 			</div>
 			<ul>
-				<li><a href="#">Dev-Ops Engineer</a></li>
-				<li><a href="#">Front-end Developer</a></li>
-				<li><a href="#">CX Manager</a></li>
-				<li><a href="#">Front-and Davoloper</a></li>
+				<li class="mb-2"><a href="${pageContext.request.contextPath}/member/main" class="text-blue-500">메인화면</a></li>
+				<li class="mb-2"><a href="${pageContext.request.contextPath}/member/member-main" class="text-blue-500">채용관리</a></li>
 			</ul>
 		</aside>
 
@@ -176,7 +174,7 @@ body {
 			<!-- Header -->
 			<div class="header">
 				<h1>공고 리스트</h1>
-				<a href="${pageContext.request.contextPath}/member/member-main">${member.name}</a>
+<%-- 				<a href="${pageContext.request.contextPath}/member/member-main">메인으로</a> --%>
 			</div>
 			<!-- Filters -->
 			<div class="filters">

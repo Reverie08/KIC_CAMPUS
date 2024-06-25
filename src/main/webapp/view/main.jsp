@@ -242,8 +242,8 @@ nav ul li:hover .dropdown {
 					<a
 						href="${pageContext.request.contextPath}/business/business-logout"
 						class="inquiry-button" style="color: white;">기업 로그아웃</a>
-					<a href="${pageContext.request.contextPath}/business/business-list"
-						class="inquiry-button" style="color: white;">기업리스트</a>
+					<a href="${pageContext.request.contextPath}/business/business-info?businessid=${sessionScope.businessId}"
+						class="inquiry-button" style="color: white;">${business.businessName}</a>
 					<a
 						href="${pageContext.request.contextPath}/anno/business-anno-list?busineessid=${sessionScope.businessId}"
 						class="text-blue-500"><b>공고목록</b></a>

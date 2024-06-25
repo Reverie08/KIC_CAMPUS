@@ -91,6 +91,7 @@
         <aside class="bg-white rounded-lg shadow p-4 fixed-sidebar">
             <h2 class="text-lg font-bold mb-4">Sidebar</h2>
             <ul>
+                <li class="mb-2"><a href="${pageContext.request.contextPath}/business/business-main" class="text-blue-500">메인화면</a></li>
                 <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-info?annoId=${anno.annoId}" class="text-blue-500"><b>공고내용</b></a></li>
                 <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-management?annoId=${anno.annoId}" class="text-blue-500">이력서 관리</a></li>
                 <li class="mb-2"><a href="#" class="text-blue-500">미정</a></li>
@@ -102,16 +103,16 @@
             <div class="container bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-2xl font-bold mb-4">Update Anno</h2>
                 <form action="anno-update-pro" method="post">
-                    <input type="hidden" name="annoId" value="${anno.annoId}">
+                    <input type="text" name="annoIdStr" value="${anno.annoId}">
 
                     <div class="form-group">
                         <label for="businessName" class="form-label">기업명:</label>
                         <input type="text" id="businessName" name="businessName" value="${anno.businessName}" class="form-input">
                     </div>
-
-                    <div class="form-group">
+                    
+                     <div class="form-group">
                         <label for="welfare" class="form-label">복지:</label>
-                        <input type="text" id="welfare" name="welfare" value="${anno.welfare}" class="form-input">
+                        <textarea id="welfare" name="welfare" class="form-textarea">${anno.welfare}</textarea>
                     </div>
 
                     <div class="form-group">
@@ -179,50 +180,34 @@
                         <input type="text" id="businessId" name="businessId" value="${anno.businessId}" class="form-input">
                     </div>
                     
-<%--                     skillName.equals("html")
-                    <!-- Skill Selection -->
-                    <div class="form-group">
-                        <label for="skills" class="form-label">스킬:</label>
-                        <div id="skills">
-                            <c:forEach var="skill" items="${skills}">
-                                <div class="skill-button ${skill.skills('%java%') != null ? 'selected' : ''}" data-skillname="java">java</div>
-                                <div class="skill-button ${skill.skills('%jsp%') != null ? 'selected' : ''}" data-skillname="jsp">jsp</div>
-                                <div class="skill-button ${skill.skills('%html%') != null ? 'selected' : ''}" data-skillname="html">html</div>
-                                <div class="skill-button ${skill.skills('%css%') != null ? 'selected' : ''}" data-skillname="css">css</div>
-                                <div class="skill-button ${skill.skills('%javascript%') != null ? 'selected' : ''}" data-skillname="javascript">javascript</div>
-                                <div class="skill-button ${skill.skills('%react%') != null ? 'selected' : ''}" data-skillname="react">react</div>
-                                <div class="skill-button ${skill.skills('%springframework%') != null ? 'selected' : ''}" data-skillname="springframework">springframework</div>
-                                <div class="skill-button ${skill.skills('%springboot%') != null ? 'selected' : ''}" data-skillname="springboot">springboot</div>
-                                <div class="skill-button ${skill.skills('%python%') != null ? 'selected' : ''}" data-skillname="python">python</div>
-                                <div class="skill-button ${skill.skills('%typescript%') != null ? 'selected' : ''}" data-skillname="typescript">typescript</div>
-                                <div class="skill-button ${skill.skills('%express%') != null ? 'selected' : ''}" data-skillname="express">express</div>
-                                <div class="skill-button ${skill.skills('%oracle%') != null ? 'selected' : ''}" data-skillname="oracle">oracle</div>
-                                <div class="skill-button ${skill.skills('%mysql%') != null ? 'selected' : ''}" data-skillname="mysql">mysql</div>
-                                <div class="skill-button ${skill.skills('%mongodb%') != null ? 'selected' : ''}" data-skillname="mongodb">mongodb</div>
-                            </c:forEach>
-                        </div>
-                    </div> --%>
-                    
-                    <!-- Skill Selection -->
+
+					<!-- Skill Selection -->
 					<div class="form-group">
 					    <label for="skills" class="form-label">스킬:</label>
 					    <div id="skills">
-					        <div class="skill-button" data-skillname="java">java</div>
-					        <div class="skill-button" data-skillname="jsp">jsp</div>
-					        <div class="skill-button" data-skillname="html">html</div>
-					        <div class="skill-button" data-skillname="css">css</div>
-					        <div class="skill-button" data-skillname="javascript">javascript</div>
-					        <div class="skill-button" data-skillname="react">react</div>
-					        <div class="skill-button" data-skillname="springframework">springframework</div>
-					        <div class="skill-button" data-skillname="springboot">springboot</div>
-					        <div class="skill-button" data-skillname="python">python</div>
-					        <div class="skill-button" data-skillname="typescript">typescript</div>
-					        <div class="skill-button" data-skillname="express">express</div>
-					        <div class="skill-button" data-skillname="oracle">oracle</div>
-					        <div class="skill-button" data-skillname="mysql">mysql</div>
-					        <div class="skill-button" data-skillname="mongodb">mongodb</div>
+					        <!-- 가능한 모든 스킬 리스트를 하드코딩하여 배열로 만듭니다 -->
+					        <c:set var="allSkills" value="java,jsp,html,css,javascript,react,springframework,springboot,python,typescript,express,oracle,mysql,mongodb"/>
+					
+					        <!-- 모든 가능한 스킬을 반복합니다 -->
+					        <c:forEach var="availableSkill" items="${allSkills.split(',')}">
+					            <c:set var="isSelected" value="false" />
+					            <!-- skillsArray를 반복하여 현재 스킬이 포함되어 있는지 확인합니다 -->
+					            <c:forEach var="skill" items="${skillsArray}">
+					                <c:if test="${skill == availableSkill}">
+					                    <c:set var="isSelected" value="true" />
+					                </c:if>
+					            </c:forEach>
+					            <!-- isSelected 값에 따라 클래스 적용 -->
+					            <div class="skill-button ${isSelected == 'true' ? 'selected' : ''}" data-skillname="${availableSkill}">
+					                ${availableSkill}
+					            </div>
+					        </c:forEach>
 					    </div>
 					</div>
+
+
+
+
                     
                     <input type="hidden" id="selectedSkills" name="selectedSkills">
                     <div class="form-group">
