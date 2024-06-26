@@ -91,7 +91,6 @@
         <aside class="bg-white rounded-lg shadow p-4 fixed-sidebar">
             <h2 class="text-lg font-bold mb-4">Sidebar</h2>
             <ul>
-                <li class="mb-2"><a href="${pageContext.request.contextPath}/business/business-main" class="text-blue-500">메인화면</a></li>
                 <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-info?annoId=${anno.annoId}" class="text-blue-500"><b>공고내용</b></a></li>
                 <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-management?annoId=${anno.annoId}" class="text-blue-500">이력서 관리</a></li>
                 <li class="mb-2"><a href="#" class="text-blue-500">미정</a></li>
@@ -103,16 +102,16 @@
             <div class="container bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-2xl font-bold mb-4">Update Anno</h2>
                 <form action="anno-update-pro" method="post">
-                    <input type="text" name="annoIdStr" value="${anno.annoId}">
+                    <input type="hidden" name="annoId" value="${anno.annoId}">
 
                     <div class="form-group">
                         <label for="businessName" class="form-label">기업명:</label>
                         <input type="text" id="businessName" name="businessName" value="${anno.businessName}" class="form-input">
                     </div>
-                    
-                     <div class="form-group">
+
+                    <div class="form-group">
                         <label for="welfare" class="form-label">복지:</label>
-                        <textarea id="welfare" name="welfare" class="form-textarea">${anno.welfare}</textarea>
+                        <input type="text" id="welfare" name="welfare" value="${anno.welfare}" class="form-input">
                     </div>
 
                     <div class="form-group">

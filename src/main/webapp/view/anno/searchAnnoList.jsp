@@ -173,7 +173,7 @@ body {
 			<!-- Header -->
 			<div class="header">
 				<h1>공고 리스트</h1>
-				<a href="${pageContext.request.contextPath}/member/member-main">메인으로</a>
+<%-- 				<a href="${pageContext.request.contextPath}/member/member-main">메인으로</a> --%>
 			</div>
 			<!-- Filters -->
 			<div class="filters">

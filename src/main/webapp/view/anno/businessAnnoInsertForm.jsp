@@ -152,7 +152,7 @@
                     </div>
                     <div class="form-group">
                         <label for="businessId" class="form-label">기업 ID:</label>
-                        <input type="text" id="businessId" name="businessId" class="form-input" value="${business.businessId}">
+                        <input type="text" id="businessId" name="businessId" class="form-input" value="${business.businessId}" readonly>
                     </div>
                             
                     <!-- Skill Selection -->

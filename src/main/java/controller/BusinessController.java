@@ -175,11 +175,13 @@ public class BusinessController {
 	// 기업 정보
 	@RequestMapping("business-info")
 	public String businessInfo() throws ServletException, IOException {
-		String businessId = request.getParameter("businessid");
+		String businessId = request.getParameter("businessId");
 //		String businessId = (String) session.getAttribute("businessId");
 		List<Anno> li = annoDao.getAnnoList();
 		
 		System.out.println(businessId);
+		System.out.println("li.isEmpty() -> "+li.isEmpty());
+		System.out.println("li.size() -> "+li.size());
 		Business business = businessDao.getBusiness(businessId);
 		model.addAttribute("business", business);
 		model.addAttribute("li", li);
@@ -201,6 +203,7 @@ public class BusinessController {
 			business.setContent(content);
 		}
 		model.addAttribute("business", business);
+		model.addAttribute("checkType", business.getType());
 		return "business/businessUpdate";
 	}
 
@@ -245,13 +248,13 @@ public class BusinessController {
 		business.setWelfare(welfare);
 		business.setContent(content);
 		String msg = "";
-		String url = "business-update?businessid=" + businessId;
+		String url = "business-update?businessId=" + businessId;
 
 		if (businessDb != null) {
 			if (businessDb.getBusinessPw().equals(business.getBusinessPw())) {
 				msg = "수정하였습니다";
 				businessDao.updateBusiness(business);
-				url = "business-info?businessid=" + businessId;
+				url = "business-info?businessId=" + businessId;
 			} else {
 				System.out.println(businessDb.getBusinessPw());
 				System.out.println(business.getBusinessPw());
@@ -260,6 +263,7 @@ public class BusinessController {
 		} else {
 			msg = "수정이 불가능합니다";
 		}
+		
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 

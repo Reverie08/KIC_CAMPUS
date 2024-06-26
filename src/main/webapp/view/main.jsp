@@ -236,16 +236,16 @@ nav ul li:hover .dropdown {
 					<a href="${pageContext.request.contextPath}/member/member-logout"
 						class="inquiry-button" style="color: white;">개인 로그아웃</a>
 					<a href="${pageContext.request.contextPath}/member/member-main"
-						class="inquiry-button" style="color: white;">채용 관리?</a>
+						class="inquiry-button" style="color: white;">채용 관리</a>
 				</c:if>
 				<c:if test="${sessionScope.businessId != null }">
 					<a
 						href="${pageContext.request.contextPath}/business/business-logout"
 						class="inquiry-button" style="color: white;">기업 로그아웃</a>
-					<a href="${pageContext.request.contextPath}/business/business-info?businessid=${sessionScope.businessId}"
+					<a href="${pageContext.request.contextPath}/business/business-info?businessId=${sessionScope.businessId}"
 						class="inquiry-button" style="color: white;">${business.businessName}</a>
 					<a
-						href="${pageContext.request.contextPath}/anno/business-anno-list?busineessid=${sessionScope.businessId}"
+						href="${pageContext.request.contextPath}/anno/business-anno-list?businessId=${sessionScope.businessId}"
 						class="text-blue-500"><b>공고목록</b></a>
 					<a
 						href="${pageContext.request.contextPath}/anno/business-anno-insert-form"

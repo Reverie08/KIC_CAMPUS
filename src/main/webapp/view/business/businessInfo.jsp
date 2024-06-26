@@ -148,6 +148,11 @@ html, body {
     font-size: 12px;
     color: #999;
 }
+
+.info-group p a{
+	text-decoration: none;
+	color: #000;
+}
 </style>
 </head>
 <body>
@@ -208,7 +213,7 @@ html, body {
         </div>
         <div class="info-group">
             <label for="homepage">홈페이지</label>
-            <p>${business.homepage}</p>
+            <p><a href="${business.homepage}" target="_blank">${business.homepage}</a></p>
         </div>
         <div class="info-group">
             <label for="content">설명</label>
@@ -221,6 +226,9 @@ html, body {
             <c:set var="annoId" value="${annoId}" />
             <c:forEach var="businessAnno" items="${li}">
                 <c:if test="${business.businessId eq businessAnno.businessId}">
+<%--                 <c:if test="${li.size()==0}"> --%>
+<!-- 									  <div>채용 정보가 없습니다.</div>               -->
+<%--                 </c:if> --%>
                     <a href="${pageContext.request.contextPath}/anno/business-anno-info?annoId=${businessAnno.annoId}" class="card">
                         <div class="card-content-wrapper">
                             <div class="card-content">
@@ -238,6 +246,7 @@ html, body {
                         </div>
                     </a>
                 </c:if>
+                
             </c:forEach>
         </div>
         <c:if test="${sessionScope.businessId eq business.businessId}">

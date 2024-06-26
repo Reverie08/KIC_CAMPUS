@@ -224,7 +224,7 @@
          
           <c:if test="${sessionScope.businessId!=null }">
          <div class="login-inquiry">
-            <a href="${pageContext.request.contextPath}/business/business-info?businessid=${businessId}">${business.businessName}님</a>
+            <a href="${pageContext.request.contextPath}/business/business-info?businessId=${businessId}">${business.businessName}님</a>
             <a href="${pageContext.request.contextPath}/business/business-logout">로그아웃</a>
             <a href="${pageContext.request.contextPath}/business/business-list" class="inquiry-button" style="color: white;">기업리스트</a>
           <a href="${pageContext.request.contextPath}/anno/business-anno-list" class="text-blue-500"><b>공고목록</b></a>

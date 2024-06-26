@@ -70,6 +70,7 @@ public class AnnoController {
 	public String annoInsertPro(String selectedSkills, Anno anno, Skill skill) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 
+		String businessId = (String) session.getAttribute("businessId");
 		int skillId = annoDao.selectSkillId();
 //      String businessName = request.getParameter("businessName");
 //      String welfare = request.getParameter("welfare");
@@ -80,7 +81,7 @@ public class AnnoController {
 //      String annoGrade = request.getParameter("annoGrade");
 //      String annoWorkType = request.getParameter("annoWorkType");
 //      String annoWorkDay = request.getParameter("annoWorkDay");
-//      String annoWorkPlace = request.getParameter("annoWorkPlace");
+//		String annoWorkPlace = request.getParameter("annoWorkPlace");
 //      String annoCommon = request.getParameter("annoCommon");
 //      String annoQualification = request.getParameter("annoQualification");
 		int annoPickNum = parseIntOrDefault(request.getParameter("annoPickNum"), 0);
@@ -127,7 +128,7 @@ public class AnnoController {
 		}
 
 		String msg = "";
-		String url = "business-anno-list";
+		String url = "business-anno-list?businessId="+businessId;
 
 		if (num > 0) {
 			msg = anno.getBusinessName() + "의 공고가 등록되었습니다.";
@@ -227,10 +228,12 @@ public class AnnoController {
 	}
 
 	@RequestMapping("business-anno-info")
-	public String businessAnnoInfo(int annoId) throws ServletException, IOException {
+	public String businessAnnoInfo() throws ServletException, IOException {
+//		int annoId = annoDao.getAnnoId();
+		int annoId = Integer.parseInt(request.getParameter("annoId"));
 		Anno anno = annoDao.getAnnoFromAnnoId(annoId);
 		Skill skills = annoDao.getSkillsByAnnoId(annoId);
-
+		
 		model.addAttribute("anno", anno);
 		model.addAttribute("skills", skills);
 

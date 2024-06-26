@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,22 +71,49 @@
     .w-3-10 {
       width: 30%;
     }
+.login-inquiry {
+   margin-left: 25px;
+   height: 100%;
+   width: 100%;
+   display: flex;
+   flex-direction: row;
+   gap: 10px;
+   align-items: flex-end;
+   flex-wrap: nowrap;
+}
 
+.inquiry-button {
+   background-color: #007bff;
+   color: white;
+   padding: 10px 20px;
+   border-radius: 5px;
+   text-decoration: none;
+   border: none;
+   cursor: pointer;
+   transition: background-color 0.3s;
+}
+
+.inquiry-button:hover {
+   background-color: #0056b3;
+}
     
   </style>
 </head>
 <body class="bg-gray-100" >
   <div class="container mx-auto p-6 bg-white shadow-md rounded-lg mt-10 container-fixed " style="max-width: 1000px;">
-    <form method="post" name="resumeForm" action="insert-resume" enctype="multipart/form-data">
+    <form method="post" name="resumeForm" 
+<%--     action="${pageContext.request.contextPath}/resume/update-resume-pro"  --%>
+    action="update-resume-pro" 
+    enctype="multipart/form-data">
         <header class="text-center mb-6">
-            <input name="resumeTitle" class="text-2xl font-bold"  style="width: 70%; height: 40px; text-align: center;"  type="text" placeholder="이력서 제목을 입력해주세요">
+            <input value="${resume.resumeTitle }" name="resumeTitle" class="text-2xl font-bold"  style="width: 70%; height: 40px; text-align: center;"  type="text" placeholder="이력서 제목을 입력해주세요">
             </header>
       <div class="flex flex-wrap mb-4">
         <div class="w-full md:w-1/3 px-2">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="upload">이미지 업로드</label>
           <div class="image-upload-wrapper">
-            <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile Image">
-            <input name="profileImageFile"  type="file" id="imageUpload" accept="image/*" onchange="loadFile(event)">
+            <img id="profileImage" src="${pageContext.request.contextPath}/img/member/${resume.profileImage}" alt="Profile Image">
+            <input  value="${resume.profileImage}" name="profileImageFile"  type="file" id="imageUpload" accept="image/*" onchange="loadFile(event)">
           </div>
           <p class="text-gray-500 text-xs mt-2">가로 600px, 세로 600px / 5MB이하</p>
           <p class="text-gray-500 text-xs">등록 가능 확장자: jpg, png, jpeg</p>
@@ -93,14 +121,16 @@
         <div class="w-full md:w-2/3 px-2">
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="name">이름 *</label>
-            <input name="name" value="${member.name}"  class="appearance-none border rounded-lg w-7-10 px-3 py-2" type="text" placeholder="이름을 입력해 주세요.">
+            <input value="${resume.name }" name="name" value="${member.name}"  class="appearance-none border rounded-lg w-7-10 px-3 py-2" type="text" placeholder="이름을 입력해 주세요.">
 
             <label class="block text-gray-700 text-sm font-bold mb-2" for="name">생년월일</label>
-            <input  name="birth" value="${member.birth}" class="appearance-none border rounded-lg w-3-10 px-3 py-2" type="text" placeholder="이름을 입력해 주세요.">
+            <input value="${resume.birth }"  name="birth" value="${member.birth}" class="appearance-none border rounded-lg w-3-10 px-3 py-2" type="text" placeholder="이름을 입력해 주세요.">
           </div>
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="introduction">한줄 소개</label>
-            <textarea name="selfInfo" class="appearance-none border rounded-lg w-full px-3 py-2" rows="4" placeholder="채용담당자에게 특별한 인상을 줄 수 있는 지원자님만의 소개 글을 작성해 보세요!"></textarea>
+            <textarea name="selfInfo" class="appearance-none border rounded-lg w-full px-3 py-2" rows="4" placeholder="채용담당자에게 특별한 인상을 줄 수 있는 지원자님만의 소개 글을 작성해 보세요!">
+            ${resume.selfInfo}
+            </textarea>
             <p class="text-gray-500 text-xs mt-1">600자 이내</p>
           </div>
         </div>
@@ -111,19 +141,19 @@
         <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">휴대폰 번호 *</label>
           <div class="flex">
-            <input name="phone" value="${member.phone}" class="flex-grow border rounded-r-lg px-3 py-2" type="text" placeholder="01012345678">
+            <input name="phone"  value="${resume.phone }" class="flex-grow border rounded-r-lg px-3 py-2" type="text" placeholder="01012345678">
           </div>
         </div>
         <div class="w-full md:w-1/2 px-2">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="email">이메일 *</label>
-          <input name="email" value="${member.email}" class="appearance-none border rounded-lg w-full px-3 py-2" type="email" >
+          <input name="email"  value="${resume.email }" class="appearance-none border rounded-lg w-full px-3 py-2" type="email" >
         </div>
       </div>
 
       <!-- Address -->
       <div class="mb-4 px-2">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="address">주소 *</label>
-        <input name="address" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" placeholder="주소">
+        <input name="address"  value="${resume.address }" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" placeholder="주소">
         <p class="text-gray-500 text-xs mt-1">좋은 정보 추천을 위해 도로명(번지)까지 입력해 주세요!</p>
       </div>
 
@@ -133,12 +163,12 @@
         <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">외국어</label>
           <div class="flex">
-            <input name="language" class="flex-grow border rounded-r-lg px-3 py-2" type="text" placeholder="">
+            <input name="language" value="${resume.language }" class="flex-grow border rounded-r-lg px-3 py-2" type="text" placeholder="">
           </div>
         </div>
         <div class="w-full md:w-1/2 px-2">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="email">자격증</label>
-          <input name="certification"  class="appearance-none border rounded-lg w-full px-3 py-2" type="text" >
+          <input name="certification" value="${resume.certification }"  class="appearance-none border rounded-lg w-full px-3 py-2" type="text" >
         </div>
       </div>
             <!-- Education -->
@@ -156,6 +186,9 @@
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="school-type">학교구분</label>
                           <div class="relative">
                             <select name="schoolType" class="appearance-none border rounded-lg w-full px-3 py-2" id="school-type">
+                              
+                              <option  value="${resume.edu.schoolType}">${resume.edu.schoolType}</option>
+
                               <option value="고등학교">고등학교</option>
                               <option value="대학교(2년)">대학교(2년)</option>
                               <option value="대학교(4년)">대학교(4년)</option>
@@ -169,7 +202,7 @@
                         <div class="w-full md:w-1/2 px-2">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="school-name">학교명</label>
                           <div class="relative">
-                            <input name="schoolName" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="school-name" placeholder="">
+                            <input name="schoolName" value="${resume.edu.schoolName}" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="school-name" placeholder="">
                           </div>
                         </div>
                       </div>
@@ -177,7 +210,7 @@
                         <div class="w-full md:w-1/2 px-2">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="major">전공명</label>
                           <div class="relative">
-                            <input name="major" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="major" placeholder="">
+                            <input name="major" value="${resume.edu.major }" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="major" placeholder="">
                           </div>
                         </div>
                       </div>
@@ -185,19 +218,22 @@
                       <div class="flex flex-wrap -mx-2 mb-2">
                         <div class="w-full md:w-1/3 px-2">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="entry-date">입학년월</label>
-                          <input name="admissionDate" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="entry-date" placeholder="2022.01">
+                          <input name="admissionDate" value="${resume.edu.admissionDate }" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="entry-date" placeholder="2022.01">
                         </div>
                         <div class="w-full md:w-1/3 px-2">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="graduation-date">졸업년월</label>
-                          <input name="graduateDate" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="graduation-date" placeholder="2024.02">
+                          <input name="graduateDate" value="${resume.edu.graduateDate }" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="graduation-date" placeholder="2024.02">
                         </div>
                         <div class="w-full md:w-1/3 px-2">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="graduation-status">졸업상태</label>
                           <div class="relative">
                             <select name="graduateState" class="appearance-none border rounded-lg w-full px-3 py-2" id="graduation-status">
+                              	 <option  value="${resume.edu.graduateState }">${resume.edu.graduateState }</option>
+
+                               
                                 <option value="재학중">재학중</option>
-                              <option value="졸업예정">졸업예정</option>
-                              <option value="졸업">졸업</option>
+                                <option value="졸업예정">졸업예정</option>
+                                <option value="졸업">졸업</option>
                             </select>
                             <div class="custom-select-icon">
                               <svg class="fill-current text-gray-600 w-4 h-4" viewBox="0 0 20 20"><path d="M7 10l5 5 5-5H7z"/></svg>
@@ -208,11 +244,11 @@
                       <div class="flex flex-wrap -mx-2">
                         <div class="w-full md:w-1/3 px-2 mb-4 md:mb-0">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="credits">학점</label>
-                          <input name="score" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="credits" placeholder="4.3">
+                          <input name="score" value="${resume.edu.score }" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="credits" placeholder="4.3">
                         </div>
                         <div class="w-full md:w-1/3 px-2 mb-4 md:mb-0">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="total-credits">총점</label>
-                          <input name="totalScore" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="total-credits" placeholder="4.5">
+                          <input name="totalScore" value="${resume.edu.totalScore }" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="total-credits" placeholder="4.5">
                         </div>
                       </div>
                     </div>
@@ -240,15 +276,15 @@
               <div class="flex flex-wrap -mx-2 mb-4">
                 <div class="w-full md:w-1/3 px-2 mb-4 md:mb-0">
                   <label class="block text-gray-700 text-sm font-bold mb-2" for="company-name">회사명</label>
-                  <input name="companyName" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="company-name" placeholder="회사명을 입력하세요">
+                  <input name="companyName" value="${resume.career.companyName }" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="company-name" placeholder="회사명을 입력하세요">
                 </div>
                 <div class="w-full md:w-1/3 px-2 mb-4 md:mb-0">
                   <label class="block text-gray-700 text-sm font-bold mb-2" for="position">직책</label>
-                  <input name="position" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="position" placeholder="팀장">
+                  <input name="position" value="${resume.career.position }" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="position" placeholder="팀장">
                 </div>
                 <div class="w-full md:w-1/3 px-2 mb-4 md:mb-0">
                   <label class="block text-gray-700 text-sm font-bold mb-2" for="department">부서명</label>
-                  <input name="department" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="department" placeholder="인사팀">
+                  <input name="department" value="${resume.career.department }" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="department" placeholder="인사팀">
                 </div>
               </div>
               <div class="flex flex-wrap -mx-2 mb-4">
@@ -256,9 +292,10 @@
                   <label class="block text-gray-700 text-sm font-bold mb-2" for="employment-type">근무 유형</label>
                   <div class="relative">
                     <select name="workType" class="appearance-none border rounded-lg w-full px-3 py-2" id="employment-type">
+                        	<option  value="${resume.career.workType }">${resume.career.workType }</option>
                         <option value="인턴">인턴</option>
                         <option value="계약직">계약직</option>
-                      <option value="정규직">정규직</option>
+                        <option value="정규직">정규직</option>
                     </select>
                     <div class="custom-select-icon">
                       <svg class="fill-current text-gray-600 w-4 h-4" viewBox="0 0 20 20"><path d="M7 10l5 5 5-5H7z"/></svg>
@@ -269,7 +306,8 @@
                   <label class="block text-gray-700 text-sm font-bold mb-2" for="employment-status">재직 여부</label>
                   <div class="relative">
                     <select name="isWorking" class="appearance-none border rounded-lg w-full px-3 py-2" id="employment-status">
-                      <option value="재직중">재직중</option>
+                      <option  value="${resume.career.isWorking }">${resume.career.isWorking }</option>
+                       <option value="재직중">재직중</option>
                       <option value="퇴직">퇴직</option>
                     </select>
                     <div class="custom-select-icon">
@@ -279,12 +317,14 @@
                 </div>
                 <div class="w-full md:w-1/3 px-2 mb-4 md:mb-0">
                   <label class="block text-gray-700 text-sm font-bold mb-2" for="employment-period">재직 기간</label>
-                  <input name="workPeriod" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="employment-period" placeholder="YYYY.MM. ~ YYYY.MM.">
+                  <input name="workPeriod" value="${resume.career.workPeriod }" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="employment-period" placeholder="YYYY.MM. ~ YYYY.MM.">
                 </div>
               </div>
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="job-description">담당 업무 (최대 1,500자)</label>
-                <textarea name="workPart" class="appearance-none border rounded-lg w-full px-3 py-2" id="job-description" rows="4" placeholder="구체적인 역할과 성과 위주의 업무 내용을 작성해보세요. 수치와 함께 표현되면 경험이 잘 전달될 수 있습니다."></textarea>
+                <textarea name="workPart" class="appearance-none border rounded-lg w-full px-3 py-2" id="job-description" rows="4" placeholder="구체적인 역할과 성과 위주의 업무 내용을 작성해보세요. 수치와 함께 표현되면 경험이 잘 전달될 수 있습니다.">
+                	${resume.career.workPart}
+                </textarea>
               </div>
             </div>
           </div>
@@ -307,17 +347,18 @@
               </div>
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="project-name">프로젝트명 (최대 300자)</label>
-                <input name="projectName" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="project-name" placeholder="프로젝트명을 입력해 주세요.">
+                <input name="projectName" value="${resume.project.projectName }" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="project-name" placeholder="프로젝트명을 입력해 주세요.">
               </div>
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="organization">소속/기관</label>
-                <input name="team" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="organization" placeholder="소속/기관이 없을 경우 개인 또는 기타로 입력해 주세요.">
+                <input name="team" value="${resume.project.team }" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="organization" placeholder="소속/기관이 없을 경우 개인 또는 기타로 입력해 주세요.">
               </div>
               <div class="flex flex-wrap -mx-2 mb-4">
                 <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
                   <label class="block text-gray-700 text-sm font-bold mb-2" for="status">진행 여부</label>
                   <div class="relative">
                     <select name="isGoing" class="appearance-none border rounded-lg w-full px-3 py-2" id="status">
+                      <option  value="${resume.project.isGoing }">${resume.project.isGoing}</option>
                       <option value="진행중">진행중</option>
                       <option value="완료">완료</option>
                     </select>
@@ -328,12 +369,14 @@
                 </div>
                 <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
                   <label class="block text-gray-700 text-sm font-bold mb-2" for="period">프로젝트 기간</label>
-                  <input name="projectPeriod" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="period" placeholder="YYYY.MM. ~ YYYY.MM.">
+                  <input name="projectPeriod" value="${resume.project.projectPeriod }" class="appearance-none border rounded-lg w-full px-3 py-2" type="text" id="period" placeholder="YYYY.MM. ~ YYYY.MM.">
                 </div>
               </div>
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="description">프로젝트 설명 (최대 1,500자)</label>
-                <textarea  name="projectInfo" class="appearance-none border rounded-lg w-full px-3 py-2" id="description" rows="4" placeholder="프로젝트 내용과 본인의 역할, 기여도를 작성해보세요."></textarea>
+                <textarea  name="projectInfo" class="appearance-none border rounded-lg w-full px-3 py-2" id="description" rows="4" placeholder="프로젝트 내용과 본인의 역할, 기여도를 작성해보세요.">
+                	${resume.project.projectInfo }
+                </textarea>
               </div>
             </div>
           </div>
@@ -351,22 +394,49 @@
               <h2 class="text-lg font-bold mb-4">URL</h2>
               <button type="button" class="text-blue-500 w-full py-2 mb-4 border border-blue-500 rounded-lg" onclick="addLinkField()">+ 링크 추가</button>
             </div>
+
+               <div class="flex mb-4">
+         			 <input name="portfolioUrl" value="${resume.portfolio.portfolioUrl }" class="appearance-none border rounded-r-lg w-full px-3 py-2" type="text" placeholder="https://">
+        		</div>    
+
+            
             <!-- File Upload Entry -->
             <div class="border rounded-lg p-4 bg-gray-50 relative" id="file-section">
               <h2 class="text-lg font-bold mb-4">첨부 파일</h2>
               <button type="button" class="text-blue-500 w-full py-2 mb-4 border border-blue-500 rounded-lg" onclick="addFileField()">+ 파일 추가</button>
+              
+
+               <div class="flex items-center mb-4">
+        		  <input name="portfolioFile"  value="${resume.portfolio.portfolioFile} class="appearance-none border rounded-l-lg w-full px-3 py-2" type="file" onchange="this.nextElementSibling.value = this.value">
+        		  ${resume.portfolio.portfolioFile}
+        		</div>
+
               <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2">첨부 파일 업로드는 최대 15개까지 제출 가능해요.</label>
                 <p class="text-gray-500 text-sm mb-2">첨부 파일은 PDF, JPG, PNG 형식으로 업로드 가능하며, 각 항목당 업로드할 수 있는 첨부 파일의 최대 용량은 10MB예요.</p>
               </div>
             </div>
-          </div>
+          </div> 
       </div>
+      <input type="hidden" name="resumeId"  value="${resume.resumeId}">
+      <input type="hidden" name="eduId"     value="${resume.edu.eduId}">
+      <input type="hidden" name="careerId"   value="${resume.career.careerId}">
+      <input type="hidden" name="projectId"  value="${resume.project.projectId}">
+      <input type="hidden" name="portfolioId" value="${resume.portfolio.portfolioId}">
       
-      <button class="bg-green-500 text-white px-4 py-2 rounded" type="submit">프로필 저장</button>
-      
-      
+	      <div class="login-inquiry">
+	         <button type="submit" class="inquiry-button">
+	            수정하기
+	         </button>
+	      </div>
     </form>
+    	      <div class="login-inquiry">
+			<a class="inquiry-button" href="${pageContext.request.contextPath}/member/member-main">
+	            홈으로
+	         </a>
+	      </div>
+	      
+
   </div>
 
 

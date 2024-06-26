@@ -2,6 +2,7 @@ package mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import model.MemberProject;
 
@@ -13,4 +14,10 @@ public interface MemberProjectMapper {
 	
 	@Select("select * from memberproject where resumeid=#{resumeId}")
 	public MemberProject getProject(int resumeId);
+
+	
+	@Update("update memberproject set projectname=#{projectName}, team=#{team}, isgoing=#{isGoing},"
+			+ "projectperiod=#{projectPeriod}, projectinfo=#{projectInfo}"
+			+ "where projectid=#{projectId}")
+	public int updateProject(MemberProject project);
 }

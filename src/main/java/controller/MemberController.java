@@ -167,7 +167,7 @@ public class MemberController {
 		String url = "";
 		String msg = "";
 
-		if (profileImage != null) {
+		if (profileImage != "") {
 			member.setProfileImage(profileImage);
 			int num = memberDao.updateProfileImage(member.getProfileImage(), memberId);
 			

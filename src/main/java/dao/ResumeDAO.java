@@ -1,9 +1,11 @@
 package dao;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,11 +20,11 @@ import model.Edu;
 import model.MemberPortfolio;
 import model.MemberProject;
 import model.Resume;
-import util.MybatisConnection;
+import model.ResumeAnnoConnection;
 
 @Component
 public class ResumeDAO {
-
+	
 	@Autowired
 	SqlSessionTemplate session;
 	
@@ -56,6 +58,7 @@ public class ResumeDAO {
 		
 		Resume resume = session.getMapper(ResumeMapper.class).getResume(resumeId);
 		
+		
 		return resume; 
 	}
 	
@@ -70,16 +73,30 @@ public class ResumeDAO {
 	
 	
 	// 이력서 여러 개 리스트로 가져오기, 기업에 들어온 이력서 목록 가져오기 getBusinessReumeList
-	public List<Resume> getBusinessReumeList(int businessId){
+	public List<Resume> getBusinessReumeList(String businessId){
 		List<Resume> businessResumeList = session.getMapper(ResumeMapper.class).getBusinessReumeList(businessId);
 		return businessResumeList;
 	}
 	
 	
-	// 이력서 여러 개 리스트로 가져오기, 공고에 지원한 이력서 목록 가져오기 getAnnoReumeList
-	public List<Resume> getAnnoReumeList(int annoId){
-		List<Resume> annoResumeList = session.getMapper(ResumeMapper.class).getAnnoReumeList(annoId);
-		return annoResumeList;
+	// 
+	public List<Resume> getAnnoResumeList(int annoId){
+		
+		List<ResumeAnnoConnection> resumeAnnoConnectionList = session.getMapper(ResumeMapper.class).selectResumeIdfromConnect(annoId);
+		
+		List<Resume> resumeList = new ArrayList();
+		
+		for(int i=0;i<resumeAnnoConnectionList.size();i++) {
+			int resumeId = resumeAnnoConnectionList.get(i).getResumeId();
+			String registDate = resumeAnnoConnectionList.get(i).getResume_register_date();
+			System.out.println("==================registDate : "+registDate);
+			Resume resume = session.getMapper(ResumeMapper.class).getResume(resumeId);
+			if(resume != null) {
+				resume.setRegisterToCompanyDate(registDate);
+			}
+			resumeList.add(resume);
+		}
+		return resumeList;
 	}
 	
 	public int selectResumeId() {
@@ -110,8 +127,11 @@ public class ResumeDAO {
 		int num = session.getMapper(ResumeMapper.class).insertResume(resume);
 		System.out.println("num = "+num);
 		
+		session.commit();
+		
 		return num;
 	}
+	
 	
 	
 	
@@ -120,8 +140,27 @@ public class ResumeDAO {
 	// 이력서 수정하기 updateResume
 	public int updateResume(Resume resume) {
 		
-		// int num = session.getMapper(ResumeMapper.class).updateResume(resume);
-		int num = 1;
+		// 학력 테이블에 데이터 update
+		int num1 = session.getMapper(EduMapper.class).updateEdu(resume.getEdu());
+		System.out.println("num1 = "+num1);
+		
+		// 포트폴리오 테이블에 데이터 update
+		int num2 = session.getMapper(MemberPortfolioMapper.class).updatePortfolio(resume.getPortfolio());
+		System.out.println("num2 = "+num2);
+		
+		// 프로젝트 테이블에 데이터 update
+		int num3 = session.getMapper(MemberProjectMapper.class).updateProject(resume.getProject());
+		System.out.println("num3 = "+num3);
+		
+		// 경력 테이블에 데이터 update
+		int num4 = session.getMapper(CareerMapper.class).updateCareer(resume.getCareer());
+		System.out.println("num4 = "+num4);
+		
+		// 이력서 테이블 최종 업데이트
+		int num = session.getMapper(ResumeMapper.class).updateResume(resume);
+		System.out.println("num = "+num);
+		
+		session.commit();
 		
 		return num;
 	}
@@ -130,8 +169,23 @@ public class ResumeDAO {
 	// 이력서 삭제하기 deleteResume
 	public int deleteResume(int resumeId) {
 		int num = session.getMapper(ResumeMapper.class).deleteResume(resumeId);
-		
+		session.commit();
 		return num;
+	}
+
+	public int updateAnnoId(int resumeId, int annoId) {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("resumeId", resumeId);
+		map.put("annoId", annoId);
+		int result = session.getMapper(ResumeMapper.class).intsertAnnoId(map);
+		session.commit();
+		return 0;
+	}
+
+	public int getMemberResumeSize(String memberId) {
+		int memberResumeSize = session.getMapper(ResumeMapper.class).getMemberResumeSize(memberId);
+		// TODO Auto-generated method stub
+		return memberResumeSize;
 	}
 	
 }

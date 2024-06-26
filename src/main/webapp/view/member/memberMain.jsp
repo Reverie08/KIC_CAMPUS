@@ -181,7 +181,7 @@ body {
 								src="${pageContext.request.contextPath}/img/member/${member.profileImage}"
 								alt="프로필 사진" class="w-full h-full object-cover">
 						</div>
-						<input type="file" name="profileImageFile" id="profile-pic"
+						<input type="file" name="profileImageFile" id="profil	e-pic"
 							class="mt-4">
 						<button type="submit" class="inquiry-button">변경하기</button>
 					</div>

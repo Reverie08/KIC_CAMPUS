@@ -11,22 +11,12 @@ public class Resume {
 	String language;
 	String address;
 	String profileImage;
-	String registerDate; // 이력서가 회사에 들어간 날
 	String name;
 	String birth;
 	String phone;
 	String email;
 
-	Date registdate;
-
-	public Date getRegistdate() {
-		return registdate;
-	}
-
-	public void setRegistdate(Date registdate) {
-		this.registdate = registdate;
-	}
-
+	Date registDate;
 	Career career;
 	MemberProject project;
 	MemberPortfolio portfolio;
@@ -37,8 +27,44 @@ public class Resume {
 	int columnStage = 0; // 기본값 0
 	int evaluStage = 0; // 기본값 0
 	int resumeScore = 0; // 기본값 0
-	int annoId = 0; // 기본값 0
 
+	int isDefault = 0;
+	
+	String registerToCompanyDate;
+	
+	
+	
+	
+	
+	
+	public String getRegisterToCompanyDate() {
+		return registerToCompanyDate;
+	}
+
+	public void setRegisterToCompanyDate(String registerToCompanyDate) {
+		this.registerToCompanyDate = registerToCompanyDate;
+	}
+
+	public Date getRegistDate() {
+		return registDate;
+	}
+
+	public void setRegistDate(Date registDate) {
+		this.registDate = registDate;
+	}
+
+
+	public int getIsDefault() {
+		return isDefault;
+	}
+
+	public void setIsDefault(int isDefault) {
+		this.isDefault = isDefault;
+	}
+
+
+	
+	
 	public int getResumeId() {
 		return resumeId;
 	}
@@ -95,13 +121,6 @@ public class Resume {
 		this.profileImage = profileImage;
 	}
 
-	public String getRegisterDate() {
-		return registerDate;
-	}
-
-	public void setRegisterDate(String registerDate) {
-		this.registerDate = registerDate;
-	}
 
 	public String getName() {
 		return name;
@@ -207,23 +226,19 @@ public class Resume {
 		this.resumeScore = resumeScore;
 	}
 
-	public int getAnnoId() {
-		return annoId;
-	}
-
-	public void setAnnoId(int annoId) {
-		this.annoId = annoId;
-	}
-
 	@Override
 	public String toString() {
 		return "Resume [resumeId=" + resumeId + ", resumeTitle=" + resumeTitle + ", selfInfo=" + selfInfo
 				+ ", certification=" + certification + ", language=" + language + ", address=" + address
-				+ ", profileImage=" + profileImage + ", registerDate=" + registerDate + ", name=" + name + ", birth="
-				+ birth + ", phone=" + phone + ", email=" + email + ", registdate=" + registdate + ", career=" + career
-				+ ", project=" + project + ", portfolio=" + portfolio + ", edu=" + edu + ", memberId=" + memberId
-				+ ", businessId=" + businessId + ", columnStage=" + columnStage + ", evaluStage=" + evaluStage
-				+ ", resumeScore=" + resumeScore + ", annoId=" + annoId + "]";
+				+ ", profileImage=" + profileImage + ", name=" + name + ", birth=" + birth + ", phone=" + phone
+				+ ", email=" + email + ", registDate=" + registDate + ", career=" + career + ", project=" + project
+				+ ", portfolio=" + portfolio + ", edu=" + edu + ", memberId=" + memberId + ", businessId=" + businessId
+				+ ", columnStage=" + columnStage + ", evaluStage=" + evaluStage + ", resumeScore=" + resumeScore
+				+ ", isDefault=" + isDefault + ", registerToCompanyDate=" + registerToCompanyDate + "]";
 	}
 
+
+	
+
+	
 }

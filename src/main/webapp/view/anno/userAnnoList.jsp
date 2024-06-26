@@ -185,7 +185,7 @@ body {
 						<option value="annoTitle">공고 제목</option>
 						<option value="businessName">공고 기업</option>
 					</select> <input type="text" name="searchData" placeholder="공고 검색">
-					<!-- 					<input type="submit" value="검색"> -->
+										<input type="submit" value="검색">
 				</form>
 				<select>
 					<option>전체</option>
