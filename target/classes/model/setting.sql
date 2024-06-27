@@ -48,25 +48,27 @@ CREATE TABLE resume (
 );
 
 CREATE TABLE anno (
-	annoid	number	,
-	businessname	VARCHAR2(90)	NULL,
-	welfare	CLOB	NULL,
-	annotitle	VARCHAR2(90)	NULL,
-	annocareer	VARCHAR2(90)	NULL,
-	annosalary	number	NULL,
-	annoedu	VARCHAR2(90)	NULL,
-	annograde	VARCHAR2(90)	NULL,
-	annoworktype	VARCHAR2(90)	NULL,
-	annoworkday	VARCHAR2(90)	NULL,
-	annoworkplace	VARCHAR2(90)	NULL,
-	annocommon	VARCHAR2(90)	NULL,
-	annoqualification	VARCHAR2(90)	NULL,
-	annopicknum	number	NULL,
-	annodate	DATE	NULL,
-	annocontent	CLOB	NULL,
-	businessid	VARCHAR2(20)	,
-	skillid	number	
+    annoId NUMBER NULL,
+    businessName VARCHAR2(90) NULL,
+    welfare CLOB NULL,
+    annoTitle VARCHAR2(90) NULL,
+    annoCareer VARCHAR2(90) NULL,
+    annoSalary VARCHAR2(90) NULL,
+    annoEdu VARCHAR2(90) NULL,
+    annoGrade VARCHAR2(90) NULL,
+    annoWorkType VARCHAR2(90) NULL,
+    annoWorkDay VARCHAR2(90) NULL,
+    annoWorkPlace VARCHAR2(90) NULL,
+    annoCommon VARCHAR2(90) NULL,
+    annoQualification VARCHAR2(90) NULL,
+    annoPickNum NUMBER NULL,
+    annoDate DATE NULL,
+    annoContent CLOB NULL,
+    businessId VARCHAR2(20) NULL,
+    skillId NUMBER NULL,
+    annoDeadline DATE NULL
 );
+
 
 CREATE TABLE skill (
    skillid   number   ,

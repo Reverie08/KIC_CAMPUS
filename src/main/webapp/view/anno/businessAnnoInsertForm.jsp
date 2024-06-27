@@ -53,23 +53,83 @@
         background-color: #3182ce;
         color: white;
     }
+    .error-message {
+        color: red;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
 </style>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const skillButtons = document.querySelectorAll('.skill-button');
+        const form = document.querySelector('form');
+        const annoContent = document.getElementById('annoContent');
+        const welfare = document.getElementById('welfare');
+        const selectedSkillsInput = document.getElementById('selectedSkills');
+        
         skillButtons.forEach(button => {
             button.addEventListener('click', () => {
                 button.classList.toggle('selected');
                 updateSelectedSkills();
             });
         });
-    });
 
-    function updateSelectedSkills() {
-        const selectedSkills = document.querySelectorAll('.skill-button.selected');
-        const skillNames = Array.from(selectedSkills).map(button => button.dataset.skillname);
-        document.getElementById('selectedSkills').value = skillNames.join(',');
-    }
+        form.addEventListener('submit', function (event) {
+            const selectedSkills = document.querySelectorAll('.skill-button.selected');
+            const skillNames = Array.from(selectedSkills).map(button => button.dataset.skillname);
+            selectedSkillsInput.value = skillNames.join(',');
+
+            let valid = true;
+
+            if (annoContent.value.trim() === '') {
+                showErrorMessage(annoContent, '공고 내용을 작성하세요');
+                valid = false;
+            } else {
+                hideErrorMessage(annoContent);
+            }
+
+            if (welfare.value.trim() === '') {
+                showErrorMessage(welfare, '복지를 작성하세요');
+                valid = false;
+            } else {
+                hideErrorMessage(welfare);
+            }
+
+            if (skillNames.length === 0) {
+                showErrorMessage(document.getElementById('skills'), '최소 1개의 스킬을 선택하세요');
+                valid = false;
+            } else {
+                hideErrorMessage(document.getElementById('skills'));
+            }
+
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+
+        function updateSelectedSkills() {
+            const selectedSkills = document.querySelectorAll('.skill-button.selected');
+            const skillNames = Array.from(selectedSkills).map(button => button.dataset.skillname);
+            selectedSkillsInput.value = skillNames.join(',');
+        }
+
+        function showErrorMessage(element, message) {
+            let errorMessage = element.nextElementSibling;
+            if (!errorMessage || !errorMessage.classList.contains('error-message')) {
+                errorMessage = document.createElement('div');
+                errorMessage.classList.add('error-message');
+                element.parentNode.insertBefore(errorMessage, element.nextSibling);
+            }
+            errorMessage.textContent = message;
+        }
+
+        function hideErrorMessage(element) {
+            let errorMessage = element.nextElementSibling;
+            if (errorMessage && errorMessage.classList.contains('error-message')) {
+                errorMessage.textContent = '';
+            }
+        }
+    });
 </script>
 </head>
 <body class="bg-gray-100">
@@ -84,7 +144,7 @@
         <aside class="bg-white rounded-lg shadow p-4 fixed-sidebar">
             <h2 class="text-lg font-bold mb-4">Sidebar</h2>
             <ul>
-            		<li class="mb-2"><a href="${pageContext.request.contextPath}/business/business-main" class="text-blue-500">메인화면</a></li>
+                <li class="mb-2"><a href="${pageContext.request.contextPath}/business/business-main" class="text-blue-500">메인화면</a></li>
                 <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-list" class="text-blue-500">공고목록</a></li>
                 <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-insert-form" class="text-blue-500"><b>공고작성</b></a></li>
             </ul>
@@ -156,27 +216,26 @@
                     </div>
                             
                     <!-- Skill Selection -->
-					<div class="form-group">
-					    <label for="skills" class="form-label">스킬:</label>
-					    <div id="skills">
-					        <div class="skill-button" data-skillname="java">java</div>
-					        <div class="skill-button" data-skillname="jsp">jsp</div>
-					        <div class="skill-button" data-skillname="html">html</div>
-					        <div class="skill-button" data-skillname="css">css</div>
-					        <div class="skill-button" data-skillname="javascript">javascript</div>
-					        <div class="skill-button" data-skillname="react">react</div>
-					        <div class="skill-button" data-skillname="springframework">springframework</div>
-					        <div class="skill-button" data-skillname="springboot">springboot</div>
-					        <div class="skill-button" data-skillname="python">python</div>
-					        <div class="skill-button" data-skillname="typescript">typescript</div>
-					        <div class="skill-button" data-skillname="express">express</div>
-					        <div class="skill-button" data-skillname="oracle">oracle</div>
-					        <div class="skill-button" data-skillname="mysql">mysql</div>
-					        <div class="skill-button" data-skillname="mongodb">mongodb</div>
-					    </div>
-					</div>
+                    <div class="form-group">
+                        <label for="skills" class="form-label">스킬:</label>
+                        <div id="skills">
+                            <div class="skill-button" data-skillname="java">java</div>
+                            <div class="skill-button" data-skillname="jsp">jsp</div>
+                            <div class="skill-button" data-skillname="html">html</div>
+                            <div class="skill-button" data-skillname="css">css</div>
+                            <div class="skill-button" data-skillname="javascript">javascript</div>
+                            <div class="skill-button" data-skillname="react">react</div>
+                            <div class="skill-button" data-skillname="springframework">springframework</div>
+                            <div class="skill-button" data-skillname="springboot">springboot</div>
+                            <div class="skill-button" data-skillname="python">python</div>
+                            <div class="skill-button" data-skillname="typescript">typescript</div>
+                            <div class="skill-button" data-skillname="express">express</div>
+                            <div class="skill-button" data-skillname="oracle">oracle</div>
+                            <div class="skill-button" data-skillname="mysql">mysql</div>
+                            <div class="skill-button" data-skillname="mongodb">mongodb</div>
+                        </div>
+                    </div>
 
-                    
                     <input type="hidden" id="selectedSkills" name="selectedSkills">
                     <div class="form-group">
                         <input type="submit" value="Submit" class="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer">

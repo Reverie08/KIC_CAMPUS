@@ -1,14 +1,13 @@
 package dao;
 
+import java.util.Date;
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import mapper.AnnoMapper;
-import mapper.ResumeMapper;
 import model.Anno;
 import model.Search;
 import model.Skill;
@@ -150,6 +149,22 @@ public class AnnoDAO {
     public int selectSkillId() {
 		return session.getMapper(AnnoMapper.class).selectSkillId();
 	}
+    public int selectAnnoId() {
+		return session.getMapper(AnnoMapper.class).selectAnnoId();
+	}
+    
+    public Date getAnnoDeadline(int annoId) {
+    	return session.getMapper(AnnoMapper.class).getAnnoDeadline(annoId);
+    }
+    
+    
+    // 테이블이 resume가 아닐 수도 있음 영제꺼랑 비교해서 수정해야함
+    public int getResumeCount(int annoId) {
+        int count = session.getMapper(AnnoMapper.class).getResumeCount(annoId);
+        return count;
+    }
+
+    
     public List<Anno> searchAnnoList(Search search) {
     	List<Anno> searchAnnoList = session.getMapper(AnnoMapper.class).searchAnnoList(search);
     	return searchAnnoList;

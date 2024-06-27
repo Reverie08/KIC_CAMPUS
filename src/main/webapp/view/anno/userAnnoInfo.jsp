@@ -30,6 +30,34 @@
   .header {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+  .btn-apply {
+    background-color: #FFA07A; /* 옅은 주황색 */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  .btn-list {
+    background-color: #ADD8E6; /* 옅은 파란색 */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  .btn-disabled {
+    background-color: #D3D3D3; /* 밝은 회색 */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  .btn-active {
+    background-color: #FFA500; /* 주황색 */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
 </style>
 </head>
 <body class="bg-gray-100">
@@ -87,22 +115,39 @@
       
       <div>기업 ID:</div>
       <div>${anno.businessId}</div>
-      
-
     </div>
     
-          <!-- Skill Selection -->
-          <div class="form-group">
-            <label for="skills" class="form-label">스킬:</label>
-            <div id="skills">
-              <div>${skills.skills}</div>
-            </div>
-          </div>
+    <!-- Skill Selection -->
+    <div class="form-group">
+      <label for="skills" class="form-label">스킬:</label>
+      <div id="skills">
+        <div>${skills.skills}</div>
+      </div>
+    </div>
     
     <div class="actions">
-      <a href="${pageContext.request.contextPath}/member/member-main?annoid=${anno.annoId}" class="bg-blue-500 text-white px-4 py-2 rounded">지원하기</a>
-      <a href="${pageContext.request.contextPath}/anno/user-anno-list" class="bg-gray-500 text-white px-4 py-2 rounded">목록보기</a>
+      <c:if test="${findResult >= 1}">
+        <button id="openNewPageBtn" disabled class="btn-disabled">지원완료</button>
+      </c:if>
+      <c:if test="${findResult == 0 or findResult == null}">
+        <button id="openNewPageBtn" onclick="openNewPage('${anno.annoId}')" class="btn-active">지원하기</button>
+      </c:if>
+      <a href="${pageContext.request.contextPath}/anno/user-anno-list" class="btn-list">목록보기</a>
     </div>
   </div>
+  <script>
+    var width = 430;
+    var height = 660;
+
+    // Calculate the position to center the window
+    var left = (screen.width / 2) - (width / 2);
+    var top = (screen.height / 2) - (height / 2);
+
+    function openNewPage(annoId) {
+      window.open("${pageContext.request.contextPath}/resume/resume-anno-register-form?annoId=" + annoId, 
+        'NewPage',
+        'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
+    }
+  </script>
 </body>
 </html>

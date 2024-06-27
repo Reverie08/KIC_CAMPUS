@@ -27,60 +27,68 @@
             cursor: pointer;
             width: 100%;
         }
+
     </style>
 </head>
 <body class="bg-gray-100">
     <div class="container bg-white p-6 rounded-lg shadow-md">
-        <h1 class="text-blue-600 font-bold text-lg mb-2">지오다노</h1>
-        <h2 class="text-xl font-bold mb-4">지오다노 신입 및 경력직 사원 모집</h2>
+        <h1 class="text-blue-600 font-bold text-lg mb-2">${anno.businessName}</h1>
+        <h2 class="text-xl font-bold mb-4">${anno.annoTitle}</h2>
         
-        <label for="applicationField" class="block mb-2">지원분야를 선택해 주세요.</label>
-        <select id="applicationField" class="block w-full mb-4 p-2 border border-gray-300 rounded-md">
-            <!-- Options go here -->
-        </select>
-        
-        
-        <c:forEach var="r" items="${memberResumeList}">
-	        <div class="border p-4 mb-4">
-	            <h3 class="text-lg font-bold mb-2">지원이력서</h3>
-	            <p>${r.selfInfo }</p>
-	            <div class="mt-2">
-	                <span class="block text-gray-700">이메일: ${r.email}</span>
-	                <span class="block text-gray-700">휴대폰번호: ${r.phone }</span>
-	            </div>
-	        </div>
-        </c:forEach>
-        
-        
-        <div class="border p-4 mb-4 resume-container">
-            <h3 class="text-lg font-bold mb-2">선택항목</h3>
-            <ul>
-                <c:forEach var="resume" items="${memberResumeList}">
-                    <li class="mb-2">
-                        <span class="block text-gray-700">[포트폴리오] ${resume.portfolio.portfolioName}</span>
-                        <a href="#" class="text-blue-500">""</a>
-                    </li>
-                </c:forEach>
-            </ul>
-        </div>
+
+
+           <div class="border p-4 mb-4">
+               <h3 class="text-lg font-bold mb-2">지원이력서</h3>
+               <p>${resume.resumeTitle }</p>
+               <div class="mt-2">
+                   <span class="block text-gray-700">이메일: ${resume.email}</span>
+                   <span class="block text-gray-700">휴대폰번호: ${resume.phone }</span>
+               </div>
+           </div>
+
         
         <p class="text-sm text-gray-500 mb-4">* 개인정보보호를 위해 개인정보가 포함된 파일은 사전에 동의 없이 삭제될 수 있습니다.</p>
         <p class="text-sm text-gray-500 mb-4">* 채용시스템에 따른 마감 90일까지 지원기기에서 삭제 가능합니다.</p>
-        <form method="get"  
-        	action="${pageContext.request.contextPath}/resume/resume-anno-register" 
-        	>
-        <input type="hidden" name="resumeId" value="${resumeId }" >
-        <input type="hidden" name="annoId" value="${annoId}" >
-        <button class="bg-orange-500 text-white w-full py-2 rounded mb-4">지원하기</button>
-        <button type="submit" class="support-button">지원하기</button>
-        </form>
+
+
+        <button class="bg-orange-500 text-white w-full py-2 rounded mb-4" onclick="submitData('${resume.resumeId}', '${anno.annoId}')">지원하기</button>
+        <button type="button" class="support-button" onclick="submitData(`${resume.resumeId}`,`${anno.annoId}`)">지원하기</button>
+
     </div>
     
     <script>
-    // onsubmit="return windowClose()"
-      function windowClose(){
-    	  window.close();
-      }
-    </script>
+    // 폼 제출 이벤트 처리
+    
+   
+    function submitData(resumeId, annoId) {
+        console.log("Resume ID: ", resumeId);  // 값을 확인하기 위해 로그 출력
+        console.log("Anno ID: ", annoId);      // 값을 확인하기 위해 로그 출력
+        // 여기까지는 값이 잘 넘어온다
+        
+        const url = `${pageContext.request.contextPath}/resume/resume-anno-register?resumeId=`+ resumeId + `&annoId=`+ annoId;
+        
+        fetch(url, { // 여기에 실제 서버 URL 입력
+            method: 'GET'
+        })
+        .then(response => {
+            if (!response.ok) { // 응답 상태 확인
+                throw new Error('Network response was not ok ' + response.status);
+            }
+            return response; // 응답을 JSON으로 파싱
+        })
+        .then(data => {
+            console.log(data); // 서버로부터 받은 데이터 출력
+            alert('이력서 지원이 완려되었습니다');
+            if (window.opener) {
+                window.opener.location.reload(); // 부모 창 새로 고침
+            }
+            window.close(); // 현재 창 닫기
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+    }
+</script>
+
 </body>
 </html>

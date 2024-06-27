@@ -186,11 +186,11 @@ body {
 				계정이 없으신가요? <a
 					href="${pageContext.request.contextPath}/business/business-join">가입하기</a>
 			</div>
-			<ul>
-				<li id="GgCustomLogin"><a href="javascript:void(0)"> <span>Login
-							with Google</span>
-				</a></li>
-			</ul>
+<!-- 			<ul> -->
+<!-- 				<li id="GgCustomLogin"><a href="javascript:void(0)"> <span>Login -->
+<!-- 							with Google</span> -->
+<!-- 				</a></li> -->
+<!-- 			</ul> -->
 		</form>
 	</div>
 </body>

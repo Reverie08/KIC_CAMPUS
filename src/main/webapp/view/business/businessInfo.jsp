@@ -225,11 +225,17 @@ html, body {
         <div class="card-container">
             <c:set var="annoId" value="${annoId}" />
             <c:forEach var="businessAnno" items="${li}">
+            	
                 <c:if test="${business.businessId eq businessAnno.businessId}">
 <%--                 <c:if test="${li.size()==0}"> --%>
 <!-- 									  <div>채용 정보가 없습니다.</div>               -->
 <%--                 </c:if> --%>
+					<c:if test="${sessionScope.businessId != null}">
                     <a href="${pageContext.request.contextPath}/anno/business-anno-info?annoId=${businessAnno.annoId}" class="card">
+                    </c:if>
+					<c:if test="${sessionScope.memberId != null}">
+                    <a href="${pageContext.request.contextPath}/anno/user-anno-info?annoId=${businessAnno.annoId}" class="card">
+                    </c:if>
                         <div class="card-content-wrapper">
                             <div class="card-content">
                                 <div class="card-title">${businessAnno.annoId}</div>
@@ -245,6 +251,7 @@ html, body {
                             </div>
                         </div>
                     </a>
+                    
                 </c:if>
                 
             </c:forEach>

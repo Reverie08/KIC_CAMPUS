@@ -21,6 +21,7 @@
 		<typeAlias type="model.MemberProject" alias="memberproject" />
 		<typeAlias type="model.Search" alias="search" />
 		<typeAlias type="model.Sort" alias="sort" />
+		<typeAlias type="model.ResumeAnnoConnection" alias="resumeAnnoConnection" />
 
 	</typeAliases>
 
@@ -47,5 +48,6 @@
 		<mapper class="mapper.MemberPortfolioMapper" />
 		<mapper class="mapper.MemberProjectMapper" />
 		<mapper class="mapper.SkillMapper" />
+		<mapper class="mapper.Resume_Anno_ConnectMapper" />
 	</mappers>
 </configuration>

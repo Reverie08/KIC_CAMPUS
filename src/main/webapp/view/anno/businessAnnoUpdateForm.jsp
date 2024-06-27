@@ -59,23 +59,83 @@
         background-color: #3182ce;
         color: white;
     }
+    .error-message {
+        color: red;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
 </style>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const skillButtons = document.querySelectorAll('.skill-button');
+        const form = document.querySelector('form');
+        const annoContent = document.getElementById('annoContent');
+        const welfare = document.getElementById('welfare');
+        const selectedSkillsInput = document.getElementById('selectedSkills');
+        
         skillButtons.forEach(button => {
             button.addEventListener('click', () => {
                 button.classList.toggle('selected');
                 updateSelectedSkills();
             });
         });
-    });
 
-    function updateSelectedSkills() {
-        const selectedSkills = document.querySelectorAll('.skill-button.selected');
-        const skillNames = Array.from(selectedSkills).map(button => button.dataset.skillname);
-        document.getElementById('selectedSkills').value = skillNames.join(',');
-    }
+        form.addEventListener('submit', function (event) {
+            const selectedSkills = document.querySelectorAll('.skill-button.selected');
+            const skillNames = Array.from(selectedSkills).map(button => button.dataset.skillname);
+            selectedSkillsInput.value = skillNames.join(',');
+
+            let valid = true;
+
+            if (welfare.value.trim() === '') {
+                showErrorMessage(welfare, '복지를 작성하세요');
+                valid = false;
+            } else {
+                hideErrorMessage(welfare);
+            }
+            
+            if (annoContent.value.trim() === '') {
+                showErrorMessage(annoContent, '공고 내용을 작성하세요');
+                valid = false;
+            } else {
+                hideErrorMessage(annoContent);
+            }
+
+            if (skillNames.length === 0) {
+                showErrorMessage(document.getElementById('skills'), '최소 1개의 스킬을 선택하세요');
+                valid = false;
+            } else {
+                hideErrorMessage(document.getElementById('skills'));
+            }
+
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+
+        function updateSelectedSkills() {
+            const selectedSkills = document.querySelectorAll('.skill-button.selected');
+            const skillNames = Array.from(selectedSkills).map(button => button.dataset.skillname);
+            selectedSkillsInput.value = skillNames.join(',');
+        }
+
+        function showErrorMessage(element, message) {
+            let errorMessage = element.nextElementSibling;
+            if (!errorMessage || !errorMessage.classList.contains('error-message')) {
+                errorMessage = document.createElement('div');
+                errorMessage.classList.add('error-message');
+                element.parentNode.insertBefore(errorMessage, element.nextSibling);
+            }
+            errorMessage.textContent = message;
+        }
+
+        function hideErrorMessage(element) {
+            let errorMessage = element.nextElementSibling;
+            if (errorMessage && errorMessage.classList.contains('error-message')) {
+                errorMessage.textContent = '';
+            }
+        }
+    });
 </script>
 </head>
 <body class="bg-gray-100">
@@ -111,7 +171,7 @@
 
                     <div class="form-group">
                         <label for="welfare" class="form-label">복지:</label>
-                        <input type="text" id="welfare" name="welfare" value="${anno.welfare}" class="form-input">
+                        <textarea id="welfare" name="welfare" class="form-textarea">${anno.welfare}</textarea>
                     </div>
 
                     <div class="form-group">
@@ -176,38 +236,33 @@
 
                     <div class="form-group">
                         <label for="businessId" class="form-label">기업 ID:</label>
-                        <input type="text" id="businessId" name="businessId" value="${anno.businessId}" class="form-input">
+                        <input type="text" id="businessId" name="businessId" value="${anno.businessId}" class="form-input" readonly>
                     </div>
+
+                    <!-- Skill Selection -->
+                    <div class="form-group">
+                        <label for="skills" class="form-label">스킬:</label>
+                        <div id="skills">
+                            <!-- 가능한 모든 스킬 리스트를 하드코딩하여 배열로 만듭니다 -->
+                            <c:set var="allSkills" value="java,jsp,html,css,javascript,react,springframework,springboot,python,typescript,express,oracle,mysql,mongodb"/>
                     
+                            <!-- 모든 가능한 스킬을 반복합니다 -->
+                            <c:forEach var="availableSkill" items="${allSkills.split(',')}">
+                                <c:set var="isSelected" value="false" />
+                                <!-- skillsArray를 반복하여 현재 스킬이 포함되어 있는지 확인합니다 -->
+                                <c:forEach var="skill" items="${skillsArray}">
+                                    <c:if test="${skill == availableSkill}">
+                                        <c:set var="isSelected" value="true" />
+                                    </c:if>
+                                </c:forEach>
+                                <!-- isSelected 값에 따라 클래스 적용 -->
+                                <div class="skill-button ${isSelected == 'true' ? 'selected' : ''}" data-skillname="${availableSkill}">
+                                    ${availableSkill}
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
 
-					<!-- Skill Selection -->
-					<div class="form-group">
-					    <label for="skills" class="form-label">스킬:</label>
-					    <div id="skills">
-					        <!-- 가능한 모든 스킬 리스트를 하드코딩하여 배열로 만듭니다 -->
-					        <c:set var="allSkills" value="java,jsp,html,css,javascript,react,springframework,springboot,python,typescript,express,oracle,mysql,mongodb"/>
-					
-					        <!-- 모든 가능한 스킬을 반복합니다 -->
-					        <c:forEach var="availableSkill" items="${allSkills.split(',')}">
-					            <c:set var="isSelected" value="false" />
-					            <!-- skillsArray를 반복하여 현재 스킬이 포함되어 있는지 확인합니다 -->
-					            <c:forEach var="skill" items="${skillsArray}">
-					                <c:if test="${skill == availableSkill}">
-					                    <c:set var="isSelected" value="true" />
-					                </c:if>
-					            </c:forEach>
-					            <!-- isSelected 값에 따라 클래스 적용 -->
-					            <div class="skill-button ${isSelected == 'true' ? 'selected' : ''}" data-skillname="${availableSkill}">
-					                ${availableSkill}
-					            </div>
-					        </c:forEach>
-					    </div>
-					</div>
-
-
-
-
-                    
                     <input type="hidden" id="selectedSkills" name="selectedSkills">
                     <div class="form-group">
                         <input type="submit" value="Submit" class="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer">

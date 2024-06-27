@@ -140,7 +140,7 @@
           <div class="actions">
 			    <a href="${pageContext.request.contextPath}/anno/business-anno-update-form?annoId=${anno.annoId}" class="bg-blue-500 text-white px-4 py-2 rounded">공고수정</a>
 			    <form action="anno-delete-pro" method="post" onsubmit="return removeCheck();" class="btn">
-			        <input type="hidden" name="annoIdStr" value="${anno.annoId}">
+			        <input type="hidden" name="annoId" value="${anno.annoId}">
 			        <input type="submit" value="공고삭제" class="bg-red-500 text-white px-4 py-2 rounded btn">
 			    </form>
 			    <a href="${pageContext.request.contextPath}/anno/business-anno-list?businessId=${sessionScope.businessId}" class="bg-gray-500 text-white px-4 py-2 rounded">목록보기</a>

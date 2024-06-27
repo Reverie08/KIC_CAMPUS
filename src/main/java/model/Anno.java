@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Anno {
@@ -16,11 +17,14 @@ public class Anno {
 	String annoWorkPlace;
 	String annoCommon;
 	String annoQualification;
-	int annoPickNum;
+	String annoPickNum;
 	Date annoDate = new Date();;
 	String annoContent;
 	String businessId;
 	int skillId;
+	Date annoDeadline;
+	int resumeCount;
+	long daysLeft;
 
 	// 기존 getter/setter 및 toString 메서드들...
 	
@@ -128,11 +132,11 @@ public class Anno {
 		this.annoQualification = annoQualification;
 	}
 
-	public int getAnnoPickNum() {
+	public String getAnnoPickNum() {
 		return annoPickNum;
 	}
 
-	public void setAnnoPickNum(int annoPickNum) {
+	public void setAnnoPickNum(String annoPickNum) {
 		this.annoPickNum = annoPickNum;
 	}
 
@@ -167,6 +171,33 @@ public class Anno {
 	public void setSkillId(int skillId) {
 		this.skillId = skillId;
 	}
+	
+
+	public Date getAnnoDeadline() {
+		return annoDeadline;
+	}
+
+	public void setAnnoDeadline(Date annoDeadline) {
+		this.annoDeadline = annoDeadline;
+	}
+	
+	
+
+	public int getResumeCount() {
+		return resumeCount;
+	}
+
+	public void setResumeCount(int resumeCount) {
+		this.resumeCount = resumeCount;
+	}
+
+	public long getDaysLeft() {
+		return daysLeft;
+	}
+
+	public void setDaysLeft(long daysLeft) {
+		this.daysLeft = daysLeft;
+	}
 
 	@Override
 	public String toString() {
@@ -175,7 +206,9 @@ public class Anno {
 				+ ", annoGrade=" + annoGrade + ", annoWorkType=" + annoWorkType + ", annoWorkDay=" + annoWorkDay
 				+ ", annoWorkPlace=" + annoWorkPlace + ", annoCommon=" + annoCommon + ", annoQualification="
 				+ annoQualification + ", annoPickNum=" + annoPickNum + ", annoDate=" + annoDate + ", annoContent="
-				+ annoContent + ", businessId=" + businessId + ", skillId=" + skillId + "]";
+				+ annoContent + ", businessId=" + businessId + ", skillId=" + skillId + ", annoDeadline=" + annoDeadline
+				+ ", resumeCount=" + resumeCount + ", daysLeft=" + daysLeft + "]";
 	}
+
 
 }

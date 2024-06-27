@@ -15,6 +15,7 @@ import mapper.EduMapper;
 import mapper.MemberPortfolioMapper;
 import mapper.MemberProjectMapper;
 import mapper.ResumeMapper;
+import mapper.Resume_Anno_ConnectMapper;
 import model.Career;
 import model.Edu;
 import model.MemberPortfolio;
@@ -65,16 +66,16 @@ public class ResumeDAO {
 	
 	
 	// 이력서 여러 개 리스트로 가져오기, 회원 자신이 작성한 이력서 목록 가져오기
-	public List<Resume> getMemberReumeList(String memberid){
-		List<Resume> memberResumeList = session.getMapper(ResumeMapper.class).getMemberReumeList(memberid);
+	public List<Resume> getMemberResumeList(String memberid){
+		List<Resume> memberResumeList = session.getMapper(ResumeMapper.class).getMemberResumeList(memberid);
 		return memberResumeList;
 	}
 	
 	
 	
-	// 이력서 여러 개 리스트로 가져오기, 기업에 들어온 이력서 목록 가져오기 getBusinessReumeList
-	public List<Resume> getBusinessReumeList(String businessId){
-		List<Resume> businessResumeList = session.getMapper(ResumeMapper.class).getBusinessReumeList(businessId);
+	// 이력서 여러 개 리스트로 가져오기, 기업에 들어온 이력서 목록 가져오기 getBusinessResumeList
+	public List<Resume> getBusinessResumeList(String businessId){
+		List<Resume> businessResumeList = session.getMapper(ResumeMapper.class).getBusinessResumeList(businessId);
 		return businessResumeList;
 	}
 	
@@ -82,7 +83,7 @@ public class ResumeDAO {
 	// 
 	public List<Resume> getAnnoResumeList(int annoId){
 		
-		List<ResumeAnnoConnection> resumeAnnoConnectionList = session.getMapper(ResumeMapper.class).selectResumeIdfromConnect(annoId);
+		List<ResumeAnnoConnection> resumeAnnoConnectionList = session.getMapper(Resume_Anno_ConnectMapper.class).selectResumeIdfromConnect(annoId);
 		
 		List<Resume> resumeList = new ArrayList();
 		
@@ -127,7 +128,6 @@ public class ResumeDAO {
 		int num = session.getMapper(ResumeMapper.class).insertResume(resume);
 		System.out.println("num = "+num);
 		
-		session.commit();
 		
 		return num;
 	}
@@ -160,8 +160,6 @@ public class ResumeDAO {
 		int num = session.getMapper(ResumeMapper.class).updateResume(resume);
 		System.out.println("num = "+num);
 		
-		session.commit();
-		
 		return num;
 	}
 	
@@ -169,7 +167,6 @@ public class ResumeDAO {
 	// 이력서 삭제하기 deleteResume
 	public int deleteResume(int resumeId) {
 		int num = session.getMapper(ResumeMapper.class).deleteResume(resumeId);
-		session.commit();
 		return num;
 	}
 
@@ -177,8 +174,7 @@ public class ResumeDAO {
 		Map<String,Integer> map = new HashMap<>();
 		map.put("resumeId", resumeId);
 		map.put("annoId", annoId);
-		int result = session.getMapper(ResumeMapper.class).intsertAnnoId(map);
-		session.commit();
+		int result = session.getMapper(Resume_Anno_ConnectMapper.class).intsertAnnoId(map);
 		return 0;
 	}
 
@@ -186,6 +182,38 @@ public class ResumeDAO {
 		int memberResumeSize = session.getMapper(ResumeMapper.class).getMemberResumeSize(memberId);
 		// TODO Auto-generated method stub
 		return memberResumeSize;
+	}
+
+	
+	// 여기서부터 가져가면 된다
+	
+	
+	// 기본이력서로 설정하기
+	public int updateResumeToDefault(int resumeId, String memberId) {
+		
+		// DB에 있는 이력서 isDefault 값 전부 0으로 바꾸기
+		int updateToZero = session.getMapper(ResumeMapper.class).updateResumeToZero(memberId);
+		System.out.println("결과 1 : updateToZero : " +updateToZero);
+		// 내가 선택한 이력서의 isDefault 값 1로 바꾸기
+		int updateResult =  session.getMapper(ResumeMapper.class).updateResumeToDefault(resumeId);
+		System.out.println("결과 2 : updateResult : " +updateResult);
+		return updateResult;
+	}
+
+	
+	
+	public Resume getMemberResumeDefault(String memberId) {
+		// isDefault 값이 1인 이력서를 가져오기
+		Resume resume = session.getMapper(ResumeMapper.class).getMemberResumeDefault(memberId);
+		return resume;
+	}
+
+	public int isResumeRegister(int annoId, int resumeId) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("annoId", annoId);
+		map.put("resumeId", resumeId);
+		int findResult = session.getMapper(Resume_Anno_ConnectMapper.class).isResumeRegister(map);
+		return findResult;
 	}
 	
 }

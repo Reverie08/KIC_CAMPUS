@@ -84,7 +84,7 @@
 		class="container mx-auto p-6 bg-white shadow-md rounded-lg mt-10 container-fixed "
 		style="max-width: 1000px;">
 		<form method="post" name="resumeForm"
-<%-- 			action="${pageContext.request.contextPath}/resume/insert-resume" --%>
+			<%-- 			action="${pageContext.request.contextPath}/resume/insert-resume" --%>
 			action="insert-resume"
 			enctype="multipart/form-data">
 			<header class="text-center mb-6">
@@ -98,8 +98,9 @@
 						for="upload">이미지 업로드</label>
 					<div class="image-upload-wrapper">
 						<img id="profileImage" src="https://via.placeholder.com/150"
-							alt="Profile Image"> <input name="profileImageFile" type="file"
-							id="imageUpload" accept="image/*" onchange="loadFile(event)">
+							alt="Profile Image"> <input name="profileImageFile"
+							type="file" id="imageUpload" accept="image/*"
+							onchange="loadFile(event)">
 					</div>
 					<p class="text-gray-500 text-xs mt-2">가로 600px, 세로 600px /
 						5MB이하</p>
@@ -470,6 +471,12 @@
 								파일 업로드는 최대 15개까지 제출 가능해요.</label>
 							<p class="text-gray-500 text-sm mb-2">첨부 파일은 PDF, JPG, PNG
 								형식으로 업로드 가능하며, 각 항목당 업로드할 수 있는 첨부 파일의 최대 용량은 10MB예요.</p>
+							<div class="flex items-center mb-4">
+								<input name="portfolioFiles"
+									class="appearance-none border rounded-l-lg w-full px-3 py-2"
+									type="file"
+									onchange="this.nextElementSibling.value = this.value">
+							</div>
 						</div>
 					</div>
 				</div>
@@ -509,7 +516,7 @@
       newField.className = 'mb-4';
       newField.innerHTML = `
         <div class="flex items-center mb-4">
-          <input name="portfolioFile"  class="appearance-none border rounded-l-lg w-full px-3 py-2" type="file" onchange="this.nextElementSibling.value = this.value">
+          <input name="portfolioFiles"  class="appearance-none border rounded-l-lg w-full px-3 py-2" type="file" onchange="this.nextElementSibling.value = this.value">
         </div>
       `;
       container.appendChild(newField);

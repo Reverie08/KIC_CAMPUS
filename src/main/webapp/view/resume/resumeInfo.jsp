@@ -519,13 +519,10 @@
 
 			<div class="login-inquiry">
 				<a class="inquiry-button"
-					href="${pageContext.request.contextPath}/resume/update-resume?resumeId=${resume.resumeId}">
-					수정하기 
-				</a> 
-				<a class="inquiry-button"
+					href="${pageContext.request.contextPath}/resume/update-resume-form?resumeId=${resume.resumeId}">
+					수정하기 </a> <a class="inquiry-button"
 					href="${pageContext.request.contextPath}/member/member-main">
-					홈으로 
-				</a>
+					홈으로 </a>
 			</div>
 		</form>
 	</div>

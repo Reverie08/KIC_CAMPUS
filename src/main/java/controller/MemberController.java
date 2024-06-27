@@ -127,7 +127,7 @@ public class MemberController {
 		String memberId = (String) session.getAttribute("memberId");
 		Member member = memberDao.getMember(memberId);
 //		int resumeId = resumeDao.selectResumeId();
-		List<Resume> memberResumeList = resumeDao.getMemberReumeList(memberId);
+		List<Resume> memberResumeList = resumeDao.getMemberResumeList(memberId);
 
 		String profileImage;
 

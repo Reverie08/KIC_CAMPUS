@@ -16,7 +16,7 @@ public class Resume {
 	String phone;
 	String email;
 
-	Date registDate;
+	String registDate;
 	Career career;
 	MemberProject project;
 	MemberPortfolio portfolio;
@@ -45,11 +45,11 @@ public class Resume {
 		this.registerToCompanyDate = registerToCompanyDate;
 	}
 
-	public Date getRegistDate() {
+	public String getRegistDate() {
 		return registDate;
 	}
 
-	public void setRegistDate(Date registDate) {
+	public void setRegistDate(String registDate) {
 		this.registDate = registDate;
 	}
 

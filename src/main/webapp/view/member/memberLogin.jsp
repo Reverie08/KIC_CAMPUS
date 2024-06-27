@@ -134,14 +134,14 @@ body {
 				계정이 없으신가요? <a
 					href="${pageContext.request.contextPath}/member/member-join">가입하기</a>
 			</div>
-			<ul>
-				<li onclick="kakaoLogin();"><a href="javascript:void(0)"> <span>카카오
-							로그인</span>
-				</a></li>
-				<li onclick="kakaoLogout();"><a href="javascript:void(0)">
-						<span>카카오 로그아웃</span>
-				</a></li>
-			</ul>
+<!-- 			<ul> -->
+<!-- 				<li onclick="kakaoLogin();"><a href="javascript:void(0)"> <span>카카오 -->
+<!-- 							로그인</span> -->
+<!-- 				</a></li> -->
+<!-- 				<li onclick="kakaoLogout();"><a href="javascript:void(0)"> -->
+<!-- 						<span>카카오 로그아웃</span> -->
+<!-- 				</a></li> -->
+<!-- 			</ul> -->
 
 		</form>
 	</div>
