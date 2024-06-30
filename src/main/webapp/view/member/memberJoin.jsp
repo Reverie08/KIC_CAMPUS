@@ -175,36 +175,36 @@ body {
 		src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 	<script>
-        function showPasswordRequirements() {
-            document.getElementById('password-requirements').style.display = 'flex';
-            validatePassword();
-        }
+//         function showPasswordRequirements() {
+//             document.getElementById('password-requirements').style.display = 'flex';
+//             validatePassword();
+//         }
 
-        function validatePassword() {
-            const pw= document.getElementById('memberPw').value;
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
+//         function validatePassword() {
+//             const pw= document.getElementById('memberPw').value;
+//             const name = document.getElementById('name').value;
+//             const phone = document.getElementById('phone').value;
 
-            const uppercase = /[A-Z]/.test(password);
-            const lowercase = /[a-z]/.test(password);
-            const number = /[0-9]/.test(password);
-            const special = /[~!@#$%^&*(),.?":{}|<>]/.test(password);
-            const length = password.length >= 8;
-            const noPersonalInfo = !password.includes(name) && !password.includes(phone);
+//             const uppercase = /[A-Z]/.test(password);
+//             const lowercase = /[a-z]/.test(password);
+//             const number = /[0-9]/.test(password);
+//             const special = /[~!@#$%^&*(),.?":{}|<>]/.test(password);
+//             const length = password.length >= 8;
+//             const noPersonalInfo = !password.includes(name) && !password.includes(phone);
 
-            document.getElementById('uppercase').classList.toggle('invalid', !uppercase);
-            document.getElementById('uppercase').classList.toggle('valid', uppercase);
-            document.getElementById('lowercase').classList.toggle('invalid', !lowercase);
-            document.getElementById('lowercase').classList.toggle('valid', lowercase);
-            document.getElementById('number').classList.toggle('invalid', !number);
-            document.getElementById('number').classList.toggle('valid', number);
-            document.getElementById('special').classList.toggle('invalid', !special);
-            document.getElementById('special').classList.toggle('valid', special);
-            document.getElementById('length').classList.toggle('invalid', !length);
-            document.getElementById('length').classList.toggle('valid', length);
-            document.getElementById('no-personal-info').classList.toggle('invalid', !noPersonalInfo);
-            document.getElementById('no-personal-info').classList.toggle('valid', noPersonalInfo);
-        }
+//             document.getElementById('uppercase').classList.toggle('invalid', !uppercase);
+//             document.getElementById('uppercase').classList.toggle('valid', uppercase);
+//             document.getElementById('lowercase').classList.toggle('invalid', !lowercase);
+//             document.getElementById('lowercase').classList.toggle('valid', lowercase);
+//             document.getElementById('number').classList.toggle('invalid', !number);
+//             document.getElementById('number').classList.toggle('valid', number);
+//             document.getElementById('special').classList.toggle('invalid', !special);
+//             document.getElementById('special').classList.toggle('valid', special);
+//             document.getElementById('length').classList.toggle('invalid', !length);
+//             document.getElementById('length').classList.toggle('valid', length);
+//             document.getElementById('no-personal-info').classList.toggle('invalid', !noPersonalInfo);
+//             document.getElementById('no-personal-info').classList.toggle('valid', noPersonalInfo);
+//         }
         
         function chkform(f){
         	   alert(f.memberPw.value==f.checkPw.value)

@@ -249,7 +249,7 @@ nav ul li:hover .dropdown {
 						class="text-blue-500"><b>공고목록</b></a>
 					<a
 						href="${pageContext.request.contextPath}/anno/business-anno-insert-form"
-						class="text-blue-500">공고작성</a>
+						class="text-blue-500"><b>공고작성</b></a>
 
 				</c:if>
 			</div>

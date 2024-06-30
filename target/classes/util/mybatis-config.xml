@@ -22,7 +22,8 @@
 		<typeAlias type="model.Search" alias="search" />
 		<typeAlias type="model.Sort" alias="sort" />
 		<typeAlias type="model.ResumeAnnoConnection" alias="resumeAnnoConnection" />
-
+		<typeAlias type="model.Column" alias="column" />
+		<typeAlias type="model.Evaluate" alias="evaluate" />
 	</typeAliases>
 
 	<environments default="oracle">
@@ -49,5 +50,6 @@
 		<mapper class="mapper.MemberProjectMapper" />
 		<mapper class="mapper.SkillMapper" />
 		<mapper class="mapper.Resume_Anno_ConnectMapper" />
+		<mapper class="mapper.ResumeEvaluateMapper" />
 	</mappers>
 </configuration>

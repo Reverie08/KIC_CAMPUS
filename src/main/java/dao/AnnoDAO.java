@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import mapper.AnnoMapper;
 import model.Anno;
+import model.Column;
 import model.Search;
 import model.Skill;
 
@@ -170,6 +171,20 @@ public class AnnoDAO {
     	return searchAnnoList;
     }
     
-    
+	public int insertColumn(Column column) {
+		int num = session.getMapper(AnnoMapper.class).insertColumn(column);
+		return 0;
+	}
+
+	public Column getColumn(int annoId) {
+		Column column = session.getMapper(AnnoMapper.class).getColumn(annoId);
+		return column;
+	}
+
+	public int updateColumn(Column column) {
+		// TODO Auto-generated method stub
+		int num = session.getMapper(AnnoMapper.class).updateColumn(column);
+		return num;
+	}
     
 }

@@ -137,8 +137,8 @@ body {
 				<input type="number" id="salary" name="salary" placeholder="급여" required>
 			</div>
 			<div class="form-group form-group-full">
-				<label for="welfare">복리후생</label>
-				<textarea id="welfare" name="welfare" rows="4" placeholder="복리후생"></textarea>
+				<label for="welfare">복지</label>
+				<textarea id="welfare" name="welfare" rows="4" placeholder="복지"></textarea>
 			</div>
 			<div class="form-group">
 				<label for="ceo">CEO</label>

@@ -100,9 +100,15 @@ public class ResumeController {
       annoId = Integer.parseInt(request.getParameter("annoId"));
       
       // resume 테이블에 annoId 집어넣기, update
-      int result = resumeDao.updateAnnoId(resumeId, annoId);
+      Resume resume = new Resume();
+      resume.setResumeId(resumeId);
+      resume.setAnnoId(annoId);
+      
+      int result = resumeDao.insertResumeAnnoConnect(resume);
+      
+      
       System.out.println("공고지원한 결과 : "+result);
-       return "member-main";
+      return "member/memberMain";
    }
 
    
@@ -110,7 +116,6 @@ public class ResumeController {
     
     @RequestMapping("resume-anno-register-form-pro")
     public String resumeAnnoRegisterPro(int annoId) throws ServletException, IOException {
-        
        
 //       int annoId = Integer.parseInt(request.getParameter("annoId"));
         String memberId = (String) session.getAttribute("memberId");
@@ -171,6 +176,8 @@ public class ResumeController {
         return "resume/resumeRegisterForm";
     }
 
+    
+    
     // 이력서 작성 처리
     @RequestMapping("insert-resume")
     public String insertResume(@RequestParam("profileImageFile") MultipartFile multipartFile, @RequestParam("portfolioFiles") MultipartFile multipartFile2)
@@ -352,26 +359,41 @@ public class ResumeController {
     	 String path = request.getServletContext().getRealPath("/") + "img/member/";
 //         MultipartRequest multi = new MultipartRequest(request, path, 10 * 1024 * 1024, "UTF-8");
     	 Resume resume = new Resume();
-         MemberPortfolio portfolio = new MemberPortfolio();
+    	 MemberPortfolio portfolio = new MemberPortfolio();
+    	 
+    	// 이력서 아이디 가져오기
+         int resumeId = Integer.parseInt(request.getParameter("resumeId"));
+         
+         Resume resumeDb =resumeDao.getResume(resumeId);
+         
          String profileImage = "";
   		if(!multipartFile.isEmpty()) {
   			File file = new File(path, multipartFile.getOriginalFilename());
   			profileImage=multipartFile.getOriginalFilename();
   			multipartFile.transferTo(file);
-  		}
+  			resume.setProfileImage(profileImage);
+  		} else { //업로드를 안했을 경우
+  			resume.setProfileImage(resumeDb.getProfileImage());
+		}
+  		
   		
   		String portfolioFile = "";
   		if(!multipartFile2.isEmpty()) {
   			File file = new File(path, multipartFile2.getOriginalFilename());
   			portfolioFile=multipartFile2.getOriginalFilename();
   			multipartFile2.transferTo(file);
-  		}
-    	 
+  			portfolio.setPortfolioFile(portfolioFile);
+  			System.out.println("portfolio.setPortfolioFile(portfolioFile) : " + portfolioFile);
+  		} else { //업로드를 안했을 경우
+  			portfolio.setPortfolioFile(resumeDb.getPortfolio().getPortfolioFile());
+  			System.out.println("resumeDb.getPortfolio().getPortfolioFile() : " + resumeDb.getPortfolio().getPortfolioFile());
+		}
+    	
+  		
          // 회원 정보: 회원 아이디를 가져와서 회원 테이블에서 조회
          String memberId = (String) session.getAttribute("memberId");
 
-         // 이력서 아이디 가져오기
-         int resumeId = Integer.parseInt(request.getParameter("resumeId"));
+         
 
          // 교육 정보 설정
          Edu edu = new Edu();
@@ -416,7 +438,7 @@ public class ResumeController {
          int portfolioId = Integer.parseInt(request.getParameter("portfolioId"));
          portfolio.setPortfolioId(portfolioId);
          portfolio.setPortfolioUrl(request.getParameter("portfolioUrl"));
-         portfolio.setPortfolioFile(portfolioFile);
+//         portfolio.setPortfolioFile(portfolioFile);
          portfolio.setResumeId(resumeId);
 
          // 이력서 정보 설정
@@ -436,7 +458,7 @@ public class ResumeController {
          resume.setCertification(request.getParameter("certification"));
          resume.setLanguage(request.getParameter("language"));
          resume.setAddress(request.getParameter("address"));
-         resume.setProfileImage(profileImage);
+//         resume.setProfileImage(profileImage);
 
          
         
@@ -505,7 +527,7 @@ public class ResumeController {
     
     
     // 기본 이력서로 이력서 업데이트 하기
-    @RequestMapping("update-resume-default")
+    @RequestMapping("update-resume-default")	
     public String updateResumeDefault(int resumeId) throws ServletException, IOException {
 //        int resumeId = Integer.parseInt(request.getParameter("resumeId"));
         String memberId = (String) session.getAttribute("memberId");

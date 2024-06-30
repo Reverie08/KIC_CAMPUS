@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Date;
 
 public class Resume {
 	int resumeId;
@@ -24,19 +23,14 @@ public class Resume {
 
 	String memberId;
 	String businessId;
-	int columnStage = 0; // 기본값 0
-	int evaluStage = 0; // 기본값 0
+	int columnStage = 1; // 기본값 0
 	int resumeScore = 0; // 기본값 0
 
 	int isDefault = 0;
-	
-	String registerToCompanyDate;
-	
-	
-	
-	
-	
-	
+	String resumeCheckDate;
+	String registerToCompanyDate; // 회사 공고에 지원한 날짜
+	int annoId;
+
 	public String getRegisterToCompanyDate() {
 		return registerToCompanyDate;
 	}
@@ -53,7 +47,6 @@ public class Resume {
 		this.registDate = registDate;
 	}
 
-
 	public int getIsDefault() {
 		return isDefault;
 	}
@@ -62,9 +55,6 @@ public class Resume {
 		this.isDefault = isDefault;
 	}
 
-
-	
-	
 	public int getResumeId() {
 		return resumeId;
 	}
@@ -120,7 +110,6 @@ public class Resume {
 	public void setProfileImage(String profileImage) {
 		this.profileImage = profileImage;
 	}
-
 
 	public String getName() {
 		return name;
@@ -209,21 +198,31 @@ public class Resume {
 	public void setColumnStage(int columnStage) {
 		this.columnStage = columnStage;
 	}
-
-	public int getEvaluStage() {
-		return evaluStage;
-	}
-
-	public void setEvaluStage(int evaluStage) {
-		this.evaluStage = evaluStage;
-	}
+	
 
 	public int getResumeScore() {
 		return resumeScore;
 	}
 
+
 	public void setResumeScore(int resumeScore) {
 		this.resumeScore = resumeScore;
+	}
+
+	public String getResumeCheckDate() {
+		return resumeCheckDate;
+	}
+
+	public void setResumeCheckDate(String resumeCheckDate) {
+		this.resumeCheckDate = resumeCheckDate;
+	}
+
+	public int getAnnoId() {
+		return annoId;
+	}
+
+	public void setAnnoId(int annoId) {
+		this.annoId = annoId;
 	}
 
 	@Override
@@ -233,12 +232,9 @@ public class Resume {
 				+ ", profileImage=" + profileImage + ", name=" + name + ", birth=" + birth + ", phone=" + phone
 				+ ", email=" + email + ", registDate=" + registDate + ", career=" + career + ", project=" + project
 				+ ", portfolio=" + portfolio + ", edu=" + edu + ", memberId=" + memberId + ", businessId=" + businessId
-				+ ", columnStage=" + columnStage + ", evaluStage=" + evaluStage + ", resumeScore=" + resumeScore
-				+ ", isDefault=" + isDefault + ", registerToCompanyDate=" + registerToCompanyDate + "]";
+				+ ", columnStage=" + columnStage + ", resumeScore=" + resumeScore + ", isDefault=" + isDefault
+				+ ", resumeCheckDate=" + resumeCheckDate + ", registerToCompanyDate=" + registerToCompanyDate
+				+ ", annoId=" + annoId + "]";
 	}
 
-
-	
-
-	
 }

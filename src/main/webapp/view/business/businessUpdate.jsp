@@ -127,7 +127,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 			<div class="form-group">
 				<label for="businessId">사업자번호</label> <input type="text"
 					id="businessId" name="businessId" placeholder="사업자번호" required
-					pattern="\d{1,10}" value="${businessId}">
+					pattern="\d{1,10}" value="${businessId}" >
 				<div class="error-message">숫자를 입력하세요 (최대 10자리).</div>
 			</div>
 			<div class="form-group">
@@ -149,8 +149,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 					name="salary" placeholder="급여" required value="${business.salary}">
 			</div>
 			<div class="form-group form-group-full">
-				<label for="welfare">복리후생</label>
-				<textarea id="welfare" name="welfare" rows="4" placeholder="복리후생">${business.welfare}</textarea>
+				<label for="welfare">복지</label>
+				<textarea id="welfare" name="welfare" rows="4" placeholder="복지">${business.welfare}</textarea>
 			</div>
 			<div class="form-group">
 				<label for="ceo">CEO</label> <input type="text" id="ceo" name="ceo"

@@ -39,9 +39,6 @@ CREATE TABLE resume (
    certification   VARCHAR2(90)   NULL,
    language   VARCHAR2(90)   NULL,
    address   VARCHAR2(90)   NULL,
-   columnstage   number   NULL,
-   evalustage   number   NULL,
-   resumescore   number   NULL,
    memberid   VARCHAR2(40),
    businessid   VARCHAR2(40),
    isdefault number
@@ -122,9 +119,31 @@ create table resume_anno_connect(
     resumeid   number,
     annoid   number,
     resume_register_date Date,
-    resume_check_date Date
+    resume_check_date Date,
+    columnstage number,
+    resumescore number
 );
 
+
+create table columntable(
+    annoid   number,
+    columntitle   VARCHAR2(100),
+    columnstage number
+);
+
+
+-- 이력서 평가 테이블
+create table resume_evaluate_table(
+    resumeid number,
+    annoid number,
+    evaluatestage number,
+    evaluatedate VARCHAR2(500),
+    suitablescore number,
+    suitablecontent VARCHAR2(500),
+    practicalscore number,
+    practicalcontent VARCHAR2(500),
+    avgscore number
+);
 
 
 
@@ -156,6 +175,11 @@ drop table edu;
 drop table career;
 drop table memberproject;
 drop table memberportfolio;
+drop table resume_anno_connect;
+drop table columntable;
+drop table resume_evaluate_table;
+
+
 
 drop sequence memberseq;
 drop sequence memberprojectseq;

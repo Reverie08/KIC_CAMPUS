@@ -14,10 +14,12 @@ import mapper.CareerMapper;
 import mapper.EduMapper;
 import mapper.MemberPortfolioMapper;
 import mapper.MemberProjectMapper;
+import mapper.ResumeEvaluateMapper;
 import mapper.ResumeMapper;
 import mapper.Resume_Anno_ConnectMapper;
 import model.Career;
 import model.Edu;
+import model.Evaluate;
 import model.MemberPortfolio;
 import model.MemberProject;
 import model.Resume;
@@ -81,22 +83,8 @@ public class ResumeDAO {
 	
 	
 	// 
-	public List<Resume> getAnnoResumeList(int annoId){
-		
-		List<ResumeAnnoConnection> resumeAnnoConnectionList = session.getMapper(Resume_Anno_ConnectMapper.class).selectResumeIdfromConnect(annoId);
-		
-		List<Resume> resumeList = new ArrayList();
-		
-		for(int i=0;i<resumeAnnoConnectionList.size();i++) {
-			int resumeId = resumeAnnoConnectionList.get(i).getResumeId();
-			String registDate = resumeAnnoConnectionList.get(i).getResume_register_date();
-			System.out.println("==================registDate : "+registDate);
-			Resume resume = session.getMapper(ResumeMapper.class).getResume(resumeId);
-			if(resume != null) {
-				resume.setRegisterToCompanyDate(registDate);
-			}
-			resumeList.add(resume);
-		}
+	public List<Resume> getResumeToBusinessManagement(int annoId){
+		List<Resume> resumeList = session.getMapper(ResumeMapper.class).getResumeToBusinessManagement(annoId);
 		return resumeList;
 	}
 	
@@ -170,13 +158,13 @@ public class ResumeDAO {
 		return num;
 	}
 
-	public int updateAnnoId(int resumeId, int annoId) {
-		Map<String,Integer> map = new HashMap<>();
-		map.put("resumeId", resumeId);
-		map.put("annoId", annoId);
-		int result = session.getMapper(Resume_Anno_ConnectMapper.class).intsertAnnoId(map);
-		return 0;
-	}
+//	public int updateAnnoId(int resumeId, int annoId) {
+//		Map<String,Integer> map = new HashMap<>();
+//		map.put("resumeId", resumeId);
+//		map.put("annoId", annoId);
+//		int result = session.getMapper(Resume_Anno_ConnectMapper.class).intsertAnnoId(map);
+//		return 0;
+//	}
 
 	public int getMemberResumeSize(String memberId) {
 		int memberResumeSize = session.getMapper(ResumeMapper.class).getMemberResumeSize(memberId);
@@ -215,5 +203,63 @@ public class ResumeDAO {
 		int findResult = session.getMapper(Resume_Anno_ConnectMapper.class).isResumeRegister(map);
 		return findResult;
 	}
+
+	public List<Resume> getAnnoResumeList(int annoId) {
+		List<Resume> resumeList = session.getMapper(ResumeMapper.class).getAnnoResumeList(annoId);
+		return resumeList;
+	}
+
+	public int insertResumeAnnoConnect(Resume resume) {
+		// TODO Auto-generated method stub
+		int num = session.getMapper(Resume_Anno_ConnectMapper.class).insertResumeAnnoConnect(resume);
+		return num;
+	}
+
+	
+	
+	// ===========================================================================================
+	
+	
+	// 이력서 평가 테이블에 값 집어넣기
+	public int insertResumeEvaluate(Evaluate evaluate) {
+		int num = session.getMapper(ResumeEvaluateMapper.class).insertResumeEvaluate(evaluate);
+		return 0;
+	}
+	
+	// 이력서 평가 테이블에 데이터가 있는 지 판단
+	public int selectResumeEvaluate(Evaluate evaluate) {
+		int count = session.getMapper(ResumeEvaluateMapper.class).selectResumeEvaluate(evaluate);
+		return count;
+	}
+	
+	// 평가 데이터가 이미 들어가 있으면 update하기
+	public int updateResumeEvaluate(Evaluate evaluate) {
+		int num = session.getMapper(ResumeEvaluateMapper.class).updateResumeEvaluate(evaluate);
+		return num;
+	}
+
+	
+	// 비즈니스 매니지먼트에서 이력서 평가로 페이지가 넘어갈 때 값 가져오기
+	public Evaluate getResumeEvaluate(Evaluate evaluate) {
+		Evaluate getEvaluateResult = session.getMapper(ResumeEvaluateMapper.class).getResumeEvaluate(evaluate);
+		return getEvaluateResult;
+	}
+
+	// 비즈니스 매니지먼트에 보여줄 이력서 평가 내용들을 리스트로 가져오기
+	public List<Evaluate> getResumeEvaluateList(int annoId) {
+		List<Evaluate> evaluateList = session.getMapper(ResumeEvaluateMapper.class).getResumeEvaluateList(annoId);
+		return evaluateList;
+	}
+
+	public int updateResumeAnnoConnect(Evaluate evaluate) {
+		int num = session.getMapper(Resume_Anno_ConnectMapper.class).updateResumeAnnoConnect(evaluate);
+		return num;
+	}
+	
+	
+	
+	
+	
+	
 	
 }

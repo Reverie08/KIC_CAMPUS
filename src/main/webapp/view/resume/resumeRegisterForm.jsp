@@ -472,11 +472,11 @@
 							<p class="text-gray-500 text-sm mb-2">첨부 파일은 PDF, JPG, PNG
 								형식으로 업로드 가능하며, 각 항목당 업로드할 수 있는 첨부 파일의 최대 용량은 10MB예요.</p>
 							<div class="flex items-center mb-4">
-								<input name="portfolioFiles"
-									class="appearance-none border rounded-l-lg w-full px-3 py-2"
-									type="file"
-									onchange="this.nextElementSibling.value = this.value">
-							</div>
+<!-- 								<input name="portfolioFiles" -->
+<!-- 									class="appearance-none border rounded-l-lg w-full px-3 py-2" -->
+<!-- 									type="file" -->
+<!-- 									onchange="this.nextElementSibling.value = this.value"> -->
+<!-- 							</div> -->
 						</div>
 					</div>
 				</div>

@@ -103,6 +103,7 @@
 .inquiry-button:hover {
 	background-color: #0056b3;
 }
+
 </style>
 </head>
 <body class="bg-gray-100">
@@ -126,7 +127,7 @@
 							src="${pageContext.request.contextPath}/img/member/${resume.profileImage}"
 							alt="Profile Image"> <input name="profileImage"
 							value="${resume.profileImage}" type="file" id="imageUpload"
-							accept="image/*" onchange="loadFile(event)">
+							accept="image/*" onchange="loadFile(event)" disabled>
 					</div>
 					<p class="text-gray-500 text-xs mt-2">가로 600px, 세로 600px /
 						5MB이하</p>
@@ -148,9 +149,7 @@
 							for="introduction">한줄 소개</label>
 						<textarea name="selfInfo"
 							class="appearance-none border rounded-lg w-full px-3 py-2"
-							rows="4" readonly>
-            ${resume.selfInfo}
-            </textarea>
+							rows="4" readonly>${resume.selfInfo}</textarea>
 						<p class="text-gray-500 text-xs mt-1">600자 이내</p>
 					</div>
 				</div>
@@ -399,9 +398,7 @@
 								class="appearance-none border rounded-lg w-full px-3 py-2"
 								id="job-description" rows="4"
 								placeholder="구체적인 역할과 성과 위주의 업무 내용을 작성해보세요. 수치와 함께 표현되면 경험이 잘 전달될 수 있습니다."
-								readonly>
-                ${resume.career.workPart}
-                </textarea>
+								readonly>${resume.career.workPart}</textarea>
 						</div>
 					</div>
 				</div>
@@ -471,9 +468,7 @@
 							<textarea name="projectInfo"
 								class="appearance-none border rounded-lg w-full px-3 py-2"
 								id="description" rows="4"
-								placeholder="프로젝트 내용과 본인의 역할, 기여도를 작성해보세요." readonly>
-                ${resume.project.projectInfo}
-                </textarea>
+								placeholder="프로젝트 내용과 본인의 역할, 기여도를 작성해보세요." readonly>${resume.project.projectInfo}</textarea>
 						</div>
 					</div>
 				</div>
@@ -502,15 +497,15 @@
 					<div class="border rounded-lg p-4 bg-gray-50 relative"
 						id="file-section">
 						<h2 class="text-lg font-bold mb-4">첨부 파일</h2>
-						<button type="button"
-							class="text-blue-500 w-full py-2 mb-4 border border-blue-500 rounded-lg"
-							onclick="addFileField()">+ 파일 추가</button>
+<!-- 						<button type="button" -->
+<!-- 							class="text-blue-500 w-full py-2 mb-4 border border-blue-500 rounded-lg" -->
+<!-- 							onclick="addFileField()">+ 파일 추가</button> -->
 						<div class="flex items-center mb-4">
-							<input name="portfolioFileName"
-								value="${resume.portfolio.portfolioFile}"
-								class="appearance-none border rounded-l-lg w-full px-3 py-2"
-								type="file"
-								onchange="this.nextElementSibling.value = this.value" readonly>
+<!-- 							<input name="portfolioFileName" -->
+<%-- 								value="${resume.portfolio.portfolioFile}" --%>
+<!-- 								class="appearance-none border rounded-l-lg w-full px-3 py-2" -->
+<!-- 								type="file" -->
+<!-- 								onchange="this.nextElementSibling.value = this.value" disabled> -->
 							${resume.portfolio.portfolioFile}
 						</div>
 					</div>

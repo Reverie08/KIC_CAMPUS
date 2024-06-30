@@ -1,7 +1,6 @@
 package mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -9,7 +8,6 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import model.Resume;
-import model.ResumeAnnoConnection;
 
 public interface ResumeMapper {
 
@@ -32,8 +30,12 @@ public interface ResumeMapper {
 	public List<Resume> getBusinessResumeList(String businessId);
 
 	// 공고에 지원한 이력서 목록 가져오기
-	@Select("select * from resume where annoid=#{annoId}")
+//	@Select("select * from resume, resume_anno_connect where annoid=#{annoId}")
+//	public List<Resume> getAnnoResumeList(int annoId);
+	
+	@Select("select * from resume r JOIN resume_anno_connect rac ON r.resumeid = rac.resumeid where rac.annoid=#{annoId}")
 	public List<Resume> getAnnoResumeList(int annoId);
+	
 
 	@Select("select profileimage from resume where memberid=#{memberId}")
 	public String getProfileImage(String memberId);
@@ -41,7 +43,7 @@ public interface ResumeMapper {
 	// 이력서 삽입
 	@Insert("insert into resume values(#{resumeId},#{resumeTitle},#{profileImage},"
 			+ "#{name},#{birth},#{phone},#{email},sysdate,#{selfInfo},#{certification},#{language},"
-			+ "#{address},#{columnStage},#{evaluStage},#{resumeScore},#{memberId},#{businessId},#{isDefault})")
+			+ "#{address},#{memberId},#{businessId},#{isDefault})")
 	public int insertResume(Resume resume);
 
 	// 이력서 삭제
@@ -68,4 +70,19 @@ public interface ResumeMapper {
 
 	@Select("select * from resume where memberid = #{memberId} and isdefault = 1")
 	public Resume getMemberResumeDefault(String memberId);
+	
+	
+	
+	
+	
+	
+	// 기업 입장에서 자기 공고에 지원한 이력서들을 볼 때, 이력서를 DB에서 불러오는 쿼리
+	@Select("select r.*, rac.annoid as annoId, rac.columnstage as columnStage, "
+			+ "to_char(resume_check_date,'YYYY-MM-DD PM HH:MI:SS')as resumeCheckDate, "
+			+ "to_char(resume_register_date,'YYYY-MM-DD PM HH:MI:SS')as registerToCompanyDate, "
+			+ "rac.resumescore as resumeScore "
+			+ "from resume r, resume_anno_connect rac "
+			+ "where r.resumeid = rac.resumeid "
+			+ "and annoid=#{annoId}")
+	public List<Resume> getResumeToBusinessManagement(int annoId);
 }

@@ -1,154 +1,453 @@
+<%@page import="java.util.Calendar"%>
+<%@page import="java.util.Date"%>
+<%@page import="model.Anno"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Anno Info</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-  <style>
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-    .info {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    .info div:nth-child(odd) {
-      font-weight: bold;
-    }
-    .actions {
-      display: flex;
-      gap: 1rem;
-    }
-    .header {
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    .fixed-sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 16.66%;
-    }
-    .main-content {
-      margin-left: 16.66%;
-    }
-    .btn {
-     cursor: pointer;
-    }
-  </style>
-  <script>
-    function removeCheck() {
-      return confirm("정말 삭제하시겠습니까?");
-    }
-  </script>
+<meta charset="UTF-8">
+<title>채용 공고</title>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+	rel="stylesheet">
+<style>
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+.dropdown-menu {
+	display: none;
+	position: absolute;
+	right: 2rem;
+	top: 4rem;
+	background-color: white;
+	border: 1px solid #ddd;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 0.5rem;
+	width: 200px;
+	z-index: 1000;
+}
+
+.dropdown-menu.show {
+	display: block;
+}
+
+.login-inquiry {
+	height: 100%;
+	width: 100%;
+	margin-top: 586px;
+	/*  	display: flex;  */
+	/* 	flex-direction: row; */
+	gap: 10px;
+	/*  	align-items: flex-end; */
+	/*  	flex-wrap: nowrap; */
+}
+
+.inquiry-button {
+	background-color: #007bff;
+	color: white;
+	margin-top: 20px;
+	padding: 10px 20px;
+	border-radius: 5px;
+	text-decoration: none;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	margin-right: 4px
+}
+
+.inquiry-button:hover {
+	background-color: #0056b3;
+}
+
+.font-semibold {
+	font-size: 16px;
+}
+
+.w-1\/5 {
+	width: 16.66%;
+}
+
+.w-2\/3 {
+	margin-left: -200px;
+	width: 66.666667%;
+}
+
+.card-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	width: 100%;
+}
+
+.card {
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	width: 60%;
+	padding: 0;
+	background-color: #fff; /* 카드 배경색을 흰색으로 설정 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	transition: transform 0.2s, box-shadow 0.2s;
+	overflow: hidden;
+	text-decoration: none;
+	color: inherit;
+	display: flex;
+	flex-direction: column;
+}
+
+.card-content-wrapper {
+	display: flex;
+}
+
+.card-content {
+	padding: 16px;
+	width: 66.67%;
+}
+
+.card-extra {
+	padding: 16px;
+	width: 33.33%;
+	border-left: 1px solid #ddd;
+}
+
+.card-title {
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+
+.card-text {
+	font-size: 14px;
+	color: #555;
+	margin-bottom: 4px;
+}
+
+.card-footer {
+	font-size: 12px;
+	color: #777;
+	padding: 16px;
+	align-self: flex-start;
+}
+
+.card:hover {
+	transform: scale(1.05);
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.header {
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	padding: 1rem 2rem;
+}
+
+.fixed-sidebar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 16.66%;
+}
+
+.main-content {
+	margin-left: 16.66%;
+}
+
+.text-2xl {
+	font-size: 1.5rem;
+	line-height: 2rem;
+}
+
+.container {
+	max-width: 1200px; /* 현재 사이즈의 3배 */
+	margin: 0 auto;
+	padding: 2rem;
+}
+
+.header {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 1200px; /* 현재 사이즈의 3배 */
+	height: auto; /* 높이 복구 */
+	background-color: #fff;
+	z-index: 1000;
+	padding: 1rem 2rem;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header .business-name {
+	position: relative;
+	top: -6%;
+	left: 1%;
+	font-size: 1.2rem;
+	color: #6b7280;
+}
+
+.header .title-date-container {
+	position: relative;
+	margin-left: 10%;
+}
+
+.header h2 {
+	position: relative;
+	margin-left: -10%;
+}
+
+.header .date {
+	position: absolute;
+	bottom: -80%;
+	right: -1%;
+	font-size: 0.975rem;
+	color: #6b7280;
+}
+
+.main-content {
+	margin-left: 16.66%;
+	padding-top: 6rem;
+	width: 1200px; /* 현재 사이즈의 3배 */
+	margin: 0 auto;
+}
+
+.btn {
+	cursor: pointer;
+}
+
+#skills .skill-item {
+	display: inline-block;
+	background-color: #e0f2fe;
+	border: 1px solid #0284c7;
+	color: #0369a1;
+	padding: 0.5rem 1rem;
+	margin-right: 0.5rem;
+	margin-bottom: 0.5rem;
+	border-radius: 9999px;
+	font-size: 0.875rem;
+	font-weight: 500;
+}
+
+.form-label {
+	font-weight: bold;
+	color: #374151;
+	margin-bottom: 0.5rem;
+	display: block;
+}
+
+.form-group {
+	margin-bottom: 1rem;
+}
+
+h2, h3 {
+	color: #1f2937;
+}
+
+.body-section {
+	margin-top: 1rem;
+}
+
+.image-placeholder {
+	width: 100%;
+	height: 600px;
+	background-color: #e5e7eb;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.25rem;
+	color: #9ca3af;
+	margin-bottom: 1rem;
+}
+
+.days-left {
+	font-size: 1.25rem;
+	font-weight: bold;
+	color: #ef4444;
+	margin-bottom: 1rem;
+}
+
+.info-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.5rem;
+	font-size: 0.875rem;
+}
+
+.info-item {
+	display: flex;
+	justify-content: space-between;
+}
+
+.actions {
+	display: flex;
+	gap: 1rem;
+	margin-top: 1.5rem;
+	flex-wrap: wrap;
+}
+
+img, video {
+	display: inline;
+	width: 69.7%;
+	border-radius: 10px;
+	height: auto;
+}
+</style>
+<script>
+	function removeCheck() {
+		return confirm("정말 삭제하시겠습니까?");
+	}
+</script>
 </head>
 <body class="bg-gray-100">
-  <div class="flex flex-col h-screen">
-    <header class="header bg-white p-4 shadow-md">
-      <div class="container mx-auto flex justify-between items-center">
-        <h1 class="text-2xl font-bold">Anno Info</h1>
-      </div>
-    </header>
-    <div class="flex flex-grow">
-    
-      <!-- Sidebar -->
-      <aside class="bg-white rounded-lg shadow p-4 fixed-sidebar">
-        <h2 class="text-lg font-bold mb-4">Sidebar</h2>
-        <ul>
-        	<li class="mb-2"><a href="${pageContext.request.contextPath}/business/business-main" class="text-blue-500">메인화면</a></li>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-info?annoId=${anno.annoId}" class="text-blue-500"><b>공고내용</b></a></li>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-list?businessId=${sessionScope.businessId}" class="text-blue-500">공고 목록</a></li>
-          <li class="mb-2"><a href="${pageContext.request.contextPath}/anno/business-anno-management?annoId=${anno.annoId}" class="text-blue-500">이력서 관리</a></li>
-          <li class="mb-2"><a href="#" class="text-blue-500">미정</a></li>
-        </ul>
-      </aside>
-
-      <!-- Main Content -->
-      <div class="main-content w-5/6 p-4 overflow-x-auto">
-        <div class="container bg-white p-6 rounded-lg shadow-md">
-          <h2 class="text-2xl font-bold mb-4">Anno Info</h2>
-          
-          <div class="info">
-            <div>annoId:</div>
-            <div>${anno.annoId}</div>
-            
-            <div>annoDate:</div>
-            <div>${anno.annoDate}</div>
-            
-            <div>기업명:</div>
-            <div>${anno.businessName}</div>
-            
-            <div>복지:</div>
-            <div>${anno.welfare}</div>
-            
-            <div>공고 제목:</div>
-            <div>${anno.annoTitle}</div>
-            
-            <div>경력:</div>
-            <div>${anno.annoCareer}</div>
-            
-            <div>연봉:</div>
-            <div>${anno.annoSalary}</div>
-            
-            <div>학력:</div>
-            <div>${anno.annoEdu}</div>
-            
-            <div>직급:</div>
-            <div>${anno.annoGrade}</div>
-            
-            <div>근무 형태:</div>
-            <div>${anno.annoWorkType}</div>
-            
-            <div>근무 요일:</div>
-            <div>${anno.annoWorkDay}</div>
-            
-            <div>근무지:</div>
-            <div>${anno.annoWorkPlace}</div>
-            
-            <div>공통 자격:</div>
-            <div>${anno.annoCommon}</div>
-            
-            <div>지원 자격:</div>
-            <div>${anno.annoQualification}</div>
-            
-            <div>채용 인원:</div>
-            <div>${anno.annoPickNum}</div>
-            
-            <div>공고 내용:</div>
-            <div>${anno.annoContent}</div>
-            
-            <div>기업 ID:</div>
-            <div>${anno.businessId}</div>
-
-          </div>
-
-          <!-- Skill Selection -->
-          <div class="form-group">
-            <label for="skills" class="form-label">스킬:</label>
-            <div id="skills">
-              <div>${skills.skills}</div>
-            </div>
-          </div>
-          
-          <div class="actions">
-			    <a href="${pageContext.request.contextPath}/anno/business-anno-update-form?annoId=${anno.annoId}" class="bg-blue-500 text-white px-4 py-2 rounded">공고수정</a>
-			    <form action="anno-delete-pro" method="post" onsubmit="return removeCheck();" class="btn">
-			        <input type="hidden" name="annoId" value="${anno.annoId}">
-			        <input type="submit" value="공고삭제" class="bg-red-500 text-white px-4 py-2 rounded btn">
-			    </form>
-			    <a href="${pageContext.request.contextPath}/anno/business-anno-list?businessId=${sessionScope.businessId}" class="bg-gray-500 text-white px-4 py-2 rounded">목록보기</a>
+	<div class="flex flex-col h-screen">
+		<header class="header">
+			<div class="business-name">${anno.businessName}</div>
+			<div class="title-date-container">
+				<h2 class="text-2xl font-bold mb-4">${anno.annoTitle}</h2>
+				<span class="date"><fmt:formatDate value="${anno.annoDate}"
+						pattern="yyyy년 M월 d일 E요일 a hh시 mm분" /></span>
 			</div>
-          
-        </div>
-      </div>
-    </div>
-  </div>
+		</header>
+		<div class="flex flex-grow">
+
+			<!-- Sidebar -->
+			<div class="fixed-sidebar bg-white shadow-lg p-4 flex flex-col">
+				<div>
+					<div class="flex items-center mb-4">
+						<a href="${pageContext.request.contextPath}/member/main"> <img
+							src="https://ifh.cc/g/8x0DFF.png" alt="Logo" class="mr-2">
+						</a>
+					</div>
+					<ul>
+						<li class="mb-2"><a
+							href="${pageContext.request.contextPath}/anno/business-anno-list?busineessId=${sessionScope.businessId}"
+							class="text-blue-500">공고목록</a></li>
+						<li class="mb-2"><a
+							href="${pageContext.request.contextPath}/anno/business-anno-info?annoId=${anno.annoId}"
+							class="text-blue-500"><b>공고정보</b></a></li>
+						<li class="mb-2"><a
+							href="${pageContext.request.contextPath}/anno/business-anno-insert-form"
+							class="text-blue-500">공고작성</a></li>
+						<li class="mb-2"><a
+							href="${pageContext.request.contextPath}/business/business-main"
+							class="text-blue-500">홈으로</a></li>
+						<li class="mb-2"><a
+							href="${pageContext.request.contextPath}/anno/business-anno-management?annoId=${anno.annoId}"
+							class="text-blue-500">이력서 관리</a></li>
+					</ul>
+				</div>
+
+				<div class="login-inquiry mt-auto">
+					<a
+						href="${pageContext.request.contextPath}/business/business-logout"
+						method="post">
+						<button type="submit" class="inquiry-button">로그아웃</button>
+					</a> <a
+						href="${pageContext.request.contextPath}/business/business-info?businessId=${sessionScope.businessId}"
+						method="post">
+						<button type="submit" class="inquiry-button">기업 정보</button>
+					</a>
+				</div>
+			</div>
+
+			<!-- Main Content -->
+			<div class="main-content overflow-x-auto">
+				<div
+					class="container bg-white p-6 rounded-lg shadow-md body-section">
+					<div class="info-grid">
+						<div class="info-item">
+							<span class="font-semibold">경력</span> <span>${anno.annoCareer}</span>
+						</div>
+						<div class="info-item">
+							<span class="font-semibold">급여</span> <span>${anno.annoSalary}</span>
+						</div>
+						<div class="info-item">
+							<span class="font-semibold">학력</span> <span>${anno.annoEdu}</span>
+						</div>
+						<div class="info-item">
+							<span class="font-semibold">근무지역</span> <span>${anno.annoWorkPlace}</span>
+						</div>
+						<div class="info-item">
+							<span class="font-semibold">근무형태</span> <span>${anno.annoWorkType}</span>
+						</div>
+					</div>
+					<hr>
+
+					<!-- Image Placeholder -->
+					<img class="image-placeholder" src="https://ifh.cc/g/Pqhd8G.jpg" />
+
+					<!-- Days Left -->
+					<div class="days-left">남은 기간: ${daysLeft}일</div>
+
+					<!-- Start and End Dates -->
+					<div class="info">
+						<div>
+							시작일
+							<fmt:formatDate value="${anno.annoDate}"
+								pattern="yyyy년 M월 d일 E요일 a hh시 mm분" />
+						</div>
+						<div>
+							마감일
+							<fmt:formatDate value="${anno.annoDeadline}"
+								pattern="yyyy년 M월 d일 E요일 a hh시 mm분" />
+						</div>
+					</div>
+
+					<!-- Company Info -->
+					<h3 class="text-xl font-bold mt-6 mb-4">기업 정보</h3>
+					<div class="info-content bg-gray-50 p-4 rounded-lg">
+						<div class="mb-4">
+							<h4 class="text-lg font-semibold mb-2">복지</h4>
+							<p>${anno.welfare}</p>
+						</div>
+						<div class="mb-4">
+							<h4 class="text-lg font-semibold mb-2">공통 자격</h4>
+							<p>${anno.annoCommon}</p>
+						</div>
+						<div class="mb-4">
+							<h4 class="text-lg font-semibold mb-2">지원 자격</h4>
+							<p>${anno.annoQualification}</p>
+						</div>
+						<div class="mb-4">
+							<h4 class="text-lg font-semibold mb-2">채용 인원</h4>
+							<p>${anno.annoPickNum}</p>
+						</div>
+						<div>
+							<h4 class="text-lg font-semibold mb-2">공고 내용</h4>
+							<p>${anno.annoContent}</p>
+						</div>
+					</div>
+
+					<!-- Skill Selection -->
+					<div class="form-group">
+						<label for="skills" class="form-label">스킬:</label>
+						<div id="skills">
+							<c:forEach var="skill" items="${skills.skills}">
+								<div class="skill-item">${skill}</div>
+							</c:forEach>
+						</div>
+					</div>
+
+					<div class="actions">
+						<a
+							href="${pageContext.request.contextPath}/anno/business-anno-update-form?annoId=${anno.annoId}"
+							class="bg-blue-500 text-white px-4 py-2 rounded">공고수정</a>
+						<form action="anno-delete-pro" method="post"
+							onsubmit="return removeCheck();" class="btn">
+							<input type="hidden" name="annoId" value="${anno.annoId}">
+							<input type="submit" value="공고삭제"
+								class="bg-red-500 text-white px-4 py-2 rounded btn">
+						</form>
+						<a
+							href="${pageContext.request.contextPath}/anno/business-anno-list"
+							class="bg-gray-500 text-white px-4 py-2 rounded">목록보기</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
