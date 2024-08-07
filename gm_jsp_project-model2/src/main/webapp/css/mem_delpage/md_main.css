@@ -1,0 +1,160 @@
+@charset "UTF-8";
+/* main */
+.main {
+   clear: both;
+   padding-top: 60px;
+   text-align: center;
+   font-family: 'GmarketSansMedium';
+}
+
+.main img {
+   padding-bottom: 30px;
+}
+
+.main button {
+   font-family: 'GmarketSansMedium';
+   font-size: 16px;
+}
+
+.main .member_ox button {
+   display: inline-block;
+   border-radius: 8px 8px 0 0;
+   border-bottom: none;
+   width: 210px;
+   height: 50px;
+}
+
+.member_ox button:first-child {
+   position: relative;
+   background-color: #fff;
+   border: 1px solid #00C400;
+   border-bottom: none;
+   right: -11px;
+}
+
+.member_ox button:last-child {
+   position: relative;
+   background-color: #EEEEEE;
+   border: none;
+   left: 5px;
+   color: #9E9E9E;
+}
+
+.loginbox input {
+   width: 366px;
+   height: 60px;
+   border: 1px solid #E0E0E0;
+}
+
+.id img {
+   position: absolute;
+}
+
+.loginbox .id {
+   position: relative;
+   top: -1px;
+   left: 8px;
+}
+
+.id img {
+   top: 22px;
+   left: 760px;
+}
+
+
+.id input {
+   padding-left: 50px;
+}
+
+.password input {
+   padding-left: 50px;
+}
+
+.loginbox .password {
+   position: relative;
+   top: -2px;
+   left: 8px;
+}
+
+.password span {
+   position: absolute;
+   top: 25px;
+   left: 1070px;
+   font-size: 12px;
+   text-decoration: underline;
+}
+
+
+.password img {
+   position: absolute;
+   top: 21px;
+   left: 760px;
+}
+
+
+.id_save {
+   position: relative;
+}
+
+
+.id_save input {
+   position: relative;
+   top: -10px;
+   right: 145px;
+   width: 20px;
+}
+
+.id_save span {
+   font-size: 14px;
+   position: relative;
+   top: -36px;
+   right: 140px;
+}
+
+
+.loginBtn button{
+   position: relative;
+   margin-top: 20px;
+   width: 423px;
+   height: 60px;
+   border-radius: 8px;
+   border: none;
+   color: #fff;
+   font-size: 20px;
+   background-color: #00C400;
+   left: 10px;
+   margin-bottom: 15px;
+}
+
+.mini_tag table td a {
+   text-decoration: none;
+   color: gray;
+}
+
+.mini_tag table td:last-child a{
+   position: relative;
+   top: 3px;
+}
+
+
+.main table {
+   margin: auto;
+   margin-bottom: 30px;
+}
+
+.main .simple_login {
+   margin: 0 750px;
+   margin-right: 730px;
+   border-top: 1px solid #E2E2E2;
+   padding-top: 30px;
+}
+
+.simple_login ul {
+   list-style-type: none;
+   padding-left: 70px;
+}
+
+.simple_login ul li {
+   float: left;
+   padding: 10px;
+}

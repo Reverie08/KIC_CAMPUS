@@ -1,0 +1,106 @@
+@charset "UTF-8";
+/* header */
+.header {
+   width: 1900px;
+   height: 30px;
+   padding: 5px;
+   font-family: 'GmarketSansMedium';
+   border-bottom: 1px solid #E1E1E1;
+}
+
+input::placeholder {
+   font-family: 'GmarketSansMedium';
+}
+
+.logo {
+   float: left;
+}
+
+.search {
+   position: relative;
+   float: left;
+   height: 30px;
+   margin: 0;
+}
+
+#triangle {
+   position: absolute;
+   width: 0px;
+   height: 0px;
+   border-top: 8px solid #BEC1C7;
+   border-left: 5px solid transparent;
+   border-right: 5px solid transparent;
+}
+
+.triangle1 {
+   top: 24px;
+   left: 268px;
+}
+
+.triangle2 {
+   top: 24px;
+   left: 345px;
+}
+
+.triangle3 {
+   top: 24px;
+   left: 1668px;
+}
+
+.search input {
+   float: left;
+   width: 130px;
+   height: 25px;
+   border: 1px solid #067DFD;
+   outline: none;
+   border-radius: 20px;
+   padding: 0 10px;
+   margin-left: 6px;
+   margin-top: 0;
+}
+
+.search img {
+   position: absolute;
+   width: 16px;
+   height: 16px;
+   top: 5px;
+   left: 135px;
+   cursor: pointer;
+}
+
+
+.min_menu1 td, .min_menu2 td {
+   float: left;
+   margin-top: 5px;
+   padding-left: 13px;
+   padding-right: 25px;
+   font-size: 13px;
+   color: gray;
+   border-right: 1px solid #E1E1E1;
+}
+
+.min_menu1 td:last-child, .min_menu2 td:last-child  {
+   border-right: none;
+}
+
+.min_menu1 {
+   float: left;
+}
+
+.min_menu2 {
+   float: right;
+}
+
+.min_menu2 td:nth-child(3) {
+   margin-top: 2px;
+   padding-right: 19px;
+}
+
+.min_menu2 td:not(:nth-child(3)) {
+   padding-right: 8px;
+}
+
+.min_menu2 td a {
+   text-decoration: none;
+   color: gray;
+}
